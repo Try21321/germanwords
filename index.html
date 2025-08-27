@@ -1,0 +1,490 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Учебник немецких слов</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      color: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background: #3b3b58;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.6);
+      width: 450px;
+      max-width: 95%;
+      text-align: center;
+    }
+    h1 {
+      color: #ffd166;
+      margin-bottom: 20px;
+      font-size: 26px;
+    }
+    #question {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 20px 0;
+      color: #f1faee;
+    }
+    input {
+      width: 95%;
+      padding: 12px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      margin: 12px 0;
+      text-align: center;
+    }
+    button {
+      background: #6c5ce7;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      margin: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: scale(1.05);
+      background: #7d6cf2;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      min-height: 28px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Учебник немецких слов</h1>
+
+    <!-- выбор направления -->
+    <select id="mode" onchange="getRandomWord()">
+      <option value="mix">🔀 Микс</option>
+      <option value="de">🇩🇪 → 🇷🇺</option>
+      <option value="ru">🇷🇺 → 🇩🇪</option>
+    </select>
+
+    <div id="question">...</div>
+    <input type="text" id="answerInput" placeholder="Введите перевод">
+    <br>
+    <button onclick="checkAnswer()">Проверить</button>
+    <button onclick="showAnswer()">Показать ответ</button>
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    // общий словарь
+    const words = {
+     "er": "Он",
+        "sie": "Она, они",
+        "es": "Оно",
+        "wir": "Мы",
+        "ihr": "Вы",
+        "Sie": "Вы",
+        "das Kind": "Ребёнок",
+        "der Junge": "Мальчик",
+        "das Mädchen": "Девочка",
+        "der Jugendliche": "Молодой человек",
+        "der Erwachsene": "Взрослый",
+        "der Herr": "Мужчина",
+        "männlich": "Мужественный",
+        "die Frau": "Женщина",
+        "die Dame": "Дама",
+        "weiblich": "Женственный",
+        "der Mensch": "Человек",
+        "die Leute": "Люди",
+        "international": "Интернациональный",
+        "Hallo": "Привет",
+        "Willkommen": "Добро пожаловать",
+        "Bitte": "Пожалуйста",
+        "Danke": "Спасибо",
+        "Achtung": "Внимание",
+        "Vorsicht": "Осторожно",
+        "Gerne": "Охотно",
+        "Tschüss": "Пока",
+        "Auf Wiederhören": "Услышимся",
+        "Auf Wiedersehen": "Увидимся",
+        "haben": "Иметь",
+        "sein": "Быть",
+        "werden": "Становиться",
+        "können": "уметь",
+        "wollen": "Хотеть",
+        "möchten": "Хотеть ",
+        "dürfen": "иметь право",
+        "müssen": "Быть должным",
+        "sollen": "иметь приказ",
+        "heißen": "Зваться",
+        "brauchen": "Нуждаться",
+        "bekommen": "Получать",
+        "kriegen": "Воевать",
+        "gehören": "Принадлежать",
+        "weg sein": "Быть не здесь",
+        "zu sein": "Быть закрытым",
+        "an sein": "Быть включённым",
+        "auf sein": "Быть открытым",
+        "aus sein": "Быть выключенным",
+        "eins": "Один",
+        "zwei": "Два",
+        "drei": "Три",
+         "vier": "Четыре",
+        "fünf": "Пять",
+        "sechs": "Шесть",
+        "sieben": "Семь",
+        "acht": "Восемь",
+        "neun": "Девять",
+        "zehn": "Десять",
+        "elf": "Одиннадцать",
+        "zwölf": "Двенадцать",
+        "dreizehn": "Тринадцать",
+        "vierzehn": "Четырнадцать",
+        "fünfzehn": "Пятнадцать",
+        "sechzehn": "Шестнадцать",
+        "siebzehn": "Семнадцать",
+        "achtzehn": "Восемнадцать",
+        "neunzehn": "Девятнадцать",
+        "zwanzig": "Двадцать",
+        "dreißig": "Тридцать",
+        "vierzig": "Сорок",
+        "fünfzig": "Пятьдесят",
+        "sechzig": "Шестьдесят",
+        "siebzig": "Семьдесят",
+        "achtzig": "Восемьдесят",
+        "neunzig": "Девяносто",
+        "hundert": "Сто",
+        "tausend": "Тысяча",
+        "eine Million": "Миллион",
+        "eine Milliarde": "Миллиард",
+        "die Zeit": "Время",
+        "das Datum": "Дата",
+        "das Jahr": "Год",
+        "der Monat": "Месяц",
+        "die Woche": "Неделя",
+        "der Tag": "День",
+        "die Stunde": "Час",
+        "die Minute": "Минута",
+        "die Sekunde": "Секунда",
+        "der Moment": "Секунда",
+        "der Moment": "Момент",
+        "der Morgen": "Утро",
+        "der Vormittag": "Первая половина дня",
+        "der Mittag": "Полдень",
+        "der Nachmittag": "Вторая половина дня",
+        "der Abend": "Вечер",
+        "die Nacht": "Ночь",
+        "der Wochentag": "День недели",
+        "der Montag": "Понедельник",
+        "der Dienstag": "Вторник",
+        "der Mittwoch": "Среда",
+        "der Donnerstag": "Четверг",
+        "der Freitag": "Пятница",
+         "das Wochenende": "Выходные",
+        "der Samstag": "Суббота",
+        "der Sonntag": "Воскресенье",
+        "der Frühling": "Весна",
+        "der Sommer": "Лето",
+        "der Herbst": "Осень",
+        "der Winter": "Зима",
+        "der Januar": "Январь",
+        "der Februar": "Февраль",
+        "der März": "Март",
+        "der April": "Апрель",
+        "der Mai": "Май",
+        "der Juni": "Июнь",
+        "der Juli": "Июль",
+        "der Augus": "Август",
+        "der September": "Сентябрь",
+        "der Oktober": "der Oktober",
+        "der November": "Ноябрь",
+        "Ноябрь": "der Dezember",
+        "mir": "Мне",
+        "dir": "Тебе",
+        "ihm": "Ему",
+        "ihr": "Ей",
+        "uns": "Нам",
+        "euch": "Вам",
+        "ihnen": "Им",
+        "Ihnen": "Вам",
+        "schlafen": "Спать",
+        "stehen": "Стоять",
+        "aufstehen": "Вставать",
+        "liegen": "Лежать",
+        "sitzen": "Сидеть",
+        "gehen": "Идти",
+        "laufen": "Бежать",
+        "fahren": "Ехать",
+        "fliegen": "Летать",
+        "kommen": "Приходить",
+        "tanzen": "Танцевать",
+        "spielen": "Играть",
+        "alt": "Старый",
+        "neu": "Новый",
+        "jung": "Молодой",
+        "gut": "Хороший",
+        "schlecht": "Плохой",
+        "normal": "Нормальный",
+        "klein": "Маленький",
+        "groß": "Большой",
+        "schön": "Красивый",
+        "kurz": "Короткий",
+        "lang": "Длинный",
+        "hoch": "Высокий",
+         "schwarz": "Чёрный",
+        "weiß": "Белый",
+        "grau": "Серый",
+        "blau": "Синий",
+        "grün": "Зелёный",
+        "rot": "Красный",
+        "gelb": "Жёлтый",
+        "braun": "Коричневый",
+        "hören": "Слышать",
+        "sehen": "Смотреть",
+        "schmecken": "Чувствовать вкус",
+        "riechen": "Чувствовать запах",
+        "freuen": "Радовать",
+        "lachen": "Смеяться",
+        "gefallen": "Нравиться",
+        "mögen": "симпатия",
+        "lieben": "Любить",
+        "glauben": "Верить",
+        "lustig": "Весёлый",
+        "zufrieden": "Довольный",
+        "ruhig": "Спокойный",
+        "böse": "Злой",
+        "müde": "Усталый",
+        "glücklich": "Счастливый",
+        "das Glück": "Счастье",
+        "wer": "Кто",
+        "was": "Что",
+        "wo": "Где",
+        "wie": "Как",
+        "wann": "Когда",
+        "warum": "Почему",
+        "woher": "Откуда",
+        "wohin": "Куда",
+        "wie viel": "Как много",
+        "was für ein": "Что за? Какой",
+        "mich": "Меня",
+        "dich": "Тебя",
+        "ihn": "Его",
+        "sie": "Её",
+        "es": "Его",
+        "uns": "Нам",
+        "euch": "Вас",
+        "sie": "Их",
+        "Sie": "Вас",
+        "machen": "Делать",
+        "ausmachen": "Выключать",
+        "anmachen": "Включать",
+        "tun": "Поступать",
+        "suchen": "Искать",
+        "finden": "Находить",
+        "nehmen": "Брать",
+         "halten": "Держать",
+        "benutzen": "Использовать",
+        "öffnen": "Открывать",
+        "schließen": "Закрывать",
+        "bringen": "Приносить",
+        "holen": "доставать",
+        "geben": "Давать",
+        "stellen": "Ставить",
+        "legen": "legen",
+        "beginnen": "Начинать",
+        "aufhören": "Прекращать",
+        "das Wetter": "Погода",
+        "Grad": "Градус",
+        "klar": "Ясно",
+        "die Sonne": "Солнце",
+        "scheinen": "Светить",
+        "der Wind": "Ветер",
+        "regnen": "Идёт дождь",
+        "der Regen": "Дождь",
+        "der See": "Озеро",
+        "das Meer": "Море",
+        "das Feuer": "Огонь",
+        "der Baum": "Дерево",
+        "die Blume": "Цветок",
+        "die Welt": "die Welt",
+        "das Land": "Страна",
+        "die Stadt": "Город",
+        "das Dorf": "Деревня",
+        "die Straße": "Улица",
+        "der Platz": "Место",
+        "der Ort": "городок",
+        "der Anfang": "Начало",
+        "die Mitte": "Середина",
+        "das Ende": "Конец",
+        "der Teil": "Часть",
+        "geradeaus": "Прямо",
+        "zurück": "Назад",
+        "nach links": "Налево",
+        "nach rechts": "Направо",
+        "der Norden": "Север",
+        "der Süden": "Юг",
+        "der Westen": "Запад",
+        "der Osten": "Восток",
+        "hier": "Здесь",
+        "da": "Там",
+        "dort": "Там",
+        "daneben": "Рядом",
+        "draußen": "Снаружи",
+        "links": "Слева",
+        "rechts": "Справа",
+        "oben": "Наверху",
+         "unten": "Внизу",
+        "unter": "Под",
+        "hinten": "Сзади",
+        "hinter": "Позади",
+        "der Gruß": "Приветствие",
+        "vorstellen": "Представлять",
+        "sagen": "Сказать",
+        "sprechen": "Говорить",
+        "fragen": "Спрашивать",
+        "die Frage": "Вопрос",
+        "antworten": "Отвечать",
+        "die Antwort": "Ответ",
+        "erzählen": "Рассказывать",
+        "bitten": "Просить",
+        "die Bitte": "Просьба",
+        "danken": "Благодарить",
+        "der Dank": "Благодарность",
+        "entschuldigen": "Извинять",
+        "die Entschuldigung": "Извинение",
+        "helfen": "Помогать",
+        "die Hilfe": "Помощь",
+        "heiraten": "Жениться",
+        "sich kümmern": "Заботиться",
+        "die Familie": "Семья",
+        "die Ehefrau": "Жена",
+        "der Ehemann": "Муж",
+        "der Partner": "Партнёр",
+        "die Mutter": "Мама",
+        "der Vater": "Отец",
+        "die Eltern": "Родители",
+        "das Baby": "Младенец",
+        "der Sohn": "Сын",
+        "die Tochter": "Дочь",
+        "der Bruder": "Брат",
+        "die Schwester": "Сестра",
+        "der Verwandte": "Родственник",
+        "die Geschwister": "Братья и сёстры",
+        "die Großeltern": "Бабушки и дедушки",
+        "die Großmutter": "Бабушка",
+        "der Großvater": "Дедушка",
+        "die Oma": "Бабушка",
+        "der Opa": "Дедушка",
+        "der Hund": "Собака",
+        "fremd": "Чужой",
+        "kennen": "Знать",
+        "kennenlernen": "Знакомиться",
+        "bekannt": "Известный",
+        "der Bekannte": "Знакомый",
+        "der Freund": "Друг",
+        "gleich": "Одинаковый",
+        "allein": "в одиночку",
+         "zusammen": "Вместе",
+        "beide": "Оба/обе",
+        "treffen": "Встречать",
+        "warten": "Ждать",
+        "besuchen": "Посещать",
+        "bleiben": "Оставаться",
+        "übernachten": "Переночевать",
+        "mitbringen": "Приносить с собой",
+        "mitkommen": "Прийти вместе",
+        "mitmachen": "Делать что-то вместе",
+        "das Telefon": "Телефон",
+        "das Handy": "Мобильный",
+        "anrufen": "Звонить",
+        "der Anruf": "Телефонный звонок",
+        "der Anrufbeantworter": "Автоответчик",
+        "telefonieren": "Говорить по телефону",
+        "wiederholen": "Повторять",
+        "verstehen": "Понимать",
+        "buchstabieren": "Диктовать по буквам",
+        "das Auto": "Машина",
+        "die Autobahn": "Скоростная трасса",
+        "das Taxi": "Такси",
+        "der Fahrer": "Водитель",
+        "der Bus": "Автобус",
+        "die Haltestelle": "Остановка",
+        "die Bahn": "Железная дорога",
+        "die S-Bahn": "Пригородная электричка",
+        "die Straßenbahn": "Трамвай",
+        "der Zug": "Поезд",
+        "der Bahnhof": "Вокзал",
+        "der Bahnsteig": "Железнодорожная платформа",
+        "das Gleis": "Железнодорожный путь",
+        "das Flugzeug": "Самолёт",
+        "der Flughafen": "Аэропорт",
+        "das Fahrrad": "Велосипед",
+        "Rad fahren": "Ехать на велосипеде",
+        "der Lkw": "Грузовик",
+        "die Fahrkarte": "Проездной билет",
+        "das Ticket": "Билет",
+        "einsteigen": "Входить",
+        "aussteigen": "Выходить",
+        "frei": "Свободно",
+        "besetzt": "Занято",
+        "langsam": "Медленный",
+        "schnell": "Быстрый",
+        "der Automat": "Автомат",
+        "automatisch": "Автоматически",
+        "die Maschine": "Механизм",
+        "das Schild": "Знак",
+        "die Heimat": "Родина"
+    };
+
+    let correctAnswer = "";
+
+    function getRandomWord() {
+      const mode = document.getElementById("mode").value;
+      const entries = Object.entries(words);
+      const [german, russian] = entries[Math.floor(Math.random() * entries.length)];
+      const askGerman = mode === 'de' ? true : mode === 'ru' ? false : (Math.random() < 0.5);
+
+      if (askGerman) {
+        correctAnswer = russian.toLowerCase();
+        document.getElementById("question").textContent = `Что значит: "${german}"?`;
+      } else {
+        correctAnswer = german.toLowerCase();
+        document.getElementById("question").textContent = `Как будет по-немецки: "${russian}"?`;
+      }
+
+      document.getElementById("answerInput").value = "";
+      document.getElementById("result").textContent = "";
+    }
+
+    function checkAnswer() {
+      const input = document.getElementById("answerInput").value.trim().toLowerCase();
+      const res = document.getElementById("result");
+      res.textContent = input === correctAnswer ? "✅ Верно!" : "❌ Неправильно.";
+      if (input === correctAnswer) setTimeout(getRandomWord, 1500);
+    }
+
+    function showAnswer() {
+      document.getElementById("answerInput").value = correctAnswer;
+      document.getElementById("result").textContent = "ℹ️ Ответ подставлен. Нажми 'Проверить'.";
+    }
+
+    getRandomWord();
+  </script>
+</body>
+</html>
