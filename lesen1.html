@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Урок 1 — Немецкий язык</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      color: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .card {
+      background: #3b3b58;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.6);
+      max-width: 700px;
+      margin: auto;
+    }
+    h1 {
+      color: #ffd166;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+    .word-list {
+      text-align: left;
+      margin: 20px auto;
+      padding: 10px;
+      line-height: 1.7;
+      font-size: 18px;
+    }
+    button {
+      background: #6c5ce7;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      margin: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: scale(1.05);
+      background: #7d6cf2;
+    }
+    #testBox {
+      display: none;
+      margin-top: 20px;
+    }
+    #question {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    #answerInput {
+      width: 80%;
+      padding: 12px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    #feedback {
+      margin-top: 10px;
+      font-size: 20px;
+      min-height: 24px;
+    }
+    #feedback.correct {
+      color: #06d6a0;
+      font-weight: bold;
+    }
+    #feedback.wrong {
+      color: #ef476f;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>📘 Урок 1</h1>
+
+    <!-- Блок урока -->
+    <div id="lessonBox">
+      <div class="word-list">
+        <p><b>Привет</b> — Hallo</p>
+        <p><b>Я</b> — Ich</p>
+        <p><b>назвать, зовут</b> — heißen (ich heiße)</p>
+        <p><b>Меня зовут Алекс</b> — ich heiße Alex</p>
+        <p><b>приходить</b> — kommen</p>
+        <p><b>из</b> — aus</p>
+        <p><b>Я из Германии</b> — Ich komme aus Deutschland</p>
+        <p><b>Я из России</b> — Ich komme aus Russland</p>
+        <p><b>Я из Украины</b> — Ich komme aus der Ukraine</p>
+        <p><b>говорить</b> — sprechen</p>
+        <p><b>Я говорю по-немецки</b> — Ich spreche Deutsch</p>
+        <p><b>Я говорю по-английски</b> — Ich spreche Englisch</p>
+        <p><b>Я говорю по-английски и по-немецки</b> — Ich spreche Englisch und Deutsch</p>
+        <p><b>Я говорю по-немецки и по-английски</b> — Ich spreche Deutsch und Englisch</p>
+        <p><b>работать</b> — arbeiten</p>
+        <p><b>Я работаю</b> — Ich arbeite</p>
+        <p><b>учиться</b> — studieren</p>
+        <p><b>Я учусь</b> — Ich studiere</p>
+        <p><b>Я работаю и учусь</b> — Ich arbeite und studiere</p>
+        <p><b>Я учусь и работаю</b> — Ich studiere und arbeite</p>
+      </div>
+      <button onclick="startTest()">Контрольная работа</button>
+    </div>
+
+    <!-- Блок теста -->
+    <div id="testBox">
+      <div id="question">...</div>
+      <input type="text" id="answerInput" placeholder="Введите перевод">
+      <br>
+      <button onclick="checkAnswer()">Проверить</button>
+      <button onclick="showAnswer()">Показать ответ</button>
+      <button onclick="backToLesson()">Назад к уроку</button>
+      <div id="feedback"></div>
+    </div>
+  </div>
+
+  <script>
+    const phrases = [
+      ["Привет", "Hallo"],
+      ["Я", "Ich"],
+      ["назвать, зовут", "heißen (ich heiße)"],
+      ["Меня зовут Алекс", "ich heiße Alex"],
+      ["приходить", "kommen"],
+      ["из", "aus"],
+      ["Я из Германии", "Ich komme aus Deutschland"],
+      ["Я из России", "Ich komme aus Russland"],
+      ["Я из Украины", "Ich komme aus der Ukraine"],
+      ["говорить", "sprechen"],
+      ["Я говорю по-немецки", "Ich spreche Deutsch"],
+      ["Я говорю по-английски", "Ich spreche Englisch"],
+      ["Я говорю по-английски и по-немецки", "Ich spreche Englisch und Deutsch"],
+      ["Я говорю по-немецки и по-английски", "Ich spreche Deutsch und Englisch"],
+      ["работать", "arbeiten"],
+      ["Я работаю", "Ich arbeite"],
+      ["учиться", "studieren"],
+      ["Я учусь", "Ich studiere"],
+      ["Я работаю и учусь", "Ich arbeite und studiere"],
+      ["Я учусь и работаю", "Ich studiere und arbeite"]
+    ];
+
+    let currentPair = null;
+
+    function startTest() {
+      document.getElementById("lessonBox").style.display = "none";
+      document.getElementById("testBox").style.display = "block";
+      nextQuestion();
+    }
+
+    function nextQuestion() {
+      const pair = phrases[Math.floor(Math.random() * phrases.length)];
+      currentPair = Math.random() < 0.5 ? [pair[0], pair[1]] : [pair[1], pair[0]];
+      document.getElementById("question").textContent = `Переведите: "${currentPair[0]}"`;
+      document.getElementById("answerInput").value = "";
+      document.getElementById("feedback").textContent = "";
+    }
+
+    function checkAnswer() {
+      const input = document.getElementById("answerInput").value.trim().toLowerCase();
+      const correct = currentPair[1].toLowerCase();
+      const feedback = document.getElementById("feedback");
+
+      if (input === correct) {
+        feedback.textContent = "✅ Верно!";
+        feedback.className = "correct";
+        setTimeout(nextQuestion, 1500);
+      } else {
+        feedback.textContent = "❌ Неправильно, попробуй ещё.";
+        feedback.className = "wrong";
+      }
+    }
+
+    function showAnswer() {
+      const feedback = document.getElementById("feedback");
+      feedback.textContent = `ℹ️ Правильный ответ: ${currentPair[1]}`;
+      feedback.className = "";
+      setTimeout(nextQuestion, 2000);
+    }
+
+    function backToLesson() {
+      document.getElementById("lessonBox").style.display = "block";
+      document.getElementById("testBox").style.display = "none";
+    }
+  </script>
+</body>
+</html>
