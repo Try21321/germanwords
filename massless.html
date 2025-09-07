@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Урок немецкого</title>
+  <style>
+   body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  color: #f8f9fa;
+  margin: 0;
+  padding: 20px;
+  /* убираем фиксированную высоту и выравнивание по центру */
+}
+   .card {
+  background: #3b3b58;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.6);
+  width: 600px;
+  max-width: 95%;
+  margin: 0 auto;
+}
+    h1 {
+      color: #ffd166;
+      margin-bottom: 20px;
+      font-size: 26px;
+    }
+    .phrase { margin: 6px 0; font-size: 20px; }
+    button {
+      background: #6c5ce7;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: transform 0.2s;
+    }
+    button:hover { transform: scale(1.05); background: #7d6cf2; }
+    #quiz { display: none; margin-top: 20px; }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      text-align: center;
+    }
+    .result { margin-top: 10px; min-height: 24px; font-size: 18px; }
+    #menu {
+  position: sticky; /* фиксируем меню сверху карточки */
+  top: 0;
+  background: #3b3b58;
+  padding: 10px 0;
+  z-index: 10;
+}
+  </style>
+</head>
+<body>
+ <!-- ... твой lesson.html ... -->
+
+<div class="card">
+  <!-- Меню -->
+  <div id="menu">
+    <button onclick="goLesson(1)">Урок 1</button>
+    <button onclick="goLesson(2)">Урок 2</button>
+    <button onclick="goLesson(3)">Урок 3</button>
+    <button onclick="goLesson(4)">Урок 4</button>
+  </div>
+
+  <h1 id="lessonTitle">Урок</h1>
+
+  <!-- слова урока -->
+  <div id="lessonContent"></div>
+
+  <!-- кнопка запуска -->
+  <button id="startBtn" onclick="startQuiz()">Контрольная работа</button>
+
+  <!-- блок с тестом -->
+  <div id="quiz" style="display:none;">
+    <div id="question"></div>
+    <input type="text" id="answerInput" placeholder="Введите перевод">
+    <br>
+    <button onclick="checkAnswer()">Проверить</button>
+    <button onclick="showAnswer()">Показать ответ</button>
+    <div id="result" class="result"></div>
+    <br>
+    <button onclick="endQuiz()">Закончить контрольную</button>
+  </div>
+</div>
+
+<script>
+  const lessons = {
+    1: [["Привет", "Hallo"],
+      ["Я", "Ich"],
+      ["назвать, зовут", "heißen (ich heiße)"],
+      ["Меня зовут Алекс", "ich heiße Alex"],
+      ["приходить", "kommen"],
+      ["из", "aus"],
+      ["Я из Германии", "Ich komme aus Deutschland"],
+      ["Я из России", "Ich komme aus Russland"],
+      ["Я из Украины", "Ich komme aus der Ukraine"],
+      ["говорить", "sprechen"],
+      ["Я говорю по-немецки", "Ich spreche Deutsch"],
+      ["Я говорю по-английски", "Ich spreche Englisch"],
+      ["Я говорю по-английски и по-немецки", "Ich spreche Englisch und Deutsch"],
+      ["Я говорю по-немецки и по-английски", "Ich spreche Deutsch und Englisch"],
+      ["работать", "arbeiten"],
+      ["Я работаю", "Ich arbeite"],
+      ["учиться", "studieren"],
+      ["Я учусь", "Ich studiere"],
+      ["Я работаю и учусь", "Ich arbeite und studiere"],
+      ["Я учусь и работаю", "Ich studiere und arbeite"]],
+    2: [ ["жить", "leben"],
+  ["Я живу в Германии", "Ich lebe in Deutschland"],
+  ["Я живу в России", "Ich lebe in Russland"],
+  ["Я живу в Украине", "Ich lebe in der Ukraine"],
+  ["любить", "lieben"],
+  ["Я люблю", "Ich liebe"],
+  ["тебя", "dich"],
+  ["Я люблю тебя", "Ich liebe dich"],
+  ["Я люблю немецкий язык", "Ich liebe Deutsch"],
+  ["Это", "es"],
+  ["Я это люблю", "Ich liebe es"],
+  ["проживать", "wohnen"],
+  ["Я проживаю в Берлине", "Ich wohne in Berlin"],
+  ["Я проживаю в Гамбурге", "Ich wohne in Hamburg"],
+  ["Я проживаю в Москве", "Ich wohne in Moskau"],
+  ["учить", "lernen"],
+  ["я учу немецкий", "Ich lerne Deutsch"],
+  ["Я учу английский", "Ich lerne Englisch"],
+  ["Я учу немецкий онлайн", "Ich lerne Deutsch online"],
+  ["Я учу английский онлайн", "Ich lerne Englisch online"],
+  ["Я учу английский и немецкий", "Ich lerne Englisch und Deutsch"],
+  ["Я учу немецкий и английский", "Ich lerne Deutsch und Englisch"],
+  ["нравиться", "mögen"],
+  ["Мне нравится", "Ich mag"],
+  ["Мне нравится немецкий", "Ich mag Deutsch"],
+  ["Мне нравится Германия", "Ich mag Deutschland"],
+  ["Мне нравится музыка", "Ich mag Musik"],
+  ["Мне нравится спорт", "Ich mag Sport"],
+  ["Мне нравится спорт и музыка", "Ich mag Sport und Musik"],
+  ["Мне нравиться музыка и спорт", "Ich mag Musik und Sport"]],
+    3: [["Мы", "Wir"],
+  ["Они", "Sie"],
+  ["здесь", "hier"],
+  ["слышать, слушать", "hören"],
+  ["кушать, есть", "essen"],
+  ["Рыба", "Fisch"],
+  ["пить", "trinken"],
+
+  ["Мы работаем", "Wir arbeiten"],
+  ["Они работают", "Sie arbeiten"],
+  ["Мы работаем здесь", "Wir arbeiten hier"],
+  ["Мы живем в Германии", "Wir leben in Deutschland"],
+  ["Они живут в России", "Sie leben in Russland"],
+  ["Мы проживаем в Берлине", "Wir wohnen in Berlin"],
+  ["Мы учим немецкий онлайн", "Wir lernen Deutsch online"],
+  ["Они учат английский и немецкий", "Sie lernen Englisch und Deutsch"],
+  ["Мы учим немецкий", "Wir lernen Deutsch"],
+
+  ["Мы слушаем музыку", "Wir hören Musik"],
+  ["Они слушают музыку", "Sie hören Musik"],
+
+  ["Мы едим пиццу", "Wir essen Pizza"],
+  ["Мы едим рыбу", "Wir essen Fisch"],
+  ["Мы пьем кофе", "Wir trinken Kaffee"],
+  ["Мы пьем чай", "Wir trinken Tee"]],
+    4: [ ["Идти", "gehen"],
+  ["гулять", "spazieren"],
+  ["сегодня", "heute"],
+  ["сейчас", "jetzt"],
+  ["иметь", "haben"],
+  ["Время", "Zeit"],
+  ["деньги", "Geld"],
+  ["понимать", "verstehen"],
+  ["это", "es"],
+  ["очень", "sehr"],
+  ["хорошо", "gut"],
+  ["делать, заниматься", "machen"],
+
+  ["Мы идем", "Wir gehen"],
+  ["Они идут", "Sie gehen"],
+  ["Я иду гулять", "Ich gehe spazieren"],
+  ["Мы идем гулять", "Wir gehen spazieren"],
+  ["Они идут гулять", "Sie gehen spazieren"],
+
+  ["работать", "arbeiten"],
+  ["Я сегодня работаю", "Ich arbeite heute"],
+  ["Мы сегодня работаем", "Wir arbeiten heute"],
+  ["Они сейчас работают", "Sie arbeiten jetzt"],
+
+  ["У меня есть время", "Ich habe Zeit"],
+  ["У меня есть деньги", "Ich habe Geld"],
+  ["У нас есть время", "Wir haben Zeit"],
+  ["У них есть деньги", "Sie haben Geld"],
+
+  ["Я понимаю", "Ich verstehe"],
+  ["Я понимаю это", "Ich verstehe es"],
+  ["Мы понимаем это очень хорошо", "Wir verstehen es sehr gut"],
+  ["Они понимают это", "Sie verstehen es"],
+
+  ["Мы занимаемся спортом", "Wir machen Sport"],
+  ["Они занимаются спортом", "Sie machen Sport"],
+  ["Я занимаюсь спортом", "Ich mache Sport"]]
+  };
+
+  let currentLesson = 1;
+  let quizPool = [];
+  let correctAnswer = "";
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.has("lesson")) currentLesson = parseInt(params.get("lesson"));
+
+  function renderLesson() {
+    const content = document.getElementById("lessonContent");
+    content.innerHTML = "";
+    const lesson = lessons[currentLesson] || [];
+    document.getElementById("lessonTitle").textContent = "Урок " + currentLesson;
+    lesson.forEach(pair => {
+      const div = document.createElement("div");
+      div.className = "phrase";
+      div.textContent = `${pair[0]} — ${pair[1]}`;
+      content.appendChild(div);
+    });
+  }
+
+  function goLesson(n) {
+    window.location.search = "?lesson=" + n;
+  }
+
+  function startQuiz() {
+    quizPool = [...lessons[currentLesson]];
+    document.getElementById("lessonContent").style.display = "none";
+    document.getElementById("startBtn").style.display = "none";
+    document.getElementById("quiz").style.display = "block";
+    nextQuestion();
+  }
+
+  function nextQuestion() {
+    if (quizPool.length === 0) {
+      document.getElementById("question").textContent = "🎉 Контрольная завершена!";
+      document.getElementById("answerInput").style.display = "none";
+      return;
+    }
+    const idx = Math.floor(Math.random() * quizPool.length);
+    const [q, a] = quizPool[idx];
+    quizPool.splice(idx, 1);
+
+    if (Math.random() < 0.5) {
+      document.getElementById("question").textContent = `Что значит: "${q}"?`;
+      correctAnswer = a.toLowerCase();
+    } else {
+      document.getElementById("question").textContent = `Как будет по-немецки: "${a}"?`;
+      correctAnswer = q.toLowerCase();
+    }
+    document.getElementById("answerInput").value = "";
+    document.getElementById("result").textContent = "";
+  }
+
+  function checkAnswer() {
+    const input = document.getElementById("answerInput").value.trim().toLowerCase();
+    const res = document.getElementById("result");
+    if (input === correctAnswer) {
+      res.textContent = "✅ Верно!";
+      setTimeout(nextQuestion, 1200);
+    } else {
+      res.textContent = "❌ Неправильно!";
+    }
+  }
+
+  function showAnswer() {
+    document.getElementById("answerInput").value = correctAnswer;
+    document.getElementById("result").textContent = "ℹ️ Ответ подставлен. Нажми 'Проверить'.";
+  }
+
+  function endQuiz() {
+    document.getElementById("lessonContent").style.display = "block";
+    document.getElementById("startBtn").style.display = "inline-block";
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("answerInput").style.display = "inline-block";
+  }
+
+  renderLesson();
+</script>
+</body>
+</html>
