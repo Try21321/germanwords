@@ -1,194 +1,398 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Урок 1 — Немецкий язык</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: linear-gradient(135deg, #2c3e50, #34495e);
-      color: #f8f9fa;
-      margin: 0;
-      padding: 20px;
-      text-align: center;
-    }
-    .card {
-      background: #3b3b58;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.6);
-      max-width: 700px;
-      margin: auto;
-    }
-    h1 {
-      color: #ffd166;
-      margin-bottom: 20px;
-      font-size: 28px;
-    }
-    .word-list {
-      text-align: left;
-      margin: 20px auto;
-      padding: 10px;
-      line-height: 1.7;
-      font-size: 18px;
-    }
-    button {
-      background: #6c5ce7;
-      color: #fff;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 10px;
-      margin: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: transform 0.2s;
-    }
-    button:hover {
-      transform: scale(1.05);
-      background: #7d6cf2;
-    }
-    #testBox {
-      display: none;
-      margin-top: 20px;
-    }
-    #question {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-    #answerInput {
-      width: 80%;
-      padding: 12px;
-      font-size: 18px;
-      border: none;
-      border-radius: 10px;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    #feedback {
-      margin-top: 10px;
-      font-size: 20px;
-      min-height: 24px;
-    }
-    #feedback.correct {
-      color: #06d6a0;
-      font-weight: bold;
-    }
-    #feedback.wrong {
-      color: #ef476f;
-      font-weight: bold;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Справочник по немецким глаголам — подробности и упражнения</title>
+<style>
+  :root{
+    --bg:#0f1720; --card:#0b1220; --panel:#0e1624;
+    --accent:#ffd166; --muted:#9aa4b2; --text:#e6eef6;
+    --success:#2ecc71; --danger:#ff6b6b;
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    background: linear-gradient(180deg,#081019 0%, #091223 100%); color:var(--text);
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    padding:18px;
+  }
+
+  .wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:280px 1fr;gap:18px;}
+  @media(max-width:900px){ .wrap{grid-template-columns:1fr; padding-bottom:40px} }
+
+  .sidebar{
+    background:linear-gradient(180deg,var(--card), #071018);
+    padding:12px;border-radius:var(--radius);box-shadow:0 8px 22px rgba(2,6,23,0.6);
+  }
+  .search{display:flex;gap:8px;margin-bottom:8px}
+  .search input{
+    flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);
+    background:transparent;color:var(--text);outline:none;font-size:14px;
+  }
+  .verb-list{max-height:72vh;overflow:auto;padding-right:8px}
+  .verb-item{padding:8px 10px;border-radius:8px;margin-bottom:6px;cursor:pointer;
+    background:transparent;border:1px solid transparent;font-weight:600}
+  .verb-item:hover{background:rgba(255,255,255,0.02)}
+  .verb-item.active{background:linear-gradient(90deg, rgba(255,209,102,0.06), rgba(255,209,102,0.02));border-color:rgba(255,209,102,0.12);color:var(--accent)}
+
+  .main{
+    background:linear-gradient(180deg,var(--panel), #071018);
+    padding:18px;border-radius:var(--radius);box-shadow:0 10px 26px rgba(2,6,23,0.65);
+  }
+  .hdr{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  .badge{background:var(--accent);color:#081018;padding:8px 12px;border-radius:10px;font-weight:700}
+  h1{margin:0;font-size:20px}
+  .meta{color:var(--muted);font-size:13px;margin-top:6px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media(max-width:700px){ .grid2{grid-template-columns:1fr} }
+
+  .card{background:#07101a;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+  .small{font-size:13px;color:var(--muted)}
+
+  table{width:100%;border-collapse:collapse}
+  td,th{padding:8px;border-bottom:1px dashed rgba(255,255,255,0.03);text-align:left}
+  th{color:var(--muted);font-weight:700;font-size:13px}
+
+  .examples{margin-top:12px}
+  .example{background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:10px;border-radius:8px;margin-bottom:8px;display:flex;gap:8px;align-items:center}
+  .example p{margin:0;flex:1}
+  .example input{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)}
+  .controls{display:flex;gap:8px;align-items:center;margin-top:8px}
+
+  button{background:var(--accent);color:#071018;border:0;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+  .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
+  .feedback{font-weight:700;margin-left:8px}
+  .ok{color:var(--success)} .bad{color:var(--danger)}
+
+  .hint{font-size:13px;color:var(--muted);margin-top:8px}
+  .footer{margin-top:18px;color:var(--muted);font-size:13px}
+</style>
 </head>
 <body>
-  <div class="card">
-    <h1>📘 Урок 1</h1>
-
-    <!-- Блок урока -->
-    <div id="lessonBox">
-      <div class="word-list">
-        <p><b>Привет</b> — Hallo</p>
-        <p><b>Я</b> — Ich</p>
-        <p><b>назвать, зовут</b> — heißen (ich heiße)</p>
-        <p><b>Меня зовут Алекс</b> — ich heiße Alex</p>
-        <p><b>приходить</b> — kommen</p>
-        <p><b>из</b> — aus</p>
-        <p><b>Я из Германии</b> — Ich komme aus Deutschland</p>
-        <p><b>Я из России</b> — Ich komme aus Russland</p>
-        <p><b>Я из Украины</b> — Ich komme aus der Ukraine</p>
-        <p><b>говорить</b> — sprechen</p>
-        <p><b>Я говорю по-немецки</b> — Ich spreche Deutsch</p>
-        <p><b>Я говорю по-английски</b> — Ich spreche Englisch</p>
-        <p><b>Я говорю по-английски и по-немецки</b> — Ich spreche Englisch und Deutsch</p>
-        <p><b>Я говорю по-немецки и по-английски</b> — Ich spreche Deutsch und Englisch</p>
-        <p><b>работать</b> — arbeiten</p>
-        <p><b>Я работаю</b> — Ich arbeite</p>
-        <p><b>учиться</b> — studieren</p>
-        <p><b>Я учусь</b> — Ich studiere</p>
-        <p><b>Я работаю и учусь</b> — Ich arbeite und studiere</p>
-        <p><b>Я учусь и работаю</b> — Ich studiere und arbeite</p>
+  <div class="wrap">
+    <aside class="sidebar">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div style="font-weight:800">Глаголы</div>
+        <div class="small">Учебный справочник</div>
       </div>
-      <button onclick="startTest()">Контрольная работа</button>
-    </div>
 
-    <!-- Блок теста -->
-    <div id="testBox">
-      <div id="question">...</div>
-      <input type="text" id="answerInput" placeholder="Введите перевод">
-      <br>
-      <button onclick="checkAnswer()">Проверить</button>
-      <button onclick="showAnswer()">Показать ответ</button>
-      <button onclick="backToLesson()">Назад к уроку</button>
-      <div id="feedback"></div>
-    </div>
+      <div class="search">
+        <input id="searchInput" placeholder="Поиск: z.B. machen, sehen..." oninput="renderList()" />
+        <button class="btn-ghost" onclick="resetSearch()">Сброс</button>
+      </div>
+
+      <div id="list" class="verb-list"></div>
+      <div class="hint">Кликните на глагол, чтобы увидеть формы, спряжение и упражнения.</div>
+    </aside>
+
+    <main class="main">
+      <div class="hdr">
+        <div class="badge" id="badge">INF</div>
+        <div>
+          <h1 id="title">Выберите глагол слева</h1>
+          <div class="meta" id="meta">Инфинитив — перевод • тип</div>
+        </div>
+      </div>
+
+      <div class="grid2" id="infoGrid">
+        <div class="card" id="formsCard">
+          <h3 style="margin:0 0 8px 0">Формы (основные)</h3>
+          <div class="small">Infinitiv • Präteritum • Partizip II</div>
+          <div style="margin-top:10px;font-weight:800" id="infForm">—</div>
+          <div style="margin-top:8px" id="praeteritum">—</div>
+          <div style="margin-top:8px" id="p2">—</div>
+        </div>
+
+        <div class="card" id="conjCard">
+          <h3 style="margin:0 0 8px 0">Спряжение (Präsens)</h3>
+          <table>
+            <thead><tr><th>Лицо</th><th>Форма</th></tr></thead>
+            <tbody id="conjTable">
+              <tr><td>ich</td><td>—</td></tr>
+              <tr><td>du</td><td>—</td></tr>
+              <tr><td>er/sie/es</td><td>—</td></tr>
+              <tr><td>wir</td><td>—</td></tr>
+              <tr><td>ihr</td><td>—</td></tr>
+              <tr><td>sie/Sie</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card examples" id="examplesCard" style="margin-top:14px">
+        <h3 style="margin:0 0 8px 0">Упражнения — заполните пропуски</h3>
+        <div id="examplesList">
+          <div class="small">Выберите глагол в левом списке, чтобы начать.</div>
+        </div>
+
+        <div class="controls" style="margin-top:10px">
+          <button id="nextExampleBtn" onclick="nextExample()" class="btn-ghost">Следующий пример</button>
+          <button onclick="showAnswer()" class="btn-ghost">Показать ответ</button>
+          <button id="checkAllBtn" onclick="checkAll()" class="btn-ghost">Проверить все</button>
+          <div id="multiFeedback" class="feedback"></div>
+        </div>
+      </div>
+
+      <div class="footer">Шаблон можно расширять — добавляй глаголы в массив <code>VERBS</code> внутри скрипта.</div>
+    </main>
   </div>
 
-  <script>
-    const phrases = [
-      ["Привет", "Hallo"],
-      ["Я", "Ich"],
-      ["назвать, зовут", "heißen (ich heiße)"],
-      ["Меня зовут Алекс", "ich heiße Alex"],
-      ["приходить", "kommen"],
-      ["из", "aus"],
-      ["Я из Германии", "Ich komme aus Deutschland"],
-      ["Я из России", "Ich komme aus Russland"],
-      ["Я из Украины", "Ich komme aus der Ukraine"],
-      ["говорить", "sprechen"],
-      ["Я говорю по-немецки", "Ich spreche Deutsch"],
-      ["Я говорю по-английски", "Ich spreche Englisch"],
-      ["Я говорю по-английски и по-немецки", "Ich spreche Englisch und Deutsch"],
-      ["Я говорю по-немецки и по-английски", "Ich spreche Deutsch und Englisch"],
-      ["работать", "arbeiten"],
-      ["Я работаю", "Ich arbeite"],
-      ["учиться", "studieren"],
-      ["Я учусь", "Ich studiere"],
-      ["Я работаю и учусь", "Ich arbeite und studiere"],
-      ["Я учусь и работаю", "Ich studiere und arbeite"]
-    ];
+<script>
+/*
+  Примеры структуры для каждого глагола. Добавляй сюда новые элементы.
+  Поля:
+   - inf: инфинитив (str)
+   - translation: перевод (str)
+   - type: "сильный" / "слабый" / "смешанный" / "модальный"
+   - praeteritum: Präteritum (str)
+   - partizip2: Partizip II (str)
+   - conjugation: объект {ich, du, er, wir, ihr, sie}
+   - examples: массив объектов {text: "Ich _ gern.", answer: "spiele"} — '_' место для ввода
+*/
+const VERBS = [
+  {
+    inf:"machen", translation:"делать, заниматься", type:"слабый",
+    praeteritum:"machte", partizip2:"gemacht",
+    conjugation:{ich:"mache", du:"machst", er:"macht", wir:"machen", ihr:"macht", sie:"machen"},
+    examples:[
+      {text:"Ich _ Sport.", answer:"mache"},
+      {text:"Was _ du heute?", answer:"machst"},
+      {text:"Wir _ es morgen.", answer:"machen"}
+    ]
+  },
+  {
+    inf:"gehen", translation:"идти", type:"сильный",
+    praeteritum:"ging", partizip2:"gegangen",
+    conjugation:{ich:"gehe", du:"gehst", er:"geht", wir:"gehen", ihr:"geht", sie:"gehen"},
+    examples:[
+      {text:"Ich _ spazieren.", answer:"gehe"},
+      {text:"Wir _ nach Hause.", answer:"gehen"},
+      {text:"Sie _ schnell.", answer:"gehen"}
+    ]
+  },
+  {
+    inf:"sehen", translation:"видеть", type:"сильный",
+    praeteritum:"sah", partizip2:"gesehen",
+    conjugation:{ich:"sehe", du:"siehst", er:"sieht", wir:"sehen", ihr:"seht", sie:"sehen"},
+    examples:[
+      {text:"Ich _ den Film.", answer:"sehe"},
+      {text:"Was _ du dort?", answer:"siehst"},
+      {text:"Wir _ den Hund.", answer:"sehen"}
+    ]
+  },
+  {
+    inf:"können", translation:"мочь, уметь (модальный)", type:"модальный",
+    praeteritum:"konnte", partizip2:"gekonnt",
+    conjugation:{ich:"kann", du:"kannst", er:"kann", wir:"können", ihr:"könnt", sie:"können"},
+    examples:[
+      {text:"Ich _ schwimmen.", answer:"kann"},
+      {text:"Du _ schnell lesen.", answer:"kannst"},
+      {text:"Wir _ Deutsch sprechen.", answer:"können"}
+    ]
+  },
+  {
+    inf:"haben", translation:"иметь", type:"слабый/вспомогательный",
+    praeteritum:"hatte", partizip2:"gehabt",
+    conjugation:{ich:"habe", du:"hast", er:"hat", wir:"haben", ihr:"habt", sie:"haben"},
+    examples:[
+      {text:"Ich _ Zeit.", answer:"habe"},
+      {text:"Hast du ein Buch? — Ja, ich _ ein Buch.", answer:"habe"},
+      {text:"Wir _ drei Kinder.", answer:"haben"}
+    ]
+  }
+];
 
-    let currentPair = null;
+// --- глобальные переменные ---
+let selected = null;
+let filtered = VERBS.slice();
+let currentExampleIndex = 0;
 
-    function startTest() {
-      document.getElementById("lessonBox").style.display = "none";
-      document.getElementById("testBox").style.display = "block";
-      nextQuestion();
+// --- UI селекторы ---
+const listEl = document.getElementById('list');
+const titleEl = document.getElementById('title');
+const metaEl = document.getElementById('meta');
+const badgeEl = document.getElementById('badge');
+const infFormEl = document.getElementById('infForm');
+const praetEl = document.getElementById('praeteritum');
+const p2El = document.getElementById('p2');
+const conjTable = document.getElementById('conjTable');
+const examplesList = document.getElementById('examplesList');
+const nextBtn = document.getElementById('nextExampleBtn');
+const checkAllBtn = document.getElementById('checkAllBtn');
+const multiFeedback = document.getElementById('multiFeedback');
+
+function renderList(){
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  filtered = VERBS.filter(v => v.inf.includes(q) || v.translation.toLowerCase().includes(q));
+  listEl.innerHTML = '';
+  filtered.forEach(v => {
+    const btn = document.createElement('div');
+    btn.className = 'verb-item';
+    btn.textContent = v.inf + " — " + v.translation;
+    btn.onclick = ()=> selectVerb(v);
+    if (selected && selected.inf === v.inf) btn.classList.add('active');
+    listEl.appendChild(btn);
+  });
+  if(filtered.length===0) listEl.innerHTML = '<div class="small" style="color:var(--muted)">Ничего не найдено</div>';
+}
+
+function resetSearch(){ document.getElementById('searchInput').value=''; renderList(); }
+
+function selectVerb(v){
+  selected = v;
+  currentExampleIndex = 0;
+  // highlight
+  [...listEl.children].forEach(ch => ch.classList.toggle('active', ch.textContent.startsWith(v.inf)));
+  // header
+  titleEl.textContent = v.inf + " — " + v.translation;
+  metaEl.textContent = `${v.inf} • ${v.translation} • тип: ${v.type}`;
+  badgeEl.textContent = v.inf.slice(0,3).toUpperCase();
+
+  infFormEl.textContent = `Infinitiv: ${v.inf}`;
+  praetEl.textContent = `Präteritum: ${v.praeteritum}`;
+  p2El.textContent = `Partizip II: ${v.partizip2}`;
+
+  // conj table
+  conjTable.innerHTML = `
+    <tr><td>ich</td><td>${v.conjugation.ich}</td></tr>
+    <tr><td>du</td><td>${v.conjugation.du}</td></tr>
+    <tr><td>er/sie/es</td><td>${v.conjugation.er}</td></tr>
+    <tr><td>wir</td><td>${v.conjugation.wir}</td></tr>
+    <tr><td>ihr</td><td>${v.conjugation.ihr}</td></tr>
+    <tr><td>sie/Sie</td><td>${v.conjugation.sie}</td></tr>
+  `;
+
+  renderExamples();
+}
+
+function renderExamples(){
+  examplesList.innerHTML = '';
+  if(!selected){
+    examplesList.innerHTML = '<div class="small">Выберите глагол слева.</div>';
+    return;
+  }
+  // покажем все примеры с полями ввода (пользователь может проверить все)
+  selected.examples.forEach((ex, idx) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'example';
+    const p = document.createElement('p');
+    const parts = ex.text.split('_');
+    // build text with input in middle
+    if(parts.length===1){
+      p.textContent = ex.text;
+      const inp = document.createElement('input');
+      inp.value = '';
+      inp.dataset.idx = idx;
+      wrap.appendChild(p);
+      wrap.appendChild(inp);
+    } else {
+      p.innerHTML = '';
+      p.append(document.createTextNode(parts[0]));
+      const inp = document.createElement('input');
+      inp.placeholder = '…ответ…';
+      inp.dataset.idx = idx;
+      // add remaining text
+      const tail = document.createTextNode(parts.slice(1).join('_'));
+      wrap.appendChild(p);
+      wrap.appendChild(inp);
+      wrap.appendChild(tail);
     }
+    // feedback span
+    const fb = document.createElement('div');
+    fb.className = 'feedback';
+    fb.style.minWidth='80px';
+    fb.id = `fb-${idx}`;
+    wrap.appendChild(fb);
 
-    function nextQuestion() {
-      const pair = phrases[Math.floor(Math.random() * phrases.length)];
-      currentPair = Math.random() < 0.5 ? [pair[0], pair[1]] : [pair[1], pair[0]];
-      document.getElementById("question").textContent = `Переведите: "${currentPair[0]}"`;
-      document.getElementById("answerInput").value = "";
-      document.getElementById("feedback").textContent = "";
+    examplesList.appendChild(wrap);
+  });
+
+  // show first example in focus
+  scrollToExample(0);
+  multiFeedback.textContent = '';
+}
+
+function scrollToExample(i){
+  const inputs = examplesList.querySelectorAll('input');
+  if(inputs[i]) {
+    inputs[i].focus();
+  }
+  currentExampleIndex = i;
+}
+
+// next example: focus next input
+function nextExample(){
+  if(!selected) return;
+  const inputs = examplesList.querySelectorAll('input');
+  const next = Math.min(inputs.length-1, currentExampleIndex+1);
+  scrollToExample(next);
+}
+
+// show correct answer for focused input(s)
+function showAnswer(){
+  if(!selected) return;
+  const inputs = examplesList.querySelectorAll('input');
+  inputs.forEach(inp=>{
+    const idx = parseInt(inp.dataset.idx,10);
+    const ans = selected.examples[idx].answer;
+    inp.value = ans;
+    const fb = document.getElementById(`fb-${idx}`);
+    fb.textContent = 'Ответ показан';
+    fb.className = 'feedback ok';
+  });
+}
+
+// check one input by index
+function checkInputIdx(idx){
+  const inp = examplesList.querySelector(`input[data-idx="${idx}"]`);
+  if(!inp) return false;
+  const user = inp.value.trim().toLowerCase();
+  const correct = selected.examples[idx].answer.trim().toLowerCase();
+  const fb = document.getElementById(`fb-${idx}`);
+  if(user === correct){
+    fb.textContent = '✅ Верно';
+    fb.className = 'feedback ok';
+    return true;
+  } else {
+    fb.textContent = `❌ ${selected.examples[idx].answer}`;
+    fb.className = 'feedback bad';
+    return false;
+  }
+}
+
+// check all examples
+function checkAll(){
+  if(!selected) return;
+  let okCount = 0;
+  selected.examples.forEach((ex, idx) => { if(checkInputIdx(idx)) okCount++; });
+  multiFeedback.textContent = `Правильно ${okCount}/${selected.examples.length}`;
+  multiFeedback.className = 'feedback ' + (okCount===selected.examples.length ? 'ok' : 'bad');
+}
+
+// клавиша Enter — проверять текущ input
+document.addEventListener('keydown', (e)=>{
+  if(e.key==='Enter'){
+    const active = document.activeElement;
+    if(active && active.tagName==='INPUT' && active.dataset.idx){
+      const idx = parseInt(active.dataset.idx,10);
+      checkInputIdx(idx);
+      // перейти к следующему
+      nextExample();
     }
+  }
+});
 
-    function checkAnswer() {
-      const input = document.getElementById("answerInput").value.trim().toLowerCase();
-      const correct = currentPair[1].toLowerCase();
-      const feedback = document.getElementById("feedback");
+// init
+renderList();
 
-      if (input === correct) {
-        feedback.textContent = "✅ Верно!";
-        feedback.className = "correct";
-        setTimeout(nextQuestion, 1500);
-      } else {
-        feedback.textContent = "❌ Неправильно, попробуй ещё.";
-        feedback.className = "wrong";
-      }
-    }
+// -- helper: add new verb function (для расширения) --
+function addVerb(v){ VERBS.push(v); renderList(); }
 
-    function showAnswer() {
-      const feedback = document.getElementById("feedback");
-      feedback.textContent = `ℹ️ Правильный ответ: ${currentPair[1]}`;
-      feedback.className = "";
-      setTimeout(nextQuestion, 2000);
-    }
-
-    function backToLesson() {
-      document.getElementById("lessonBox").style.display = "block";
-      document.getElementById("testBox").style.display = "none";
-    }
-  </script>
+// Пример: можно динамически добавить кнопку перехода на твой канал
+// const menu = document.querySelector('.sidebar'); // не использовано, но можешь вставить кнопку.
+</script>
 </body>
 </html>
