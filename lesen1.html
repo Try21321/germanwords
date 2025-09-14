@@ -202,13 +202,216 @@ const VERBS = [
       {text:"Hast du ein Buch? — Ja, ich _ ein Buch.", answer:"habe"},
       {text:"Wir _ drei Kinder.", answer:"haben"}
     ]
-  }
+  },
+  {
+  inf:"sein", translation:"быть", type:"сильный/вспомогательный",
+  praeteritum:"war", partizip2:"gewesen",
+  conjugation:{ich:"bin", du:"bist", er:"ist", wir:"sind", ihr:"seid", sie:"sind"},
+  examples:[
+    {text:"Ich _ müde.", answer:"bin"},
+    {text:"Er _ gestern krank.", answer:"war"},
+    {text:"Wir _ glücklich.", answer:"sind"}
+  ]
+},
+{
+  inf:"kommen", translation:"приходить", type:"сильный",
+  praeteritum:"kam", partizip2:"gekommen",
+  conjugation:{ich:"komme", du:"kommst", er:"kommt", wir:"kommen", ihr:"kommt", sie:"kommen"},
+  examples:[
+    {text:"Wann _ du?", answer:"kommst"},
+    {text:"Er _ spät.", answer:"kam"},
+    {text:"Wir _ nach Hause.", answer:"kommen"}
+  ]
+},
+{
+  inf:"sprechen", translation:"говорить", type:"сильный",
+  praeteritum:"sprach", partizip2:"gesprochen",
+  conjugation:{ich:"spreche", du:"sprichst", er:"spricht", wir:"sprechen", ihr:"sprecht", sie:"sprechen"},
+  examples:[
+    {text:"Ich _ Deutsch.", answer:"spreche"},
+    {text:"Er _ laut.", answer:"spricht"},
+    {text:"Wir _ über das Wetter.", answer:"sprechen"}
+  ]
+},
+{
+  inf:"nehmen", translation:"брать", type:"сильный",
+  praeteritum:"nahm", partizip2:"genommen",
+  conjugation:{ich:"nehme", du:"nimmst", er:"nimmt", wir:"nehmen", ihr:"nehmt", sie:"nehmen"},
+  examples:[
+    {text:"Ich _ einen Kaffee.", answer:"nehme"},
+    {text:"Er _ das Buch.", answer:"nahm"},
+    {text:"Wir _ die Tasche.", answer:"nehmen"}
+  ]
+},
+{
+  inf:"geben", translation:"давать", type:"сильный",
+  praeteritum:"gab", partizip2:"gegeben",
+  conjugation:{ich:"gebe", du:"gibst", er:"gibt", wir:"geben", ihr:"gebt", sie:"geben"},
+  examples:[
+    {text:"Er _ mir ein Geschenk.", answer:"gibt"},
+    {text:"Sie _ ihm das Buch.", answer:"gab"},
+    {text:"Wir _ dir Geld.", answer:"geben"}
+  ]
+},
+{
+  inf:"wissen", translation:"знать", type:"смешанный",
+  praeteritum:"wusste", partizip2:"gewusst",
+  conjugation:{ich:"weiß", du:"weißt", er:"weiß", wir:"wissen", ihr:"wisst", sie:"wissen"},
+  examples:[
+    {text:"Ich _ die Antwort.", answer:"weiß"},
+    {text:"Wir _ das gestern nicht.", answer:"wussten"},
+    {text:"Du _ es gut.", answer:"weißt"}
+  ]
+},
+{
+  inf:"essen", translation:"есть, кушать", type:"сильный",
+  praeteritum:"aß", partizip2:"gegessen",
+  conjugation:{ich:"esse", du:"isst", er:"isst", wir:"essen", ihr:"esst", sie:"essen"},
+  examples:[
+    {text:"Ich _ einen Apfel.", answer:"esse"},
+    {text:"Er _ Pizza.", answer:"isst"},
+    {text:"Wir _ zusammen.", answer:"essen"}
+  ]
+},
+{
+  inf:"trinken", translation:"пить", type:"сильный",
+  praeteritum:"trank", partizip2:"getrunken",
+  conjugation:{ich:"trinke", du:"trinkst", er:"trinkt", wir:"trinken", ihr:"trinkt", sie:"trinken"},
+  examples:[
+    {text:"Ich _ Wasser.", answer:"trinke"},
+    {text:"Er _ gestern Bier.", answer:"trank"},
+    {text:"Wir _ Kaffee.", answer:"trinken"}
+  ]
+},
+{
+  inf:"schreiben", translation:"писать", type:"сильный",
+  praeteritum:"schrieb", partizip2:"geschrieben",
+  conjugation:{ich:"schreibe", du:"schreibst", er:"schreibt", wir:"schreiben", ihr:"schreibt", sie:"schreiben"},
+  examples:[
+    {text:"Ich _ einen Brief.", answer:"schreibe"},
+    {text:"Sie _ eine E-Mail.", answer:"schreibt"},
+    {text:"Er _ gestern einen Text.", answer:"schrieb"}
+  ]
+},
+{
+  inf:"lesen", translation:"читать", type:"сильный",
+  praeteritum:"las", partizip2:"gelesen",
+  conjugation:{ich:"lese", du:"liest", er:"liest", wir:"lesen", ihr:"lest", sie:"lesen"},
+  examples:[
+    {text:"Ich _ ein Buch.", answer:"lese"},
+    {text:"Er _ die Zeitung.", answer:"liest"},
+    {text:"Wir _ oft.", answer:"lesen"}
+  ]
+},
+{
+  inf:"wollen", translation:"хотеть", type:"модальный",
+  praeteritum:"wollte", partizip2:"gewollt",
+  conjugation:{ich:"will", du:"willst", er:"will", wir:"wollen", ihr:"wollt", sie:"wollen"},
+  examples:[
+    {text:"Ich _ schlafen.", answer:"will"},
+    {text:"Er _ gestern nicht kommen.", answer:"wollte"},
+    {text:"Wir _ Pizza essen.", answer:"wollen"}
+  ]
+},
+{
+  inf:"müssen", translation:"должен, нужно", type:"модальный",
+  praeteritum:"musste", partizip2:"gemusst",
+  conjugation:{ich:"muss", du:"musst", er:"muss", wir:"müssen", ihr:"müsst", sie:"müssen"},
+  examples:[
+    {text:"Ich _ arbeiten.", answer:"muss"},
+    {text:"Wir _ gestern früh aufstehen.", answer:"mussten"},
+    {text:"Du _ das lernen.", answer:"musst"}
+  ]
+},
+{
+  inf:"dürfen", translation:"иметь разрешение", type:"модальный",
+  praeteritum:"durfte", partizip2:"gedurft",
+  conjugation:{ich:"darf", du:"darfst", er:"darf", wir:"dürfen", ihr:"dürft", sie:"dürfen"},
+  examples:[
+    {text:"Ich _ hier rauchen.", answer:"darf"},
+    {text:"Er _ gestern nicht spielen.", answer:"durfte"},
+    {text:"Wir _ ins Kino gehen.", answer:"dürfen"}
+  ]
+},
+{
+  inf:"sollen", translation:"следует", type:"модальный",
+  praeteritum:"sollte", partizip2:"gesollt",
+  conjugation:{ich:"soll", du:"sollst", er:"soll", wir:"sollen", ihr:"sollt", sie:"sollen"},
+  examples:[
+    {text:"Ich _ mehr lernen.", answer:"soll"},
+    {text:"Er _ das gestern machen.", answer:"sollte"},
+    {text:"Wir _ helfen.", answer:"sollen"}
+  ]
+},
+{
+  inf:"spielen", translation:"играть", type:"слабый",
+  praeteritum:"spielte", partizip2:"gespielt",
+  conjugation:{ich:"spiele", du:"spielst", er:"spielt", wir:"spielen", ihr:"spielt", sie:"spielen"},
+  examples:[
+    {text:"Ich _ Fußball.", answer:"spiele"},
+    {text:"Wir _ gestern Karten.", answer:"spielten"},
+    {text:"Er _ Gitarre.", answer:"spielt"}
+  ]
+},
+{
+  inf:"arbeiten", translation:"работать", type:"слабый",
+  praeteritum:"arbeitete", partizip2:"gearbeitet",
+  conjugation:{ich:"arbeite", du:"arbeitest", er:"arbeitet", wir:"arbeiten", ihr:"arbeitet", sie:"arbeiten"},
+  examples:[
+    {text:"Ich _ viel.", answer:"arbeite"},
+    {text:"Sie _ gestern im Büro.", answer:"arbeitete"},
+    {text:"Wir _ zusammen.", answer:"arbeiten"}
+  ]
+},
+{
+  inf:"finden", translation:"находить", type:"сильный",
+  praeteritum:"fand", partizip2:"gefunden",
+  conjugation:{ich:"finde", du:"findest", er:"findet", wir:"finden", ihr:"findet", sie:"finden"},
+  examples:[
+    {text:"Ich _ die Idee gut.", answer:"finde"},
+    {text:"Er _ gestern Geld.", answer:"fand"},
+    {text:"Wir _ den Weg.", answer:"finden"}
+  ]
+},
+{
+  inf:"laufen", translation:"бегать, ходить", type:"сильный",
+  praeteritum:"lief", partizip2:"gelaufen",
+  conjugation:{ich:"laufe", du:"läufst", er:"läuft", wir:"laufen", ihr:"lauft", sie:"laufen"},
+  examples:[
+    {text:"Ich _ jeden Morgen.", answer:"laufe"},
+    {text:"Er _ gestern schnell.", answer:"lief"},
+    {text:"Wir _ zusammen.", answer:"laufen"}
+  ]
+},
+{
+  inf:"bleiben", translation:"оставаться", type:"сильный",
+  praeteritum:"blieb", partizip2:"geblieben",
+  conjugation:{ich:"bleibe", du:"bleibst", er:"bleibt", wir:"bleiben", ihr:"bleibt", sie:"bleiben"},
+  examples:[
+    {text:"Ich _ zu Hause.", answer:"bleibe"},
+    {text:"Er _ gestern im Bett.", answer:"blieb"},
+    {text:"Wir _ hier.", answer:"bleiben"}
+  ]
+},
+{
+  inf:"fahren", translation:"ехать, водить", type:"сильный",
+  praeteritum:"fuhr", partizip2:"gefahren",
+  conjugation:{ich:"fahre", du:"fährst", er:"fährt", wir:"fahren", ihr:"fahrt", sie:"fahren"},
+  examples:[
+    {text:"Ich _ mit dem Bus.", answer:"fahre"},
+    {text:"Er _ gestern nach Berlin.", answer:"fuhr"},
+    {text:"Wir _ zusammen.", answer:"fahren"}
+  ]
+}
+
+
 ];
 
 // --- глобальные переменные ---
 let selected = null;
 let filtered = VERBS.slice();
 let currentExampleIndex = 0;
+
 
 // --- UI селекторы ---
 const listEl = document.getElementById('list');
@@ -311,7 +514,7 @@ function renderExamples(){
   });
 
   // show first example in focus
-  scrollToExample(0);
+  //scrollToExample(0);
   multiFeedback.textContent = '';
 }
 
