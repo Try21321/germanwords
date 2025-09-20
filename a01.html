@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Урок немецкого</title>
+  <style>
+   body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  color: #f8f9fa;
+  margin: 0;
+  padding: 20px;
+  /* убираем фиксированную высоту и выравнивание по центру */
+}
+   .card {
+  background: #3b3b58;
+  padding: 20px;
+
+  border-radius: 20px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.6);
+  width: 600px;
+  max-width: 95%;
+  margin: 0 auto;
+}
+    h1 {
+      color: #ffd166;
+      margin-bottom: 20px;
+      font-size: 26px;
+    }
+    .phrase { margin: 6px 0; font-size: 20px; }
+    button {
+      background: #6c5ce7;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: transform 0.2s;
+    }
+    button:hover { transform: scale(1.05); background: #7d6cf2; }
+    #quiz { display: none; margin-top: 20px; }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      text-align: center;
+    }
+    .result { margin-top: 10px; min-height: 24px; font-size: 18px; }
+    #menu {
+  position: sticky; /* фиксируем меню сверху карточки */
+  top: 0;
+  background: #3b3b58;
+  padding: 10px 0;
+  z-index: 10;
+}
+  </style>
+</head>
+<body>
+ <!-- ... твой lesson.html ... -->
+
+<div class="card">
+  <!-- Меню -->
+  <div id="menu">
+    <button onclick="goLesson(1)">Урок 1</button>
+    <button onclick="goLesson(2)">Урок 2</button>
+    <button onclick="goLesson(3)">Урок 3</button>
+    <button onclick="goLesson(4)">Урок 4</button>
+    <button onclick="goLesson(5)">Урок 5(закрепление) </button>
+    <button onclick="goLesson(6)">Урок 6</button>
+    <button onclick="goLesson(7)">Урок 7</button>
+    <button onclick="goLesson(8)">Урок 8</button>
+    <button onclick="goLesson(9)">Урок 9</button>
+    <button onclick="goLesson(10)">Урок 10</button>
+    <button onclick="goLesson(11)">Урок 11</button>
+    <button onclick="goLesson(12)">Урок 12</button>
+    <button onclick="goLesson(13)">Урок 13</button>
+    <button onclick="goLesson(14)">Урок 14</button>
+    <button onclick="goLesson(15)">Урок 15</button>
+    <button onclick="goLesson(16)">Урок 16</button>
+    <button onclick="goLesson(17)">Урок 17</button>
+    <button onclick="goLesson(18)">Урок 18</button>
+    <hr style="margin:10px 0; border: 1px solid #555;">
+  <button onclick="window.open('https://t.me/deutschland_learn', '_blank')">📢 Наш Telegram канал</button>
+
+  </div>
+  <br><br>
+
+  <h1 id="lessonTitle">Урок</h1>
+
+  <!-- слова урока -->
+  <div id="lessonContent"></div>
+
+  <!-- кнопка запуска -->
+  <button id="startBtn" onclick="startQuiz()">Контрольная работа</button>
+
+  <!-- блок с тестом -->
+  <div id="quiz" style="display:none; ">
+    <div id="question"></div>
+    <input type="text" id="answerInput" placeholder="Введите перевод">
+    <br>
+    <button onclick="checkAnswer()">Проверить</button>
+    <button onclick="showAnswer()">Показать ответ</button>
+    <div id="result" class="result"></div>
+    <br>
+    <button onclick="endQuiz()">Закончить контрольную</button>
+  </div>
+</div>
+
+<script>
+  const lessons = {
+    1: {
+  words: [
+    ["Это мой мужской средний женский", "Das ist mein(m n) meine(f)"],
+    ["Это мой отец", "Das ist mein Vater m"],
+    ["Это моя машина", "Das ist mein Auto n"],
+    ["Это мой дом", "Das ist mein Haus n"],
+    ["Это моя комната", "Das ist mein Zimmer n"],
+    ["Это моя собака", "Das ist mein Hund m"],
+    ["Это мой брат", "Das ist mein Bruder m"],
+    ["Это мой друг", "Das ist mein Freund m"],
+    ["Это моя книга", "Das ist mein Buch n"],
+    ["Это мой билет", "Das ist mein Ticket n"],
+    ["Это мой компьютер", "Das ist mein Computer m"],
+    ["Это моя семья", "Das ist meine Familie f"],
+    ["Это моя идея", "Das ist meine Idee f"],
+    ["Это моя мать", "Das ist meine Mutter f"],
+    ["Это моя сестра", "Das ist meine Schwester f"],
+    ["Это моя кошка", "Das ist meine Katze f"],
+    ["Это моя квартира", "Das ist meine Wohnung f"],
+    ["Это моя подруга", "Das ist meine Freundin f"]
+  ],
+  youtube: "https://youtu.be/V9_BDPlOegg"
+}
+
+
+
+  };
+
+
+  let currentLesson = 1;
+  let quizPool = [];
+  let correctAnswer = "";
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.has("lesson")) currentLesson = parseInt(params.get("lesson"));
+
+  function renderLesson() {
+    const content = document.getElementById("lessonContent");
+    content.innerHTML = "";
+    const lesson = lessons[currentLesson] || { words: [] };
+    document.getElementById("lessonTitle").textContent = "Урок " + currentLesson;
+
+    lesson.words.forEach(pair => {
+      const div = document.createElement("div");
+      div.className = "phrase";
+      div.textContent = `${pair[0]} — ${pair[1]}`;
+      content.appendChild(div);
+    });
+
+    // Добавляем кнопку YouTube
+    if (lesson.youtube) {
+      const ytBtn = document.createElement("button");
+      ytBtn.textContent = "▶ Смотреть на YouTube";
+      ytBtn.onclick = () => window.open(lesson.youtube, "_blank");
+      content.appendChild(document.createElement("br"));
+      content.appendChild(ytBtn);
+    }
+  }
+
+  function goLesson(n) {
+    window.location.search = "?lesson=" + n;
+  }
+
+  function startQuiz() {
+    quizPool = [...(lessons[currentLesson]?.words || [])];
+    document.getElementById("lessonContent").style.display = "none";
+    document.getElementById("startBtn").style.display = "none";
+    document.getElementById("quiz").style.display = "block";
+    nextQuestion();
+  }
+
+  function nextQuestion() {
+    if (quizPool.length === 0) {
+      document.getElementById("question").textContent = "🎉 Контрольная завершена!";
+      document.getElementById("answerInput").style.display = "none";
+      return;
+    }
+    const idx = Math.floor(Math.random() * quizPool.length);
+    const [q, a] = quizPool[idx];
+    quizPool.splice(idx, 1);
+
+    if (Math.random() < 0.5) {
+      document.getElementById("question").textContent = `Что значит: "${q}"?`;
+      correctAnswer = a.toLowerCase();
+    } else {
+      document.getElementById("question").textContent = `Как будет по-немецки: "${a}"?`;
+      correctAnswer = q.toLowerCase();
+    }
+    document.getElementById("answerInput").value = "";
+    document.getElementById("result").textContent = "";
+  }
+
+  function checkAnswer() {
+    const input = document.getElementById("answerInput").value.trim().toLowerCase();
+    const res = document.getElementById("result");
+    if (input === correctAnswer) {
+      res.textContent = "✅ Верно!";
+      setTimeout(nextQuestion, 1200);
+    } else {
+      res.textContent = "❌ Неправильно!";
+    }
+  }
+
+  function showAnswer() {
+    document.getElementById("answerInput").value = correctAnswer;
+    document.getElementById("result").textContent = "ℹ️ Ответ подставлен. Нажми 'Проверить'.";
+  }
+
+  function endQuiz() {
+    document.getElementById("lessonContent").style.display = "block";
+    document.getElementById("startBtn").style.display = "inline-block";
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("answerInput").style.display = "inline-block";
+  }
+
+  renderLesson();
+</script>
+</body>
+</html>
