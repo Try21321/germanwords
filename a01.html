@@ -255,7 +255,7 @@
     ["В свое свободное время мне нравится гулять или встречаться с друзьями", "In meiner Freizeit gehe ich gern spazieren oder treffe mich mit Freunden"],
     ["В свое свободное время мне нравится смотреть фильмы или сериалы", "In meiner Freizeit schaue ich gern Filme oder Serien"]
   ],
-  youtube: "https://youtu.be/V9_BDPlOegg"
+  youtube: "https://youtu.be/ErNZO1W_aQY"
 }
 
 
@@ -264,13 +264,18 @@
 
   };
 
-
-  let currentLesson = 1;
+ let currentLesson = 1;
   let quizPool = [];
   let correctAnswer = "";
 
   const params = new URLSearchParams(window.location.search);
   if (params.has("lesson")) currentLesson = parseInt(params.get("lesson"));
+
+  function speak(text, lang = "de-DE") {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang;
+    speechSynthesis.speak(utterance);
+  }
 
   function renderLesson() {
     const content = document.getElementById("lessonContent");
@@ -281,11 +286,20 @@
     lesson.words.forEach(pair => {
       const div = document.createElement("div");
       div.className = "phrase";
-      div.textContent = `${pair[0]} — ${pair[1]}`;
+
+      const span = document.createElement("span");
+      span.textContent = `${pair[0]} — ${pair[1]}`;
+      div.appendChild(span);
+
+      // кнопка озвучки немецкого
+      const btnDe = document.createElement("button");
+      btnDe.textContent = "🔊";
+      btnDe.onclick = () => speak(pair[1], "de-DE");
+      div.appendChild(btnDe);
+
       content.appendChild(div);
     });
 
-    // Добавляем кнопку YouTube
     if (lesson.youtube) {
       const ytBtn = document.createElement("button");
       ytBtn.textContent = "▶ Смотреть на YouTube";
