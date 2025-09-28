@@ -90,9 +90,10 @@
 
     <main class="main">
       <div class="hdr">
-        <div class="badge" id="badge">INF</div>
+        <div class="badge" id="badge">INF </div>
         <div>
-          <h1 id="title">Выберите глагол слева</h1>
+
+          <h1 id="title">Выберите глагол слева</h1> <button style="background: red;"onclick="window.open('https://t.me/Nameid53277432', '_blank')"> Заказать телеграмм бота</button>
           <div class="meta" id="meta">Инфинитив — перевод • тип</div>
         </div>
       </div>
@@ -402,7 +403,289 @@ const VERBS = [
     {text:"Er _ gestern nach Berlin.", answer:"fuhr"},
     {text:"Wir _ zusammen.", answer:"fahren"}
   ]
+},
+{
+  inf:"bringen", translation:"приносить", type:"сильный",
+  praeteritum:"brachte", partizip2:"gebracht",
+  conjugation:{ich:"bringe", du:"bringst", er:"bringt", wir:"bringen", ihr:"bringt", sie:"bringen"},
+  examples:[
+    {text:"Ich _ dir Wasser.", answer:"bringe"},
+    {text:"Er _ gestern Blumen.", answer:"brachte"},
+    {text:"Wir _ die Bücher.", answer:"bringen"}
+  ]
+},
+{
+  inf:"denken", translation:"думать", type:"сильный",
+  praeteritum:"dachte", partizip2:"gedacht",
+  conjugation:{ich:"denke", du:"denkst", er:"denkt", wir:"denken", ihr:"denkt", sie:"denken"},
+  examples:[
+    {text:"Ich _ oft an dich.", answer:"denke"},
+    {text:"Er _ gestern an die Arbeit.", answer:"dachte"},
+    {text:"Wir _ zusammen darüber.", answer:"denken"}
+  ]
+},
+{
+  inf:"arbeiten", translation:"работать", type:"слабый",
+  praeteritum:"arbeitete", partizip2:"gearbeitet",
+  conjugation:{ich:"arbeite", du:"arbeitest", er:"arbeitet", wir:"arbeiten", ihr:"arbeitet", sie:"arbeiten"},
+  examples:[
+    {text:"Ich _ heute viel.", answer:"arbeite"},
+    {text:"Sie _ gestern im Büro.", answer:"arbeitete"},
+    {text:"Wir _ zusammen.", answer:"arbeiten"}
+  ]
+},
+{
+  inf:"fragen", translation:"спрашивать", type:"слабый",
+  praeteritum:"fragte", partizip2:"gefragt",
+  conjugation:{ich:"frage", du:"fragst", er:"fragt", wir:"fragen", ihr:"fragt", sie:"fragen"},
+  examples:[
+    {text:"Ich _ den Lehrer.", answer:"frage"},
+    {text:"Er _ gestern nach dir.", answer:"fragte"},
+    {text:"Wir _ oft.", answer:"fragen"}
+  ]
+},
+{
+  inf:"antworten", translation:"отвечать", type:"слабый",
+  praeteritum:"antwortete", partizip2:"geantwortet",
+  conjugation:{ich:"antworte", du:"antwortest", er:"antwortet", wir:"antworten", ihr:"antwortet", sie:"antworten"},
+  examples:[
+    {text:"Ich _ auf die Frage.", answer:"antworte"},
+    {text:"Er _ gestern schnell.", answer:"antwortete"},
+    {text:"Wir _ sofort.", answer:"antworten"}
+  ]
+},
+{
+  inf:"stehen", translation:"стоять", type:"сильный",
+  praeteritum:"stand", partizip2:"gestanden",
+  conjugation:{ich:"stehe", du:"stehst", er:"steht", wir:"stehen", ihr:"steht", sie:"stehen"},
+  examples:[
+    {text:"Ich _ vor der Tür.", answer:"stehe"},
+    {text:"Er _ lange.", answer:"stand"},
+    {text:"Wir _ hier.", answer:"stehen"}
+  ]
+},
+{
+  inf:"sitzen", translation:"сидеть", type:"сильный",
+  praeteritum:"saß", partizip2:"gesessen",
+  conjugation:{ich:"sitze", du:"sitzt", er:"sitzt", wir:"sitzen", ihr:"sitzt", sie:"sitzen"},
+  examples:[
+    {text:"Ich _ auf dem Stuhl.", answer:"sitze"},
+    {text:"Er _ gestern im Café.", answer:"saß"},
+    {text:"Wir _ zusammen.", answer:"sitzen"}
+  ]
+},
+{
+  inf:"liegen", translation:"лежать", type:"сильный",
+  praeteritum:"lag", partizip2:"gelegen",
+  conjugation:{ich:"liege", du:"liegst", er:"liegt", wir:"liegen", ihr:"liegt", sie:"liegen"},
+  examples:[
+    {text:"Das Buch _ auf dem Tisch.", answer:"liegt"},
+    {text:"Er _ im Bett.", answer:"lag"},
+    {text:"Wir _ am Strand.", answer:"liegen"}
+  ]
+},
+{
+  inf:"heißen", translation:"называться", type:"сильный",
+  praeteritum:"hieß", partizip2:"geheißen",
+  conjugation:{ich:"heiße", du:"heißt", er:"heißt", wir:"heißen", ihr:"heißt", sie:"heißen"},
+  examples:[
+    {text:"Ich _ Alex.", answer:"heiße"},
+    {text:"Er _ früher Hans.", answer:"hieß"},
+    {text:"Wie _ ihr?", answer:"heißt"}
+  ]
+},
+{
+  inf:"lernen", translation:"учить, учиться", type:"слабый",
+  praeteritum:"lernte", partizip2:"gelernt",
+  conjugation:{ich:"lerne", du:"lernst", er:"lernt", wir:"lernen", ihr:"lernt", sie:"lernen"},
+  examples:[
+    {text:"Ich _ Deutsch.", answer:"lerne"},
+    {text:"Er _ gestern viel.", answer:"lernte"},
+    {text:"Wir _ zusammen.", answer:"lernen"}
+  ]
+},
+{
+  inf:"laufen", translation:"бегать, ходить", type:"сильный",
+  praeteritum:"lief", partizip2:"gelaufen",
+  conjugation:{ich:"laufe", du:"läufst", er:"läuft", wir:"laufen", ihr:"lauft", sie:"laufen"},
+  examples:[
+    {text:"Ich _ jeden Morgen.", answer:"laufe"},
+    {text:"Er _ gestern schnell.", answer:"lief"},
+    {text:"Wir _ zusammen im Park.", answer:"laufen"}
+  ]
+},
+{
+  inf:"fahren", translation:"ехать, водить", type:"сильный",
+  praeteritum:"fuhr", partizip2:"gefahren",
+  conjugation:{ich:"fahre", du:"fährst", er:"fährt", wir:"fahren", ihr:"fahrt", sie:"fahren"},
+  examples:[
+    {text:"Ich _ mit dem Bus.", answer:"fahre"},
+    {text:"Er _ gestern nach Berlin.", answer:"fuhr"},
+    {text:"Wir _ morgen nach Hause.", answer:"fahren"}
+  ]
+},
+{
+  inf:"fliegen", translation:"летать", type:"сильный",
+  praeteritum:"flog", partizip2:"geflogen",
+  conjugation:{ich:"fliege", du:"fliegst", er:"fliegt", wir:"fliegen", ihr:"fliegt", sie:"fliegen"},
+  examples:[
+    {text:"Ich _ nach Paris.", answer:"fliege"},
+    {text:"Er _ nach Rom.", answer:"flog"},
+    {text:"Wir _ im Sommer oft.", answer:"fliegen"}
+  ]
+},
+{
+  inf:"kommen", translation:"приходить", type:"сильный",
+  praeteritum:"kam", partizip2:"gekommen",
+  conjugation:{ich:"komme", du:"kommst", er:"kommt", wir:"kommen", ihr:"kommt", sie:"kommen"},
+  examples:[
+    {text:"Ich _ morgen.", answer:"komme"},
+    {text:"Er _ gestern spät.", answer:"kam"},
+    {text:"Wir _ gleich.", answer:"kommen"}
+  ]
+},
+{
+  inf:"bleiben", translation:"оставаться", type:"сильный",
+  praeteritum:"blieb", partizip2:"geblieben",
+  conjugation:{ich:"bleibe", du:"bleibst", er:"bleibt", wir:"bleiben", ihr:"bleibt", sie:"bleiben"},
+  examples:[
+    {text:"Ich _ zu Hause.", answer:"bleibe"},
+    {text:"Er _ lange dort.", answer:"blieb"},
+    {text:"Wir _ hier.", answer:"bleiben"}
+  ]
+},
+{
+  inf:"fallen", translation:"падать", type:"сильный",
+  praeteritum:"fiel", partizip2:"gefallen",
+  conjugation:{ich:"falle", du:"fällst", er:"fällt", wir:"fallen", ihr:"fallt", sie:"fallen"},
+  examples:[
+    {text:"Ich _ auf den Boden.", answer:"falle"},
+    {text:"Er _ gestern hin.", answer:"fiel"},
+    {text:"Die Blätter _.", answer:"fallen"}
+  ]
+},
+{
+  inf:"steigen", translation:"подниматься", type:"сильный",
+  praeteritum:"stieg", partizip2:"gestiegen",
+  conjugation:{ich:"steige", du:"steigst", er:"steigt", wir:"steigen", ihr:"steigt", sie:"steigen"},
+  examples:[
+    {text:"Ich _ ins Auto.", answer:"steige"},
+    {text:"Er _ gestern auf den Berg.", answer:"stieg"},
+    {text:"Wir _ jetzt aus.", answer:"steigen"}
+  ]
+},
+{
+  inf:"rennen", translation:"бежать", type:"сильный",
+  praeteritum:"rannte", partizip2:"gerannt",
+  conjugation:{ich:"renne", du:"rennst", er:"rennt", wir:"rennen", ihr:"rennt", sie:"rennen"},
+  examples:[
+    {text:"Ich _ nach Hause.", answer:"renne"},
+    {text:"Er _ schnell weg.", answer:"rannte"},
+    {text:"Wir _ ins Kino.", answer:"rennen"}
+  ]
+},
+{
+  inf:"ziehen", translation:"тянуть, переезжать", type:"сильный",
+  praeteritum:"zog", partizip2:"gezogen",
+  conjugation:{ich:"ziehe", du:"ziehst", er:"zieht", wir:"ziehen", ihr:"zieht", sie:"ziehen"},
+  examples:[
+    {text:"Ich _ den Koffer.", answer:"ziehe"},
+    {text:"Er _ nach München.", answer:"zog"},
+    {text:"Wir _ zusammen.", answer:"ziehen"}
+  ]
+},
+{
+  inf:"tragen", translation:"нести, носить", type:"сильный",
+  praeteritum:"trug", partizip2:"getragen",
+  conjugation:{ich:"trage", du:"trägst", er:"trägt", wir:"tragen", ihr:"tragt", sie:"tragen"},
+  examples:[
+    {text:"Ich _ eine Tasche.", answer:"trage"},
+    {text:"Er _ gestern das Kind.", answer:"trug"},
+    {text:"Wir _ warme Kleidung.", answer:"tragen"}
+  ]
+},
+{
+  inf:"reden", translation:"разговаривать", type:"слабый",
+  praeteritum:"redete", partizip2:"geredet",
+  conjugation:{ich:"rede", du:"redest", er:"redet", wir:"reden", ihr:"redet", sie:"reden"},
+  examples:[
+    {text:"Ich _ mit dir.", answer:"rede"},
+    {text:"Er _ gestern viel.", answer:"redete"},
+    {text:"Wir _ über die Arbeit.", answer:"reden"}
+  ]
+},
+{
+  inf:"sprechen", translation:"говорить", type:"сильный",
+  praeteritum:"sprach", partizip2:"gesprochen",
+  conjugation:{ich:"spreche", du:"sprichst", er:"spricht", wir:"sprechen", ihr:"sprecht", sie:"sprechen"},
+  examples:[
+    {text:"Ich _ Deutsch.", answer:"spreche"},
+    {text:"Er _ gestern mit ihr.", answer:"sprach"},
+    {text:"Wir _ über das Thema.", answer:"sprechen"}
+  ]
+},
+{
+  inf:"erzählen", translation:"рассказывать", type:"слабый",
+  praeteritum:"erzählte", partizip2:"erzählt",
+  conjugation:{ich:"erzähle", du:"erzählst", er:"erzählt", wir:"erzählen", ihr:"erzählt", sie:"erzählen"},
+  examples:[
+    {text:"Ich _ eine Geschichte.", answer:"erzähle"},
+    {text:"Er _ gestern alles.", answer:"erzählte"},
+    {text:"Wir _ gern Märchen.", answer:"erzählen"}
+  ]
+},
+
+{
+  inf:"schreiben", translation:"писать", type:"сильный",
+  praeteritum:"schrieb", partizip2:"geschrieben",
+  conjugation:{ich:"schreibe", du:"schreibst", er:"schreibt", wir:"schreiben", ihr:"schreibt", sie:"schreiben"},
+  examples:[
+    {text:"Ich _ einen Brief.", answer:"schreibe"},
+    {text:"Er _ gestern eine E-Mail.", answer:"schrieb"},
+    {text:"Wir _ oft Nachrichten.", answer:"schreiben"}
+  ]
+},
+{
+  inf:"lesen", translation:"читать", type:"сильный",
+  praeteritum:"las", partizip2:"gelesen",
+  conjugation:{ich:"lese", du:"liest", er:"liest", wir:"lesen", ihr:"lest", sie:"lesen"},
+  examples:[
+    {text:"Ich _ ein Buch.", answer:"lese"},
+    {text:"Er _ gestern die Zeitung.", answer:"las"},
+    {text:"Wir _ jeden Abend.", answer:"lesen"}
+  ]
+},
+{
+  inf:"hören", translation:"слышать, слушать", type:"слабый",
+  praeteritum:"hörte", partizip2:"gehört",
+  conjugation:{ich:"höre", du:"hörst", er:"hört", wir:"hören", ihr:"hört", sie:"hören"},
+  examples:[
+    {text:"Ich _ Musik.", answer:"höre"},
+    {text:"Er _ gestern Radio.", answer:"hörte"},
+    {text:"Wir _ die Lehrerin.", answer:"hören"}
+  ]
+},
+{
+  inf:"rufen", translation:"звать, кричать", type:"сильный",
+  praeteritum:"rief", partizip2:"gerufen",
+  conjugation:{ich:"rufe", du:"rufst", er:"ruft", wir:"rufen", ihr:"ruft", sie:"rufen"},
+  examples:[
+    {text:"Ich _ dich laut.", answer:"rufe"},
+    {text:"Er _ gestern seinen Freund.", answer:"rief"},
+    {text:"Wir _ nach Hilfe.", answer:"rufen"}
+  ]
+},
+{
+  inf:"telefonieren", translation:"говорить по телефону", type:"слабый",
+  praeteritum:"telefonierte", partizip2:"telefoniert",
+  conjugation:{ich:"telefoniere", du:"telefonierst", er:"telefoniert", wir:"telefonieren", ihr:"telefoniert", sie:"telefonieren"},
+  examples:[
+    {text:"Ich _ oft mit ihr.", answer:"telefoniere"},
+    {text:"Er _ gestern lange.", answer:"telefonierte"},
+    {text:"Wir _ jeden Abend.", answer:"telefonieren"}
+  ]
 }
+
 
 
 ];
