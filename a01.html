@@ -93,6 +93,11 @@
   <br><br>
 
   <h1 id="lessonTitle">Урок</h1>
+    <div style="margin:15px 0;">
+      <label for="rateRange">⚡ Скорость речи: </label>
+      <input type="range" id="rateRange" min="0.5" max="2" step="0.1" value="1">
+      <span id="rateValue">1.0</span>x
+    </div>
 
   <!-- слова урока -->
   <div id="lessonContent"></div>
@@ -267,16 +272,20 @@
 
   };
 
- let currentLesson = 1;
+
+    let currentLesson = 1;
   let quizPool = [];
   let correctAnswer = "";
+  let speechRate = 1;
 
   const params = new URLSearchParams(window.location.search);
   if (params.has("lesson")) currentLesson = parseInt(params.get("lesson"));
+  document.getElementById("lessonSelect").value = currentLesson;
 
   function speak(text, lang = "de-DE") {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = lang;
+    utterance.rate = speechRate;
     speechSynthesis.speak(utterance);
   }
 
@@ -367,6 +376,14 @@
     document.getElementById("quiz").style.display = "none";
     document.getElementById("answerInput").style.display = "inline-block";
   }
+
+  // обработка ползунка скорости
+  const rateRange = document.getElementById("rateRange");
+  const rateValue = document.getElementById("rateValue");
+  rateRange.addEventListener("input", () => {
+    speechRate = parseFloat(rateRange.value);
+    rateValue.textContent = speechRate.toFixed(1);
+  });
 
   renderLesson();
 </script>
