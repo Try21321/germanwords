@@ -65,29 +65,29 @@
 
 <div class="card">
   <!-- Меню -->
-  <div id="menu">
-    <button onclick="goLesson(1)">Урок 1</button>
-    <button onclick="goLesson(2)">Урок 2</button>
-    <button onclick="goLesson(3)">Урок 3</button>
-    <button onclick="goLesson(4)">Урок 4</button>
-    <button onclick="goLesson(5)">Урок 5(закрепление) </button>
-    <button onclick="goLesson(6)">Урок 6</button>
-    <button onclick="goLesson(7)">Урок 7</button>
-    <button onclick="goLesson(8)">Урок 8</button>
-    <button onclick="goLesson(9)">Урок 9</button>
-    <button onclick="goLesson(10)">Урок 10</button>
-    <button onclick="goLesson(11)">Урок 11</button>
-    <button onclick="goLesson(12)">Урок 12</button>
-    <button onclick="goLesson(13)">Урок 13</button>
-    <button onclick="goLesson(14)">Урок 14</button>
-    <button onclick="goLesson(15)">Урок 15</button>
-    <button onclick="goLesson(16)">Урок 16</button>
-    <button onclick="goLesson(17)">Урок 17</button>
-    <button onclick="goLesson(18)">Урок 18</button>
-    <hr style="margin:10px 0; border: 1px solid #555;">
-  <button onclick="window.open('https://t.me/deutschland_learn', '_blank')">📢 Наш Telegram канал</button>
-
-
+  <div id="menu" style="margin-bottom:15px;">
+    <label for="lessonSelect">Выбери урок:</label>
+    <select id="lessonSelect" onchange="goLesson(this.value)">
+      <option value="">-- выбрать --</option>
+      <option value="1">Урок 1</option>
+      <option value="2">Урок 2</option>
+      <option value="3">Урок 3</option>
+      <option value="4">Урок 4</option>
+      <option value="5">Урок 5</option>
+      <option value="6">Урок 6</option>
+      <option value="7">Урок 7</option>
+      <option value="8">Урок 8</option>
+      <option value="9">Урок 9</option>
+      <option value="10">Урок 10</option>
+      <option value="11">Урок 11</option>
+      <option value="12">Урок 12</option>
+      <option value="13">Урок 13</option>
+      <option value="14">Урок 14</option>
+      <option value="15">Урок 15</option>
+      <option value="16">Урок 16</option>
+      <option value="17">Урок 17</option>
+      <option value="18">Урок 18</option>
+    </select>
   </div>
 
   <h1 id="lessonTitle">Урок</h1>
