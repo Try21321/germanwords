@@ -132,11 +132,11 @@
 
   <!-- Подставь слово -->
   <div class="quiz" id="fillQuiz">
-    <p id="fillQuestion"></p>
-    <div class="options" id="fillOptions"></div>
-    <div class="emoji" id="fillEmoji"></div>
-
-  </div>
+  <p id="fillQuestion"></p>
+  <div class="options" id="fillOptions"></div>
+  <div class="emoji" id="fillEmoji"></div>
+  <button id="backFillBtn">⬅ Назад</button>
+</div>
 
   <!-- Собери предложение -->
   <div class="quiz" id="sentenceQuiz">
@@ -353,6 +353,12 @@ document.getElementById('backSentenceBtn').onclick = () => {
     fillQuiz.style.display = 'none';
     sentenceQuiz.style.display = 'none';
   }
+  document.getElementById('backFillBtn').onclick = () => {
+  clearTimeout(fillTimeout); // остановить автопереключение примеров
+  fillQuiz.style.display = 'none';
+  modeSelect.style.display = 'block';
+};
+
 </script>
 
 </body>
