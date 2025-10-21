@@ -112,15 +112,12 @@
 
 <h1>💪 Lernen wir Verben!</h1>
 
-<select id="verbSelect">
-  <option value="gehen">gehen — идти</option>
-  <option value="sprechen">sprechen — говорить</option>
-  <option value="machen">machen — делать</option>
-</select>
+<select id="verbSelect"></select>
+
 
 <div class="verb-card" id="verbCard">
-  <div class="verb" id="verbTitle">gehen — идти 🚶‍♂️</div>
-  <div class="example" id="verbExample">Ich gehe nach Hause. 🏠</div>
+ <div id="verbTitle"></div>
+<div id="verbExample"></div>
 
   <button id="startBtn">Начать</button>
 
@@ -157,13 +154,18 @@
       example: "Ich gehe nach Hause. 🏠",
      fill: [
   { question: "Du ___ zur Schule.", options: ["gehe","gehst","geht"], correct: "gehst" },
-  { question: "Ich ___ zur Schule.", options: ["gehe","gehst","geht"], correct: "gehe" }
+  { question: "Ich ___ zur Schule.", options: ["gehe","gehst","geht"], correct: "gehe" },
+  { question: "Er _ spazieren", options: ["gehe","gehst","geht"], correct: "geht" },
+  { question: "Wir _ nach Hause", options: ["gehe","gehen","gehst"], correct: "gehen" }
 ],
       sentences: [
         { translation: "Я иду домой", words: ["Ich", "gehe", "nach", "Hause"], correct: "Ich gehe nach Hause" },
-        { translation: "Мы идем в парк", words: ["Wir", "gehen", "in", "den", "Park"], correct: "Wir gehen in den Park" }
+        { translation: "Мы идем в парк", words: ["Wir", "gehen", "in", "den", "Park"], correct: "Wir gehen in den Park" },
+        { translation: "Я иду на работу", words: ["Ich", "gehen", "zur ", "Arbeit"], correct: "Ich gehen zur Arbeit" },
+        { translation: "Она ходит в школу каждый день", words: ["Sie", "geht", "jeden", "Tag", "zur", "Schule"], correct: "Sie geht jeden Tag zur Schule" },
       ]
     },
+
     sprechen: {
       title: "sprechen — говорить 🗣️",
       example: "Er spricht Deutsch.",
@@ -185,7 +187,584 @@
         { translation: "Я делаю завтрак", words: ["Ich", "mache", "Frühstück"], correct: "Ich mache Frühstück" },
         { translation: "Они делают работу", words: ["Sie", "machen", "die", "Arbeit"], correct: "Sie machen die Arbeit" }
       ]
-    }
+    },
+    sehen: {
+  title: "sehen — видеть 👀",
+  example: "Ich sehe einen Film. 🎬",
+  fill: [
+    { question: "Ich ___ den Hund.", options: ["sehe","siehst","sieht"], correct: "sehe" },
+    { question: "Du ___ die Katze.", options: ["sehe","siehst","sieht"], correct: "siehst" },
+    { question: "Er ___ den Vogel.", options: ["sehe","siehst","sieht"], correct: "sieht" },
+    { question: "Wir ___ den Sonnenuntergang.", options: ["sehen","siehst","sieht"], correct: "sehen" },
+    { question: "Ihr ___ den Film im Kino.", options: ["seht","sehe","sehen"], correct: "seht" },
+    { question: "Sie (мн.) ___ die Kinder spielen.", options: ["sehen","siehst","sieht"], correct: "sehen" },
+    { question: "Ich ___ das Auto auf der Straße.", options: ["sehe","siehst","sieht"], correct: "sehe" },
+    { question: "Du ___ den Lehrer im Klassenzimmer.", options: ["siehst","sehe","sieht"], correct: "siehst" },
+    { question: "Er ___ die Sterne am Himmel.", options: ["sehe","siehst","sieht"], correct: "sieht" },
+    { question: "Wir ___ die schönen Blumen.", options: ["sehen","siehst","sieht"], correct: "sehen" }
+  ],
+  sentences: [
+    { translation: "Я вижу фильм", words: ["Ich", "sehe", "einen", "Film"], correct: "Ich sehe einen Film" },
+    { translation: "Ты видишь кошку", words: ["Du", "siehst", "die", "Katze"], correct: "Du siehst die Katze" },
+    { translation: "Он видит птицу", words: ["Er", "sieht", "den", "Vogel"], correct: "Er sieht den Vogel" },
+    { translation: "Мы видим закат", words: ["Wir", "sehen", "den", "Sonnenuntergang"], correct: "Wir sehen den Sonnenuntergang" },
+    { translation: "Вы видите фильм в кино", words: ["Ihr", "seht", "den", "Film", "im", "Kino"], correct: "Ihr seht den Film im Kino" },
+    { translation: "Они видят играющих детей", words: ["Sie", "sehen", "die", "Kinder", "spielen"], correct: "Sie sehen die Kinder spielen" },
+    { translation: "Я вижу машину на улице", words: ["Ich", "sehe", "das", "Auto", "auf", "der", "Straße"], correct: "Ich sehe das Auto auf der Straße" },
+    { translation: "Ты видишь учителя в классе", words: ["Du", "siehst", "den", "Lehrer", "im", "Klassenzimmer"], correct: "Du siehst den Lehrer im Klassenzimmer" },
+    { translation: "Он видит звезды на небе", words: ["Er", "sieht", "die", "Sterne", "am", "Himmel"], correct: "Er sieht die Sterne am Himmel" },
+    { translation: "Мы видим красивые цветы", words: ["Wir", "sehen", "die", "schönen", "Blumen"], correct: "Wir sehen die schönen Blumen" }
+  ]
+},
+können: {
+  title: "können — мочь, уметь 💪",
+  example: "Ich kann Deutsch sprechen. 🗣️",
+  fill: [
+   { question: "Ich ___ schwimmen.", options: ["kann", "können", "kannst"], correct: "kann" },
+    { question: "Du ___ gut singen.", options: ["kannst", "können", "kann"], correct: "kannst" },
+    { question: "Er ___ schnell laufen.", options: ["kann", "kannst", "können"], correct: "kann" },
+    { question: "Wir ___ Deutsch sprechen.", options: ["können", "kann", "kannst"], correct: "können" },
+    { question: "Ihr ___ das Problem lösen.", options: ["könnt", "können", "kann"], correct: "könnt" },
+    { question: "Sie (мн.) ___ gut tanzen.", options: ["können", "könnt", "kann"], correct: "können" },
+    { question: "Ich ___ heute nicht kommen.", options: ["kann", "können", "kannst"], correct: "kann" },
+    { question: "Du ___ mir helfen?", options: ["kannst", "kann", "können"], correct: "kannst" },
+    { question: "Er ___ das Buch lesen.", options: ["kann", "kannst", "können"], correct: "kann" },
+    { question: "Wir ___ morgen früh aufstehen.", options: ["können", "kann", "kannst"], correct: "können" }
+  ],
+  sentences: [
+    { translation: "Я могу плавать", words: ["Ich", "kann", "schwimmen"], correct: "Ich kann schwimmen" },
+    { translation: "Ты можешь петь хорошо", words: ["Du", "kannst", "gut", "singen"], correct: "Du kannst gut singen" },
+    { translation: "Он может быстро бегать", words: ["Er", "kann", "schnell", "laufen"], correct: "Er kann schnell laufen" },
+    { translation: "Мы можем говорить по-немецки", words: ["Wir", "können", "Deutsch", "sprechen"], correct: "Wir können Deutsch sprechen" },
+    { translation: "Вы можете решить задачу", words: ["Ihr", "könnt", "die", "Aufgabe", "lösen"], correct: "Ihr könnt die Aufgabe lösen" },
+    { translation: "Они могут хорошо танцевать", words: ["Sie", "können", "gut", "tanzen"], correct: "Sie können gut tanzen" },
+    { translation: "Я сегодня не могу прийти", words: ["Ich", "kann", "heute", "nicht", "kommen"], correct: "Ich kann heute nicht kommen" },
+    { translation: "Ты можешь мне помочь?", words: ["Du", "kannst", "mir", "helfen?"], correct: "Du kannst mir helfen?" },
+    { translation: "Он может читать книгу", words: ["Er", "kann", "das", "Buch", "lesen"], correct: "Er kann das Buch lesen" },
+  ]
+},
+haben: { 
+  title: "haben — иметь 👜",
+  example: "Ich habe ein Auto. 🚗",
+  fill: [
+    { question: "Ich ___ ein Buch.", options: ["habe", "habt", "haben"], correct: "habe" },
+    { question: "Du ___ viele Freunde.", options: ["hast", "haben", "hat"], correct: "hast" },
+    { question: "Er ___ keine Zeit.", options: ["hat", "hast", "haben"], correct: "hat" },
+    { question: "Wir ___ ein Haus.", options: ["haben", "hat", "habt"], correct: "haben" },
+    { question: "Ihr ___ Glück.", options: ["habt", "haben", "hat"], correct: "habt" },
+    { question: "Sie (мн.) ___ viel Geld.", options: ["haben", "habt", "hat"], correct: "haben" },
+    { question: "Ich ___ Hunger.", options: ["habe", "haben", "hat"], correct: "habe" },
+    { question: "Du ___ eine Idee.", options: ["hast", "habt", "haben"], correct: "hast" },
+    { question: "Er ___ einen Hund.", options: ["hat", "haben", "hast"], correct: "hat" },
+    { question: "Wir ___ Spaß.", options: ["haben", "habt", "hat"], correct: "haben" }
+  ],
+  sentences: [
+    { translation: "У меня есть книга", words: ["Ich", "habe", "ein", "Buch"], correct: "Ich habe ein Buch" },
+    { translation: "У тебя много друзей", words: ["Du", "hast", "viele", "Freunde"], correct: "Du hast viele Freunde" },
+    { translation: "У него нет времени", words: ["Er", "hat", "keine", "Zeit"], correct: "Er hat keine Zeit" },
+    { translation: "У нас есть дом", words: ["Wir", "haben", "ein", "Haus"], correct: "Wir haben ein Haus" },
+    { translation: "У вас есть удача", words: ["Ihr", "habt", "Glück"], correct: "Ihr habt Glück" },
+    { translation: "У них много денег", words: ["Sie", "haben", "viel", "Geld"], correct: "Sie haben viel Geld" },
+    { translation: "Я голоден", words: ["Ich", "habe", "Hunger"], correct: "Ich habe Hunger" },
+    { translation: "У тебя есть идея", words: ["Du", "hast", "eine", "Idee"], correct: "Du hast eine Idee" },
+    { translation: "У него есть собака", words: ["Er", "hat", "einen", "Hund"], correct: "Er hat einen Hund" },
+    { translation: "Нам весело", words: ["Wir", "haben", "Spaß"], correct: "Wir haben Spaß" }
+  ]
+},
+sein: {
+  title: "sein — быть 🟢",
+  example: "Ich bin müde. 😴",
+  fill: [
+    { question: "Ich ___ müde.", options: ["bin","bist","ist"], correct: "bin" },
+    { question: "Du ___ glücklich.", options: ["bist","bin","sind"], correct: "bist" },
+    { question: "Er ___ krank.", options: ["ist","bist","sind"], correct: "ist" },
+    { question: "Wir ___ zu Hause.", options: ["sind","bin","seid"], correct: "sind" },
+    { question: "Ihr ___ müde.", options: ["seid","sind","ist"], correct: "seid" },
+    { question: "Sie (мн.) ___ im Park.", options: ["sind","seid","ist"], correct: "sind" },
+    { question: "Ich ___ bereit.", options: ["bin","bist","sind"], correct: "bin" },
+    { question: "Du ___ traurig.", options: ["bist","bin","sind"], correct: "bist" },
+    { question: "Er ___ glücklich.", options: ["ist","bist","sind"], correct: "ist" },
+    { question: "Wir ___ bereit zu gehen.", options: ["sind","bin","seid"], correct: "sind" }
+  ],
+  sentences: [
+    { translation: "Я устал", words: ["Ich","bin","müde"], correct: "Ich bin müde" },
+    { translation: "Ты счастлив", words: ["Du","bist","glücklich"], correct: "Du bist glücklich" },
+    { translation: "Он болен", words: ["Er","ist","krank"], correct: "Er ist krank" },
+    { translation: "Мы дома", words: ["Wir","sind","zu","Hause"], correct: "Wir sind zu Hause" },
+    { translation: "Вы устали", words: ["Ihr","seid","müde"], correct: "Ihr seid müde" },
+    { translation: "Они в парке", words: ["Sie","sind","im","Park"], correct: "Sie sind im Park" },
+    { translation: "Я готов", words: ["Ich","bin","bereit"], correct: "Ich bin bereit" },
+    { translation: "Ты грустный", words: ["Du","bist","traurig"], correct: "Du bist traurig" },
+    { translation: "Он счастлив", words: ["Er","ist","glücklich"], correct: "Er ist glücklich" },
+    { translation: "Мы готовы идти", words: ["Wir","sind","bereit","zu","gehen"], correct: "Wir sind bereit zu gehen" }
+  ]
+},
+
+kommen: {
+  title: "kommen — приходить, приезжать 🚶‍♂️",
+  example: "Ich komme aus Deutschland. 🇩🇪",
+  fill: [
+    { question: "Ich ___ aus Deutschland.", options: ["komme","kommst","kommt"], correct: "komme" },
+    { question: "Du ___ später.", options: ["kommst","komme","kommen"], correct: "kommst" },
+    { question: "Er ___ heute nicht.", options: ["kommt","kommst","komme"], correct: "kommt" },
+    { question: "Wir ___ morgen.", options: ["kommen","kommt","kommst"], correct: "kommen" },
+    { question: "Ihr ___ pünktlich.", options: ["kommt","kommt","kommt"], correct: "kommt" },
+    { question: "Sie (мн.) ___ später.", options: ["kommen","kommt","kommst"], correct: "kommen" },
+    { question: "Ich ___ gleich.", options: ["komme","kommst","kommt"], correct: "komme" },
+    { question: "Du ___ aus Berlin.", options: ["kommst","komme","kommt"], correct: "kommst" },
+    { question: "Er ___ nicht zur Arbeit.", options: ["kommt","komme","kommst"], correct: "kommt" },
+    { question: "Wir ___ aus der Schule.", options: ["kommen","komme","kommt"], correct: "kommen" }
+  ],
+  sentences: [
+    { translation: "Я из Германии", words: ["Ich","komme","aus","Deutschland"], correct: "Ich komme aus Deutschland" },
+    { translation: "Ты придешь позже", words: ["Du","kommst","später"], correct: "Du kommst später" },
+    { translation: "Он сегодня не придет", words: ["Er","kommt","heute","nicht"], correct: "Er kommt heute nicht" },
+    { translation: "Мы придем завтра", words: ["Wir","kommen","morgen"], correct: "Wir kommen morgen" },
+    { translation: "Вы придете вовремя", words: ["Ihr","kommt","pünktlich"], correct: "Ihr kommt pünktlich" },
+    { translation: "Они придут позже", words: ["Sie","kommen","später"], correct: "Sie kommen später" },
+    { translation: "Я сейчас приду", words: ["Ich","komme","gleich"], correct: "Ich komme gleich" },
+    { translation: "Ты из Берлина", words: ["Du","kommst","aus","Berlin"], correct: "Du kommst aus Berlin" },
+    { translation: "Он не придет на работу", words: ["Er","kommt","nicht","zur","Arbeit"], correct: "Er kommt nicht zur Arbeit" },
+    { translation: "Мы идем из школы", words: ["Wir","kommen","aus","der","Schule"], correct: "Wir kommen aus der Schule" }
+  ]
+},
+
+nehmen: {
+  title: "nehmen — брать 👜",
+  example: "Ich nehme das Buch. 📚",
+  fill: [
+    { question: "Ich ___ das Buch.", options: ["nehme","nimmst","nimmt"], correct: "nehme" },
+    { question: "Du ___ den Apfel.", options: ["nimmst","nehme","nimmt"], correct: "nimmst" },
+    { question: "Er ___ die Tasche.", options: ["nimmt","nimmst","nehme"], correct: "nimmt" },
+    { question: "Wir ___ die Getränke.", options: ["nehmen","nehme","nimmt"], correct: "nehmen" },
+    { question: "Ihr ___ die Zeitung.", options: ["nehmt","nehmen","nimmt"], correct: "nehmt" },
+    { question: "Sie (мн.) ___ die Stifte.", options: ["nehmen","nehmt","nimmt"], correct: "nehmen" },
+    { question: "Ich ___ den Stuhl.", options: ["nehme","nimmst","nimmt"], correct: "nehme" },
+    { question: "Du ___ die Schokolade.", options: ["nimmst","nehme","nimmt"], correct: "nimmst" },
+    { question: "Er ___ das Wasser.", options: ["nimmt","nimmst","nehme"], correct: "nimmt" },
+    { question: "Wir ___ den Bus.", options: ["nehmen","nehme","nimmt"], correct: "nehmen" }
+  ],
+  sentences: [
+    { translation: "Я беру книгу", words: ["Ich","nehme","das","Buch"], correct: "Ich nehme das Buch" },
+    { translation: "Ты берешь яблоко", words: ["Du","nimmst","den","Apfel"], correct: "Du nimmst den Apfel" },
+    { translation: "Он берет сумку", words: ["Er","nimmt","die","Tasche"], correct: "Er nimmt die Tasche" },
+    { translation: "Мы берем напитки", words: ["Wir","nehmen","die","Getränke"], correct: "Wir nehmen die Getränke" },
+    { translation: "Вы берете газету", words: ["Ihr","nehmt","die","Zeitung"], correct: "Ihr nehmt die Zeitung" },
+    { translation: "Они берут ручки", words: ["Sie","nehmen","die","Stifte"], correct: "Sie nehmen die Stifte" },
+    { translation: "Я беру стул", words: ["Ich","nehme","den","Stuhl"], correct: "Ich nehme den Stuhl" },
+    { translation: "Ты берешь шоколад", words: ["Du","nimmst","die","Schokolade"], correct: "Du nimmst die Schokolade" },
+    { translation: "Он берет воду", words: ["Er","nimmt","das","Wasser"], correct: "Er nimmt das Wasser" },
+    { translation: "Мы садимся на автобус", words: ["Wir","nehmen","den","Bus"], correct: "Wir nehmen den Bus" }
+  ]
+},
+geben: {
+  title: "geben — давать 🎁",
+  example: "Ich gebe dir ein Buch. 📖",
+  fill: [
+    { question: "Ich ___ dir ein Buch.", options: ["gebe","gibst","gibt"], correct: "gebe" },
+    { question: "Du ___ mir das Geld.", options: ["gibst","gebe","gibt"], correct: "gibst" },
+    { question: "Er ___ dem Kind einen Apfel.", options: ["gibt","gebe","gibst"], correct: "gibt" },
+    { question: "Wir ___ euch ein Geschenk.", options: ["geben","gibst","gibt"], correct: "geben" },
+    { question: "Ihr ___ mir die Zeitung.", options: ["gebt","geben","gibt"], correct: "gebt" },
+    { question: "Sie (мн.) ___ uns die Stifte.", options: ["geben","gebt","gibt"], correct: "geben" },
+    { question: "Ich ___ dir das Geld.", options: ["gebe","gibst","gibt"], correct: "gebe" },
+    { question: "Du ___ dem Lehrer das Buch.", options: ["gibst","gebe","gibt"], correct: "gibst" },
+    { question: "Er ___ der Frau die Tasche.", options: ["gibt","gebe","gibst"], correct: "gibt" },
+    { question: "Wir ___ dem Hund das Futter.", options: ["geben","gibst","gibt"], correct: "geben" }
+  ],
+  sentences: [
+    { translation: "Я даю тебе книгу", words: ["Ich","gebe","dir","ein","Buch"], correct: "Ich gebe dir ein Buch" },
+    { translation: "Ты даешь мне деньги", words: ["Du","gibst","mir","das","Geld"], correct: "Du gibst mir das Geld" },
+    { translation: "Он дает ребенку яблоко", words: ["Er","gibt","dem","Kind","einen","Apfel"], correct: "Er gibt dem Kind einen Apfel" },
+    { translation: "Мы даем вам подарок", words: ["Wir","geben","euch","ein","Geschenk"], correct: "Wir geben euch ein Geschenk" },
+    { translation: "Вы даете мне газету", words: ["Ihr","gebt","mir","die","Zeitung"], correct: "Ihr gebt mir die Zeitung" },
+    { translation: "Они дают нам ручки", words: ["Sie","geben","uns","die","Stifte"], correct: "Sie geben uns die Stifte" },
+    { translation: "Я даю тебе деньги", words: ["Ich","gebe","dir","das","Geld"], correct: "Ich gebe dir das Geld" },
+    { translation: "Ты даешь учителю книгу", words: ["Du","gibst","dem","Lehrer","das","Buch"], correct: "Du gibst dem Lehrer das Buch" },
+    { translation: "Он дает женщине сумку", words: ["Er","gibt","der","Frau","die","Tasche"], correct: "Er gibt der Frau die Tasche" },
+    { translation: "Мы даем собаке корм", words: ["Wir","geben","dem","Hund","das","Futter"], correct: "Wir geben dem Hund das Futter" }
+  ]
+},
+
+wissen: {
+  title: "wissen — знать 🧠",
+  example: "Ich weiß die Antwort. ✅",
+  fill: [
+    { question: "Ich ___ die Antwort.", options: ["weiß","weißt","wissen"], correct: "weiß" },
+    { question: "Du ___ die Lösung.", options: ["weißt","weiß","wissen"], correct: "weißt" },
+    { question: "Er ___ die Wahrheit.", options: ["weiß","weißt","wissen"], correct: "weiß" },
+    { question: "Wir ___ das Ergebnis.", options: ["wissen","weiß","weißt"], correct: "wissen" },
+    { question: "Ihr ___ die Regeln.", options: ["wisst","wissen","weiß"], correct: "wisst" },
+    { question: "Sie (мн.) ___ alles.", options: ["wissen","wisst","weiß"], correct: "wissen" },
+    { question: "Ich ___ die Antwort auf die Frage.", options: ["weiß","weißt","wissen"], correct: "weiß" },
+    { question: "Du ___ die Hausaufgaben.", options: ["weißt","weiß","wissen"], correct: "weißt" },
+    { question: "Er ___, was passiert ist.", options: ["weiß","weißt","wissen"], correct: "weiß" },
+    { question: "Wir ___, wie man das Problem löst.", options: ["wissen","weiß","weißt"], correct: "wissen" }
+  ],
+  sentences: [
+    { translation: "Я знаю ответ", words: ["Ich","weiß","die","Antwort"], correct: "Ich weiß die Antwort" },
+    { translation: "Ты знаешь решение", words: ["Du","weißt","die","Lösung"], correct: "Du weißt die Lösung" },
+    { translation: "Он знает правду", words: ["Er","weiß","die","Wahrheit"], correct: "Er weiß die Wahrheit" },
+    { translation: "Мы знаем результат", words: ["Wir","wissen","das","Ergebnis"], correct: "Wir wissen das Ergebnis" },
+    { translation: "Вы знаете правила", words: ["Ihr","wisst","die","Regeln"], correct: "Ihr wisst die Regeln" },
+    { translation: "Они знают всё", words: ["Sie","wissen","alles"], correct: "Sie wissen alles" },
+    { translation: "Я знаю ответ на вопрос", words: ["Ich","weiß","die","Antwort","auf","die","Frage"], correct: "Ich weiß die Antwort auf die Frage" },
+    { translation: "Ты знаешь домашнее задание", words: ["Du","weißt","die","Hausaufgaben"], correct: "Du weißt die Hausaufgaben" },
+    { translation: "Он знает, что произошло", words: ["Er","weiß","was","passiert","ist"], correct: "Er weiß was passiert ist" },
+    { translation: "Мы знаем, как решить проблему", words: ["Wir","wissen","wie","man","das","Problem","löst"], correct: "Wir wissen wie man das Problem löst" }
+  ]
+},
+
+essen: {
+  title: "essen — есть 🍽️",
+  example: "Ich esse einen Apfel. 🍎",
+  fill: [
+    { question: "Ich ___ einen Apfel.", options: ["esse","isst","isst"], correct: "esse" },
+    { question: "Du ___ das Brot.", options: ["isst","esse","essen"], correct: "isst" },
+    { question: "Er ___ die Suppe.", options: ["isst","esse","essen"], correct: "isst" },
+    { question: "Wir ___ Pizza.", options: ["essen","isst","esse"], correct: "essen" },
+    { question: "Ihr ___ Nudeln.", options: ["esst","essen","isst"], correct: "esst" },
+    { question: "Sie (мн.) ___ Obst.", options: ["essen","esst","isst"], correct: "essen" },
+    { question: "Ich ___ das Frühstück.", options: ["esse","isst","essen"], correct: "esse" },
+    { question: "Du ___ Kuchen.", options: ["isst","esse","essen"], correct: "isst" },
+    { question: "Er ___ Fisch.", options: ["isst","esse","essen"], correct: "isst" },
+    { question: "Wir ___ Eis.", options: ["essen","isst","esse"], correct: "essen" }
+  ],
+  sentences: [
+    { translation: "Я ем яблоко", words: ["Ich","esse","einen","Apfel"], correct: "Ich esse einen Apfel" },
+    { translation: "Ты ешь хлеб", words: ["Du","isst","das","Brot"], correct: "Du isst das Brot" },
+    { translation: "Он ест суп", words: ["Er","isst","die","Suppe"], correct: "Er isst die Suppe" },
+    { translation: "Мы едим пиццу", words: ["Wir","essen","Pizza"], correct: "Wir essen Pizza" },
+    { translation: "Вы едите макароны", words: ["Ihr","esst","Nudeln"], correct: "Ihr esst Nudeln" },
+    { translation: "Они едят фрукты", words: ["Sie","essen","Obst"], correct: "Sie essen Obst" },
+    { translation: "Я ем завтрак", words: ["Ich","esse","das","Frühstück"], correct: "Ich esse das Frühstück" },
+    { translation: "Ты ешь торт", words: ["Du","isst","Kuchen"], correct: "Du isst Kuchen" },
+    { translation: "Он ест рыбу", words: ["Er","isst","Fisch"], correct: "Er isst Fisch" },
+    { translation: "Мы едим мороженое", words: ["Wir","essen","Eis"], correct: "Wir essen Eis" }
+  ]
+},
+trinken: {
+  title: "trinken — пить 🍹",
+  example: "Ich trinke Wasser. 💧",
+  fill: [
+    { question: "Ich ___ Wasser.", options: ["trinke","trinkst","trinkt"], correct: "trinke" },
+    { question: "Du ___ Saft.", options: ["trinkst","trinke","trinken"], correct: "trinkst" },
+    { question: "Er ___ Milch.", options: ["trinkt","trinke","trinkst"], correct: "trinkt" },
+    { question: "Wir ___ Tee.", options: ["trinken","trinkt","trinke"], correct: "trinken" },
+    { question: "Ihr ___ Kaffee.", options: ["trinkt","trinkt","trinkt"], correct: "trinkt" },
+    { question: "Sie (мн.) ___ Limonade.", options: ["trinken","trinkt","trinkst"], correct: "trinken" },
+    { question: "Ich ___ Wein.", options: ["trinke","trinkt","trinkst"], correct: "trinke" },
+    { question: "Du ___ Bier.", options: ["trinkst","trinke","trinkt"], correct: "trinkst" },
+    { question: "Er ___ Orangensaft.", options: ["trinkt","trinke","trinkst"], correct: "trinkt" },
+    { question: "Wir ___ Mineralwasser.", options: ["trinken","trinkt","trinke"], correct: "trinken" }
+  ],
+  sentences: [
+    { translation: "Я пью воду", words: ["Ich","trinke","Wasser"], correct: "Ich trinke Wasser" },
+    { translation: "Ты пьешь сок", words: ["Du","trinkst","Saft"], correct: "Du trinkst Saft" },
+    { translation: "Он пьет молоко", words: ["Er","trinkt","Milch"], correct: "Er trinkt Milch" },
+    { translation: "Мы пьем чай", words: ["Wir","trinken","Tee"], correct: "Wir trinken Tee" },
+    { translation: "Вы пьете кофе", words: ["Ihr","trinkt","Kaffee"], correct: "Ihr trinkt Kaffee" },
+    { translation: "Они пьют лимонад", words: ["Sie","trinken","Limonade"], correct: "Sie trinken Limonade" },
+    { translation: "Я пью вино", words: ["Ich","trinke","Wein"], correct: "Ich trinke Wein" },
+    { translation: "Ты пьешь пиво", words: ["Du","trinkst","Bier"], correct: "Du trinkst Bier" },
+    { translation: "Он пьет апельсиновый сок", words: ["Er","trinkt","Orangensaft"], correct: "Er trinkt Orangensaft" },
+    { translation: "Мы пьем минеральную воду", words: ["Wir","trinken","Mineralwasser"], correct: "Wir trinken Mineralwasser" }
+  ]
+},
+
+schreiben: {
+  title: "schreiben — писать ✍️",
+  example: "Ich schreibe einen Brief. 📝",
+  fill: [
+    { question: "Ich ___ einen Brief.", options: ["schreibe","schreibst","schreibt"], correct: "schreibe" },
+    { question: "Du ___ eine E-Mail.", options: ["schreibst","schreibe","schreibt"], correct: "schreibst" },
+    { question: "Er ___ einen Aufsatz.", options: ["schreibt","schreibe","schreibst"], correct: "schreibt" },
+    { question: "Wir ___ Postkarten.", options: ["schreiben","schreibt","schreibe"], correct: "schreiben" },
+    { question: "Ihr ___ Notizen.", options: ["schreibt","schreiben","schreibst"], correct: "schreibt" },
+    { question: "Sie (мн.) ___ Briefe.", options: ["schreiben","schreibt","schreibst"], correct: "schreiben" },
+    { question: "Ich ___ einen Bericht.", options: ["schreibe","schreibt","schreibst"], correct: "schreibe" },
+    { question: "Du ___ eine Geschichte.", options: ["schreibst","schreibe","schreibt"], correct: "schreibst" },
+    { question: "Er ___ das Datum auf.", options: ["schreibt","schreibe","schreibst"], correct: "schreibt" },
+    { question: "Wir ___ ein Tagebuch.", options: ["schreiben","schreibt","schreibe"], correct: "schreiben" }
+  ],
+  sentences: [
+    { translation: "Я пишу письмо", words: ["Ich","schreibe","einen","Brief"], correct: "Ich schreibe einen Brief" },
+    { translation: "Ты пишешь электронное письмо", words: ["Du","schreibst","eine","E-Mail"], correct: "Du schreibst eine E-Mail" },
+    { translation: "Он пишет сочинение", words: ["Er","schreibt","einen","Aufsatz"], correct: "Er schreibt einen Aufsatz" },
+    { translation: "Мы пишем открытки", words: ["Wir","schreiben","Postkarten"], correct: "Wir schreiben Postkarten" },
+    { translation: "Вы пишете заметки", words: ["Ihr","schreibt","Notizen"], correct: "Ihr schreibt Notizen" },
+    { translation: "Они пишут письма", words: ["Sie","schreiben","Briefe"], correct: "Sie schreiben Briefe" },
+    { translation: "Я пишу отчет", words: ["Ich","schreibe","einen","Bericht"], correct: "Ich schreibe einen Bericht" },
+    { translation: "Ты пишешь историю", words: ["Du","schreibst","eine","Geschichte"], correct: "Du schreibst eine Geschichte" },
+    { translation: "Он пишет дату", words: ["Er","schreibt","das","Datum","auf"], correct: "Er schreibt das Datum auf" },
+    { translation: "Мы ведем дневник", words: ["Wir","schreiben","ein","Tagebuch"], correct: "Wir schreiben ein Tagebuch" }
+  ]
+},
+
+lesen: {
+  title: "lesen — читать 📖",
+  example: "Ich lese ein Buch. 📚",
+  fill: [
+    { question: "Ich ___ ein Buch.", options: ["lese","liest","liest"], correct: "lese" },
+    { question: "Du ___ die Zeitung.", options: ["liest","lese","lesen"], correct: "liest" },
+    { question: "Er ___ einen Artikel.", options: ["liest","lese","liest"], correct: "liest" },
+    { question: "Wir ___ Bücher.", options: ["lesen","liest","lese"], correct: "lesen" },
+    { question: "Ihr ___ das Magazin.", options: ["lest","lesen","liest"], correct: "lest" },
+    { question: "Sie (мн.) ___ Geschichten.", options: ["lesen","lest","liest"], correct: "lesen" },
+    { question: "Ich ___ die E-Mail.", options: ["lese","liest","lest"], correct: "lese" },
+    { question: "Du ___ den Brief.", options: ["liest","lese","lesen"], correct: "liest" },
+    { question: "Er ___ das Buch.", options: ["liest","lese","lesen"], correct: "liest" },
+    { question: "Wir ___ die Aufgaben.", options: ["lesen","lest","liest"], correct: "lesen" }
+  ],
+  sentences: [
+    { translation: "Я читаю книгу", words: ["Ich","lese","ein","Buch"], correct: "Ich lese ein Buch" },
+    { translation: "Ты читаешь газету", words: ["Du","liest","die","Zeitung"], correct: "Du liest die Zeitung" },
+    { translation: "Он читает статью", words: ["Er","liest","einen","Artikel"], correct: "Er liest einen Artikel" },
+    { translation: "Мы читаем книги", words: ["Wir","lesen","Bücher"], correct: "Wir lesen Bücher" },
+    { translation: "Вы читаете журнал", words: ["Ihr","lest","das","Magazin"], correct: "Ihr lest das Magazin" },
+    { translation: "Они читают истории", words: ["Sie","lesen","Geschichten"], correct: "Sie lesen Geschichten" },
+    { translation: "Я читаю электронное письмо", words: ["Ich","lese","die","E-Mail"], correct: "Ich lese die E-Mail" },
+    { translation: "Ты читаешь письмо", words: ["Du","liest","den","Brief"], correct: "Du liest den Brief" },
+    { translation: "Он читает книгу", words: ["Er","liest","das","Buch"], correct: "Er liest das Buch" },
+    { translation: "Мы читаем задания", words: ["Wir","lesen","die","Aufgaben"], correct: "Wir lesen die Aufgaben" }
+  ]
+},
+wollen: {
+  title: "wollen — хотеть 🔵",
+  example: "Ich will ein Eis. 🍦",
+  fill: [
+    { question: "Ich ___ ein Buch lesen.", options: ["will","willst","wollen"], correct: "will" },
+    { question: "Du ___ ins Kino gehen.", options: ["willst","will","wollen"], correct: "willst" },
+    { question: "Er ___ schlafen.", options: ["will","willst","wollen"], correct: "will" },
+    { question: "Wir ___ Fußball spielen.", options: ["wollen","will","willst"], correct: "wollen" },
+    { question: "Ihr ___ tanzen.", options: ["wollt","wollen","will"], correct: "wollt" },
+    { question: "Sie (мн.) ___ reisen.", options: ["wollen","wollt","will"], correct: "wollen" },
+    { question: "Ich ___ Deutsch lernen.", options: ["will","wollen","willst"], correct: "will" },
+    { question: "Du ___ Kaffee trinken.", options: ["willst","will","wollen"], correct: "willst" },
+    { question: "Er ___ spazieren gehen.", options: ["will","wollen","willst"], correct: "will" },
+    { question: "Wir ___ Pizza essen.", options: ["wollen","will","willst"], correct: "wollen" }
+  ],
+  sentences: [
+    { translation: "Я хочу читать книгу", words: ["Ich","will","ein","Buch","lesen"], correct: "Ich will ein Buch lesen" },
+    { translation: "Ты хочешь идти в кино", words: ["Du","willst","ins","Kino","gehen"], correct: "Du willst ins Kino gehen" },
+    { translation: "Он хочет спать", words: ["Er","will","schlafen"], correct: "Er will schlafen" },
+    { translation: "Мы хотим играть в футбол", words: ["Wir","wollen","Fußball","spielen"], correct: "Wir wollen Fußball spielen" },
+    { translation: "Вы хотите танцевать", words: ["Ihr","wollt","tanzen"], correct: "Ihr wollt tanzen" },
+    { translation: "Они хотят путешествовать", words: ["Sie","wollen","reisen"], correct: "Sie wollen reisen" },
+    { translation: "Я хочу учить немецкий", words: ["Ich","will","Deutsch","lernen"], correct: "Ich will Deutsch lernen" },
+    { translation: "Ты хочешь пить кофе", words: ["Du","willst","Kaffee","trinken"], correct: "Du willst Kaffee trinken" },
+    { translation: "Он хочет идти гулять", words: ["Er","will","spazieren","gehen"], correct: "Er will spazieren gehen" },
+    { translation: "Мы хотим есть пиццу", words: ["Wir","wollen","Pizza","essen"], correct: "Wir wollen Pizza essen" }
+  ]
+},
+
+müssen: {
+  title: "müssen — должен, нужно 🔴",
+  example: "Ich muss lernen. 📖",
+  fill: [
+    { question: "Ich ___ Hausaufgaben machen.", options: ["muss","musst","müssen"], correct: "muss" },
+    { question: "Du ___ pünktlich sein.", options: ["musst","muss","müssen"], correct: "musst" },
+    { question: "Er ___ arbeiten.", options: ["muss","musst","müssen"], correct: "muss" },
+    { question: "Wir ___ einkaufen.", options: ["müssen","muss","musst"], correct: "müssen" },
+    { question: "Ihr ___ leise sein.", options: ["müsst","müssen","muss"], correct: "müsst" },
+    { question: "Sie (мн.) ___ helfen.", options: ["müssen","müsst","muss"], correct: "müssen" },
+    { question: "Ich ___ zum Arzt gehen.", options: ["muss","müssen","musst"], correct: "muss" },
+    { question: "Du ___ das Buch lesen.", options: ["musst","muss","müssen"], correct: "musst" },
+    { question: "Er ___ früh aufstehen.", options: ["muss","musst","müssen"], correct: "muss" },
+    { question: "Wir ___ pünktlich kommen.", options: ["müssen","muss","musst"], correct: "müssen" }
+  ],
+  sentences: [
+    { translation: "Я должен делать домашку", words: ["Ich","muss","Hausaufgaben","machen"], correct: "Ich muss Hausaufgaben machen" },
+    { translation: "Ты должен быть пунктуален", words: ["Du","musst","pünktlich","sein"], correct: "Du musst pünktlich sein" },
+    { translation: "Он должен работать", words: ["Er","muss","arbeiten"], correct: "Er muss arbeiten" },
+    { translation: "Мы должны ходить за покупками", words: ["Wir","müssen","einkaufen"], correct: "Wir müssen einkaufen" },
+    { translation: "Вы должны быть тихими", words: ["Ihr","müsst","leise","sein"], correct: "Ihr müsst leise sein" },
+    { translation: "Они должны помочь", words: ["Sie","müssen","helfen"], correct: "Sie müssen helfen" },
+    { translation: "Я должен идти к врачу", words: ["Ich","muss","zum","Arzt","gehen"], correct: "Ich muss zum Arzt gehen" },
+    { translation: "Ты должен прочитать книгу", words: ["Du","musst","das","Buch","lesen"], correct: "Du musst das Buch lesen" },
+    { translation: "Он должен вставать рано", words: ["Er","muss","früh","aufstehen"], correct: "Er muss früh aufstehen" },
+    { translation: "Мы должны прийти вовремя", words: ["Wir","müssen","pünktlich","kommen"], correct: "Wir müssen pünktlich kommen" }
+  ]
+},
+
+dürfen: {
+  title: "dürfen — мочь (разрешение) 🟠",
+  example: "Ich darf hier parken. 🅿️",
+  fill: [
+    { question: "Ich ___ hier rauchen.", options: ["darf","darfst","dürfen"], correct: "darf" },
+    { question: "Du ___ das Buch lesen.", options: ["darfst","darf","dürfen"], correct: "darfst" },
+    { question: "Er ___ fernsehen.", options: ["darf","darfst","dürfen"], correct: "darf" },
+    { question: "Wir ___ spät kommen.", options: ["dürfen","darf","darfst"], correct: "dürfen" },
+    { question: "Ihr ___ hier spielen.", options: ["dürft","dürfen","darf"], correct: "dürft" },
+    { question: "Sie (мн.) ___ mitmachen.", options: ["dürfen","dürft","darf"], correct: "dürfen" },
+    { question: "Ich ___ das Auto benutzen.", options: ["darf","darfst","dürfen"], correct: "darf" },
+    { question: "Du ___ die Fragen beantworten.", options: ["darfst","darf","dürfen"], correct: "darfst" },
+    { question: "Er ___ das Licht anmachen.", options: ["darf","darfst","dürfen"], correct: "darf" },
+    { question: "Wir ___ ins Museum gehen.", options: ["dürfen","darf","darfst"], correct: "dürfen" }
+  ],
+  sentences: [
+    { translation: "Мне разрешено здесь курить", words: ["Ich","darf","hier","rauchen"], correct: "Ich darf hier rauchen" },
+    { translation: "Ты можешь читать книгу", words: ["Du","darfst","das","Buch","lesen"], correct: "Du darfst das Buch lesen" },
+    { translation: "Он может смотреть телевизор", words: ["Er","darf","fernsehen"], correct: "Er darf fernsehen" },
+    { translation: "Мы можем опоздать", words: ["Wir","dürfen","spät","kommen"], correct: "Wir dürfen spät kommen" },
+    { translation: "Вы можете здесь играть", words: ["Ihr","dürft","hier","spielen"], correct: "Ihr dürft hier spielen" },
+    { translation: "Они могут участвовать", words: ["Sie","dürfen","mitmachen"], correct: "Sie dürfen mitmachen" },
+    { translation: "Я могу пользоваться машиной", words: ["Ich","darf","das","Auto","benutzen"], correct: "Ich darf das Auto benutzen" },
+    { translation: "Ты можешь ответить на вопросы", words: ["Du","darfst","die","Fragen","beantworten"], correct: "Du darfst die Fragen beantworten" },
+    { translation: "Он может включить свет", words: ["Er","darf","das","Licht","anmachen"], correct: "Er darf das Licht anmachen" },
+    { translation: "Мы можем пойти в музей", words: ["Wir","dürfen","ins","Museum","gehen"], correct: "Wir dürfen ins Museum gehen" }
+  ]
+},
+sollen: {
+  title: "sollen — должен (рекомендация/совет) 🟢",
+  example: "Du sollst mehr Wasser trinken. 💧",
+  fill: [
+    { question: "Ich ___ mehr lernen.", options: ["soll","sollst","sollen"], correct: "soll" },
+    { question: "Du ___ zum Arzt gehen.", options: ["sollst","soll","sollen"], correct: "sollst" },
+    { question: "Er ___ pünktlich sein.", options: ["soll","sollst","sollen"], correct: "soll" },
+    { question: "Wir ___ das Buch lesen.", options: ["sollen","soll","sollst"], correct: "sollen" },
+    { question: "Ihr ___ leise sein.", options: ["sollt","sollen","soll"], correct: "sollt" },
+    { question: "Sie (мн.) ___ helfen.", options: ["sollen","sollt","soll"], correct: "sollen" },
+    { question: "Ich ___ Sport treiben.", options: ["soll","sollst","sollen"], correct: "soll" },
+    { question: "Du ___ gesund essen.", options: ["sollst","soll","sollen"], correct: "sollst" },
+    { question: "Er ___ das Zimmer aufräumen.", options: ["soll","sollst","sollen"], correct: "soll" },
+    { question: "Wir ___ pünktlich kommen.", options: ["sollen","soll","sollst"], correct: "sollen" }
+  ],
+  sentences: [
+    { translation: "Я должен больше учиться", words: ["Ich","soll","mehr","lernen"], correct: "Ich soll mehr lernen" },
+    { translation: "Ты должен идти к врачу", words: ["Du","sollst","zum","Arzt","gehen"], correct: "Du sollst zum Arzt gehen" },
+    { translation: "Он должен быть пунктуален", words: ["Er","soll","pünktlich","sein"], correct: "Er soll pünktlich sein" },
+    { translation: "Мы должны прочитать книгу", words: ["Wir","sollen","das","Buch","lesen"], correct: "Wir sollen das Buch lesen" },
+    { translation: "Вы должны быть тихими", words: ["Ihr","sollt","leise","sein"], correct: "Ihr sollt leise sein" },
+    { translation: "Они должны помочь", words: ["Sie","sollen","helfen"], correct: "Sie sollen helfen" },
+    { translation: "Я должен заниматься спортом", words: ["Ich","soll","Sport","treiben"], correct: "Ich soll Sport treiben" },
+    { translation: "Ты должен правильно питаться", words: ["Du","sollst","gesund","essen"], correct: "Du sollst gesund essen" },
+    { translation: "Он должен убрать комнату", words: ["Er","soll","das","Zimmer","aufräumen"], correct: "Er soll das Zimmer aufräumen" },
+    { translation: "Мы должны прийти вовремя", words: ["Wir","sollen","pünktlich","kommen"], correct: "Wir sollen pünktlich kommen" }
+  ]
+},
+
+spielen: {
+  title: "spielen — играть 🎮",
+  example: "Die Kinder spielen im Garten. 🌳",
+  fill: [
+    { question: "Ich ___ Fußball.", options: ["spiele","spielst","spielen"], correct: "spiele" },
+    { question: "Du ___ Klavier.", options: ["spielst","spiele","spielen"], correct: "spielst" },
+    { question: "Er ___ Tennis.", options: ["spielt","spiele","spielst"], correct: "spielt" },
+    { question: "Wir ___ Karten.", options: ["spielen","spielt","spielst"], correct: "spielen" },
+    { question: "Ihr ___ Basketball.", options: ["spielt","spielt","spielt"], correct: "spielt" },
+    { question: "Sie (мн.) ___ Schach.", options: ["spielen","spielt","spielst"], correct: "spielen" },
+    { question: "Ich ___ ein Videospiel.", options: ["spiele","spielst","spielen"], correct: "spiele" },
+    { question: "Du ___ draußen.", options: ["spielst","spiele","spielen"], correct: "spielst" },
+    { question: "Er ___ am Computer.", options: ["spielt","spiele","spielst"], correct: "spielt" },
+    { question: "Wir ___ im Park.", options: ["spielen","spielt","spielst"], correct: "spielen" }
+  ],
+  sentences: [
+    { translation: "Я играю в футбол", words: ["Ich","spiele","Fußball"], correct: "Ich spiele Fußball" },
+    { translation: "Ты играешь на пианино", words: ["Du","spielst","Klavier"], correct: "Du spielst Klavier" },
+    { translation: "Он играет в теннис", words: ["Er","spielt","Tennis"], correct: "Er spielt Tennis" },
+    { translation: "Мы играем в карты", words: ["Wir","spielen","Karten"], correct: "Wir spielen Karten" },
+    { translation: "Вы играете в баскетбол", words: ["Ihr","spielt","Basketball"], correct: "Ihr spielt Basketball" },
+    { translation: "Они играют в шахматы", words: ["Sie","spielen","Schach"], correct: "Sie spielen Schach" },
+    { translation: "Я играю в видеоигру", words: ["Ich","spiele","ein","Videospiel"], correct: "Ich spiele ein Videospiel" },
+    { translation: "Ты играешь на улице", words: ["Du","spielst","draußen"], correct: "Du spielst draußen" },
+    { translation: "Он играет за компьютером", words: ["Er","spielt","am","Computer"], correct: "Er spielt am Computer" },
+    { translation: "Мы играем в парке", words: ["Wir","spielen","im","Park"], correct: "Wir spielen im Park" }
+  ]
+},
+
+arbeiten: {
+  title: "arbeiten — работать 🛠️",
+  example: "Ich arbeite im Büro. 🏢",
+  fill: [
+    { question: "Ich ___ heute viel.", options: ["arbeite","arbeitest","arbeiten"], correct: "arbeite" },
+    { question: "Du ___ im Garten.", options: ["arbeitest","arbeite","arbeiten"], correct: "arbeitest" },
+    { question: "Er ___ in der Schule.", options: ["arbeitet","arbeite","arbeitest"], correct: "arbeitet" },
+    { question: "Wir ___ zusammen.", options: ["arbeiten","arbeitet","arbeitest"], correct: "arbeiten" },
+    { question: "Ihr ___ hart.", options: ["arbeitet","arbeiten","arbeite"], correct: "arbeitet" },
+    { question: "Sie (мн.) ___ im Team.", options: ["arbeiten","arbeitet","arbeitest"], correct: "arbeiten" },
+    { question: "Ich ___ am Computer.", options: ["arbeite","arbeitest","arbeiten"], correct: "arbeite" },
+    { question: "Du ___ von zu Hause.", options: ["arbeitest","arbeite","arbeiten"], correct: "arbeitest" },
+    { question: "Er ___ spät.", options: ["arbeitet","arbeite","arbeitest"], correct: "arbeitet" },
+    { question: "Wir ___ jeden Tag.", options: ["arbeiten","arbeitet","arbeitest"], correct: "arbeiten" }
+  ],
+  sentences: [
+    { translation: "Я много работаю сегодня", words: ["Ich","arbeite","heute","viel"], correct: "Ich arbeite heute viel" },
+    { translation: "Ты работаешь в саду", words: ["Du","arbeitest","im","Garten"], correct: "Du arbeitest im Garten" },
+    { translation: "Он работает в школе", words: ["Er","arbeitet","in","der","Schule"], correct: "Er arbeitet in der Schule" },
+    { translation: "Мы работаем вместе", words: ["Wir","arbeiten","zusammen"], correct: "Wir arbeiten zusammen" },
+    { translation: "Вы работаете усердно", words: ["Ihr","arbeitet","hart"], correct: "Ihr arbeitet hart" },
+    { translation: "Они работают в команде", words: ["Sie","arbeiten","im","Team"], correct: "Sie arbeiten im Team" },
+    { translation: "Я работаю за компьютером", words: ["Ich","arbeite","am","Computer"], correct: "Ich arbeite am Computer" },
+    { translation: "Ты работаешь из дома", words: ["Du","arbeitest","von","zu","Hause"], correct: "Du arbeitest von zu Hause" },
+    { translation: "Он работает поздно", words: ["Er","arbeitet","spät"], correct: "Er arbeitet spät" },
+    { translation: "Мы работаем каждый день", words: ["Wir","arbeiten","jeden","Tag"], correct: "Wir arbeiten jeden Tag" }
+  ]
+},
+
+finden: {
+  title: "finden — находить 🔍",
+  example: "Ich finde meinen Schlüssel nicht. 🔑",
+  fill: [
+    { question: "Ich ___ den Weg.", options: ["finde","findest","finden"], correct: "finde" },
+    { question: "Du ___ das Buch.", options: ["findest","finde","finden"], correct: "findest" },
+    { question: "Er ___ seinen Stift.", options: ["findet","finde","findest"], correct: "findet" },
+    { question: "Wir ___ die Lösung.", options: ["finden","findet","findest"], correct: "finden" },
+    { question: "Ihr ___ den Fehler.", options: ["findet","finden","finde"], correct: "findet" },
+    { question: "Sie (мн.) ___ die Antwort.", options: ["finden","findet","findest"], correct: "finden" },
+    { question: "Ich ___ mein Handy.", options: ["finde","findest","finden"], correct: "finde" },
+    { question: "Du ___ die Schuhe.", options: ["findest","finde","finden"], correct: "findest" },
+    { question: "Er ___ den Schlüssel.", options: ["findet","finde","findest"], correct: "findet" },
+    { question: "Wir ___ den Schatz.", options: ["finden","findet","findest"], correct: "finden" }
+  ],
+  sentences: [
+    { translation: "Я нахожу путь", words: ["Ich","finde","den","Weg"], correct: "Ich finde den Weg" },
+    { translation: "Ты находишь книгу", words: ["Du","findest","das","Buch"], correct: "Du findest das Buch" },
+    { translation: "Он находит свою ручку", words: ["Er","findet","seinen","Stift"], correct: "Er findet seinen Stift" },
+    { translation: "Мы находим решение", words: ["Wir","finden","die","Lösung"], correct: "Wir finden die Lösung" },
+    { translation: "Вы находите ошибку", words: ["Ihr","findet","den","Fehler"], correct: "Ihr findet den Fehler" },
+    { translation: "Они находят ответ", words: ["Sie","finden","die","Antwort"], correct: "Sie finden die Antwort" },
+    { translation: "Я нахожу свой телефон", words: ["Ich","finde","mein","Handy"], correct: "Ich finde mein Handy" },
+    { translation: "Ты находишь обувь", words: ["Du","findest","die","Schuhe"], correct: "Du findest die Schuhe" },
+    { translation: "Он находит ключ", words: ["Er","findet","den","Schlüssel"], correct: "Er findet den Schlüssel" },
+    { translation: "Мы находим сокровище", words: ["Wir","finden","den","Schatz"], correct: "Wir finden den Schatz" }
+  ]
+},
+
+laufen:{
+  title: "laufen — бегать, идти 🏃",
+  example: "Ich laufe jeden Morgen. 🌅",
+  fill: [
+    { question: "Ich ___ schnell.", options: ["laufe","läufst","laufen"], correct: "laufe" },
+    { question: "Du ___ im Park.", options: ["läufst","laufe","laufen"], correct: "läufst" },
+    { question: "Er ___ zur Arbeit.", options: ["läuft","laufe","läufst"], correct: "läuft" },
+    { question: "Wir ___ jeden Tag.", options: ["laufen","läuft","läufst"], correct: "laufen" },
+    { question: "Ihr ___ im Stadion.", options: ["lauft","laufen","läuft"], correct: "lauft" },
+    { question: "Sie (мн.) ___ schnell.", options: ["laufen","lauft","läuft"], correct: "laufen" },
+    { question: "Ich ___ am Morgen.", options: ["laufe","läufst","laufen"], correct: "laufe" },
+    { question: "Du ___ im Rennen.", options: ["läufst","laufe","laufen"], correct: "läufst" },
+    { question: "Er ___ nach Hause.", options: ["läuft","laufe","läufst"], correct: "läuft" },
+    { question: "Wir ___ zusammen.", options: ["laufen","läuft","läufst"], correct: "laufen" }
+  ],
+  sentences: [
+    { translation: "Я бегаю быстро", words: ["Ich","laufe","schnell"], correct: "Ich laufe schnell" },
+    { translation: "Ты бегаешь в парке", words: ["Du","läufst","im","Park"], correct: "Du läufst im Park" },
+    { translation: "Он идет на работу", words: ["Er","läuft","zur","Arbeit"], correct: "Er läuft zur Arbeit" },
+    { translation: "Мы бегаем каждый день", words: ["Wir","laufen","jeden","Tag"], correct: "Wir laufen jeden Tag" },
+    { translation: "Вы бежите на стадионе", words: ["Ihr","lauft","im","Stadion"], correct: "Ihr lauft im Stadion" },
+    { translation: "Они бегают быстро", words: ["Sie","laufen","schnell"], correct: "Sie laufen schnell" },
+    { translation: "Я бегаю утром", words: ["Ich","laufe","am","Morgen"], correct: "Ich laufe am Morgen" },
+    { translation: "Ты бежишь в гонке", words: ["Du","läufst","im","Rennen"], correct: "Du läufst im Rennen" },
+    { translation: "Он идет домой", words: ["Er","läuft","nach","Hause"], correct: "Er läuft nach Hause" },
+    { translation: "Мы идем вместе", words: ["Wir","laufen","zusammen"], correct: "Wir laufen zusammen" }
+  ]
+},
+
+
+
+
+
+
   };
 
   const startBtn = document.getElementById('startBtn');
@@ -198,6 +777,27 @@
   let currentVerb = 'gehen';
   let currentSentence = {};
 
+
+function populateVerbSelect() {
+  verbSelect.innerHTML = '';
+  for (let key in verbs) {
+    const option = document.createElement('option');
+    option.value = key;
+    option.textContent = verbs[key].title.split(' — ')[0];
+    verbSelect.appendChild(option);
+  }
+  verbSelect.value = 'gehen';
+  verbTitle.textContent = verbs['gehen'].title;
+  verbExample.textContent = verbs['gehen'].example;
+}
+
+verbSelect.addEventListener('change', () => {
+  const v = verbs[verbSelect.value];
+  verbTitle.textContent = v.title;
+  verbExample.textContent = v.example;
+});
+
+populateVerbSelect();
 
   verbSelect.addEventListener('change', () => {
     currentVerb = verbSelect.value;
