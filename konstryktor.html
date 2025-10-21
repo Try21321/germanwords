@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deutsch lernen — Verben Trainer</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: radial-gradient(circle at top, #4f8cff, #1a1a2e);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+  }
+
+  select {
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+  }
+
+  .verb-card {
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    width: 340px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .verb {
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+
+  .example {
+    font-style: italic;
+    opacity: 0.9;
+    margin-bottom: 1rem;
+  }
+
+  button {
+    background: linear-gradient(90deg, #00c9ff, #92fe9d);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #111;
+    font-weight: 600;
+    margin-top: 1rem;
+    transition: transform 0.2s;
+  }
+
+  button:hover { transform: scale(1.05); }
+
+  .quiz {
+    display: none;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .sentence {
+    margin: 1rem 0;
+  }
+
+  .options, .word-bank, .sentence-area {
+    display: flex;
+    justify-content: center;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+  }
+
+  .option, .word {
+    background: rgba(255,255,255,0.15);
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .option:hover, .word:hover {
+    background: rgba(255,255,255,0.25);
+  }
+
+  .correct { background: #4caf50 !important; }
+  .wrong { background: #e74c3c !important; }
+  .emoji { font-size: 2rem; margin-top: 1rem; }
+  .sentence-area {
+    background: rgba(255,255,255,0.15);
+    min-height: 40px;
+    border-radius: 10px;
+    padding: 10px;
+  }
+</style>
+</head>
+<body>
+
+<h1>💪 Lernen wir Verben!</h1>
+
+<select id="verbSelect">
+  <option value="gehen">gehen — идти</option>
+  <option value="sprechen">sprechen — говорить</option>
+  <option value="machen">machen — делать</option>
+</select>
+
+<div class="verb-card" id="verbCard">
+  <div class="verb" id="verbTitle">gehen — идти 🚶‍♂️</div>
+  <div class="example" id="verbExample">Ich gehe nach Hause. 🏠</div>
+
+  <button id="startBtn">Начать</button>
+
+  <div class="quiz" id="modeSelect">
+    <p>Выбери режим:</p>
+    <button onclick="startFill()">Подставь слово</button>
+    <button onclick="startSentence()">Собери предложение</button>
+  </div>
+
+  <!-- Подставь слово -->
+  <div class="quiz" id="fillQuiz">
+    <p id="fillQuestion"></p>
+    <div class="options" id="fillOptions"></div>
+    <div class="emoji" id="fillEmoji"></div>
+
+  </div>
+
+  <!-- Собери предложение -->
+  <div class="quiz" id="sentenceQuiz">
+    <p id="sentenceTranslation"></p>
+    <div class="sentence-area" id="sentenceArea"></div>
+    <div class="word-bank" id="wordBank"></div>
+    <button onclick="checkSentence()">Проверить</button>
+    <button onclick="resetSentence()">Сбросить</button>
+    <button id="backSentenceBtn">⬅ Назад</button>
+    <div class="emoji" id="sentenceEmoji"></div>
+  </div>
+</div>
+
+<script>
+  const verbs = {
+    gehen: {
+      title: "gehen — идти 🚶‍♂️",
+      example: "Ich gehe nach Hause. 🏠",
+     fill: [
+  { question: "Du ___ zur Schule.", options: ["gehe","gehst","geht"], correct: "gehst" },
+  { question: "Ich ___ zur Schule.", options: ["gehe","gehst","geht"], correct: "gehe" }
+],
+      sentences: [
+        { translation: "Я иду домой", words: ["Ich", "gehe", "nach", "Hause"], correct: "Ich gehe nach Hause" },
+        { translation: "Мы идем в парк", words: ["Wir", "gehen", "in", "den", "Park"], correct: "Wir gehen in den Park" }
+      ]
+    },
+    sprechen: {
+      title: "sprechen — говорить 🗣️",
+      example: "Er spricht Deutsch.",
+      fill: { question: "Ich ___ Englisch.", options: ["sprichst", "spreche", "spricht"], correct: "spreche" },
+      sentences: [
+        { translation: "Он говорит по-немецки", words: ["Er", "spricht", "Deutsch"], correct: "Er spricht Deutsch" },
+        { translation: "Мы говорим по-английски", words: ["Wir", "sprechen", "Englisch"], correct: "Wir sprechen Englisch" }
+      ]
+    },
+    machen: {
+      title: "machen — делать 🔧",
+      example: "Ich mache Frühstück.",
+      fill: { question: "Er ___ die Hausaufgaben.", options: ["machst", "mache", "macht"], correct: "macht" },
+      sentences: [
+        { translation: "Я делаю завтрак", words: ["Ich", "mache", "Frühstück"], correct: "Ich mache Frühstück" },
+        { translation: "Они делают работу", words: ["Sie", "machen", "die", "Arbeit"], correct: "Sie machen die Arbeit" }
+      ]
+    }
+  };
+
+  const startBtn = document.getElementById('startBtn');
+  const modeSelect = document.getElementById('modeSelect');
+  const fillQuiz = document.getElementById('fillQuiz');
+  const sentenceQuiz = document.getElementById('sentenceQuiz');
+  const verbSelect = document.getElementById('verbSelect');
+  const verbTitle = document.getElementById('verbTitle');
+  const verbExample = document.getElementById('verbExample');
+  let currentVerb = 'gehen';
+  let currentSentence = {};
+
+
+  verbSelect.addEventListener('change', () => {
+    currentVerb = verbSelect.value;
+    const v = verbs[currentVerb];
+    verbTitle.textContent = v.title;
+    verbExample.textContent = v.example;
+    resetAll();
+  });
+
+  startBtn.addEventListener('click', () => {
+    startBtn.style.display = 'none';
+    modeSelect.style.display = 'block';
+  });
+
+  let fillTimeout;
+
+function startFill() {
+  modeSelect.style.display = 'none';
+  fillQuiz.style.display = 'block';
+
+  const fillExamples = verbs[currentVerb].fill;
+  let currentFill = fillExamples[Math.floor(Math.random() * fillExamples.length)];
+
+  const fillQuestion = document.getElementById('fillQuestion');
+  const fillOptions = document.getElementById('fillOptions');
+  const emoji = document.getElementById('fillEmoji');
+
+  function loadExample() {
+    fillQuestion.textContent = currentFill.question;
+    fillOptions.innerHTML = '';
+    emoji.textContent = '';
+
+    currentFill.options.forEach(opt => {
+      const div = document.createElement('div');
+      div.className = 'option';
+      div.textContent = opt;
+      div.onclick = () => {
+        if (opt === currentFill.correct) {
+          div.classList.add('correct');
+          emoji.textContent = "🎉 Правильно!";
+          clearTimeout(fillTimeout);
+          fillTimeout = setTimeout(() => {
+            currentFill = fillExamples[Math.floor(Math.random() * fillExamples.length)];
+            loadExample();
+          }, 2500); // следующий пример через 2.5 сек
+        } else {
+          div.classList.add('wrong');
+          emoji.textContent = "😅 Попробуй ещё раз!";
+        }
+        setTimeout(() => {
+          div.classList.remove('correct', 'wrong');
+        }, 1500);
+      };
+      fillOptions.appendChild(div);
+    });
+  }
+
+  loadExample();
+}
+
+ let sentenceSelected = []; // глобальная переменная для выбранных слов в режиме "Собери предложение"
+let sentenceTimeout; // таймер для автопереключения
+
+function startSentence() {
+  modeSelect.style.display = 'none';
+  sentenceQuiz.style.display = 'block';
+  const sentences = verbs[currentVerb].sentences;
+  currentSentence = sentences[Math.floor(Math.random() * sentences.length)];
+  document.getElementById('sentenceTranslation').textContent = currentSentence.translation;
+  const bank = document.getElementById('wordBank');
+  const area = document.getElementById('sentenceArea');
+  const emoji = document.getElementById('sentenceEmoji');
+  bank.innerHTML = '';
+  area.textContent = '';
+  emoji.textContent = '';
+
+  // сброс предыдущих данных
+  sentenceSelected = [];
+  clearTimeout(sentenceTimeout);
+
+  // перемешиваем слова и создаём кнопки (по клику добавляются/удаляются)
+  const shuffled = [...currentSentence.words].sort(() => Math.random() - 0.5);
+  shuffled.forEach(word => {
+    const w = document.createElement('div');
+    w.className = 'word';
+    w.textContent = word;
+    w.onclick = () => {
+      if (w.classList.contains('used')) {
+        w.classList.remove('used');
+        const idx = sentenceSelected.indexOf(word);
+        if (idx !== -1) sentenceSelected.splice(idx, 1);
+      } else {
+        w.classList.add('used');
+        sentenceSelected.push(word);
+      }
+      area.textContent = sentenceSelected.join(' ');
+      checkSentenceAuto(); // проверяем автоматически после клика
+    };
+    bank.appendChild(w);
+  });
+}
+
+function checkSentenceAuto() {
+  const user = document.getElementById('sentenceArea').textContent.trim();
+  const emoji = document.getElementById('sentenceEmoji');
+  if (user === currentSentence.correct) {
+    emoji.textContent = "✅ Отлично!";
+    emoji.style.color = "#00ff7f";
+    // через 2.5 секунды автоматически показать следующий пример
+    sentenceTimeout = setTimeout(() => {
+      startSentence();
+    }, 2500);
+  }
+}
+
+function resetSentence() {
+  // очистить поле, снять выделения и обнулить массив выбранных слов
+  const area = document.getElementById('sentenceArea');
+  area.textContent = '';
+  sentenceSelected = [];
+  document.querySelectorAll('#wordBank .word').forEach(w => w.classList.remove('used'));
+  document.getElementById('sentenceEmoji').textContent = '';
+  clearTimeout(sentenceTimeout);
+}
+
+// Кнопка "Назад" к выбору режима
+document.getElementById('backSentenceBtn').onclick = () => {
+  resetSentence();
+  sentenceQuiz.style.display = 'none';
+  modeSelect.style.display = 'block';
+};
+
+  function checkSentence() {
+    const user = document.getElementById('sentenceArea').textContent.trim();
+    const emoji = document.getElementById('sentenceEmoji');
+    if (user === currentSentence.correct) {
+      emoji.textContent = "✅ Отлично!";
+      emoji.style.color = "#00ff7f";
+    } else {
+      emoji.textContent = "❌ Неправильно. Попробуй снова!";
+      emoji.style.color = "#ff4d4d";
+    }
+  }
+
+  function resetSentence() {
+  // очистить поле, снять выделения и обнулить массив выбранных слов
+  const area = document.getElementById('sentenceArea');
+  area.textContent = '';
+  sentenceSelected = [];
+  document.querySelectorAll('#wordBank .word').forEach(w => w.classList.remove('used'));
+  document.getElementById('sentenceEmoji').textContent = '';
+}
+
+  function resetAll() {
+    startBtn.style.display = 'block';
+    modeSelect.style.display = 'none';
+    fillQuiz.style.display = 'none';
+    sentenceQuiz.style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
+
+
+
