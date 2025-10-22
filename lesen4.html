@@ -2,121 +2,120 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Урок немецкого</title>
+  <title>Контрольная — Собери предложение</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: linear-gradient(135deg, #2c3e50, #34495e);
-      color: #f8f9fa;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+      color: #fff;
       margin: 0;
       padding: 20px;
-    }
-
-    .card {
-      background: #3b3b58;
-      padding: 20px;
-      border-radius: 20px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.6);
-      width: 600px;
-      max-width: 95%;
-      margin: 0 auto;
-    }
-
-    h1, h2 {
-      color: #ffd166;
       text-align: center;
     }
 
-    .phrase {
-      margin: 10px 0;
-      font-size: 20px;
-      line-height: 1.5;
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #2e2e4f;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      padding: 25px;
     }
 
-    .highlight {
-      background-color: #ffd166;
-      color: #000;
-      border-radius: 6px;
-      padding: 2px 6px;
+    h1 {
+      color: #ffd166;
+      margin-bottom: 20px;
+      font-size: 26px;
+    }
+
+    select, button {
+      font-size: 16px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+
+    select {
+      background: #444466;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .russian {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #ffd166;
+    }
+
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .word {
+      background: #5c5cff;
+      padding: 10px 15px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 18px;
+      user-select: none;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    .word:hover {
+      transform: scale(1.1);
+      background: #7070ff;
+    }
+
+    .used {
+      background: #9999ff !important;
+      transform: scale(0.9);
+    }
+
+    .sentence-area {
+      background: #3b3b58;
+      min-height: 50px;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .result {
+      font-size: 22px;
+      margin-bottom: 10px;
+      min-height: 24px;
     }
 
     button {
       background: #6c5ce7;
       color: #fff;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 8px;
       margin: 5px;
-      cursor: pointer;
-      font-size: 15px;
-      transition: transform 0.2s;
-    }
-
-    button:hover {
-      transform: scale(1.05);
-      background: #7d6cf2;
-    }
-
-    input {
-      width: 90%;
-      padding: 10px;
-      margin: 5px 0;
-      border-radius: 8px;
-      border: none;
-      font-size: 16px;
-      text-align: center;
-    }
-
-    #menu {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-
-    #rateValue {
-      font-weight: bold;
-      color: #ffd166;
-    }
-
-    .question-block {
-      background: #444;
-      padding: 12px;
-      border-radius: 12px;
-      margin-bottom: 10px;
       transition: background 0.3s;
     }
 
-    .feedback {
-      display: block;
-      margin-top: 5px;
-      font-size: 16px;
-      font-weight: bold;
+    button:hover {
+      background: #7d6cf2;
     }
 
-    .btn {
-      display: block;
-      margin: 10px auto;
-      font-size: 16px;
-    }
-
-    #testContainer {
-      margin-top: 20px;
-    }
-
-    #lessonScreen, #testScreen {
-      animation: fadeIn 0.4s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    @media (max-width: 600px) {
+      .word {
+        font-size: 16px;
+        padding: 8px 12px;
+      }
     }
   </style>
 </head>
 <body>
-<div class="card">
-  <div id="menu">
+  <div class="container">
+    <h1>Контрольная — Собери предложение 🇩🇪</h1>
+
     <label for="lessonSelect">Выбери урок:</label>
-    <select id="lessonSelect" onchange="goLesson(this.value)">
+    <select id="lessonSelect" onchange="loadLesson(this.value)">
       <option value="">-- выбрать --</option>
       <option value="1">Урок 1</option>
       <option value="2">Урок 2</option>
@@ -128,40 +127,24 @@
       <option value="8">Урок 8</option>
       <option value="9">Урок 9</option>
       <option value="10">Урок 10</option>
-      <option value="11">Урок 11</option>
-      <option value="12">Урок 12</option>
-      <option value="13">Урок 13</option>
-      <option value="14">Урок 14</option>
-      <option value="15">Урок 15</option>
-      <option value="16">Урок 16</option>
-      <option value="17">Урок 17</option>
-      <option value="18">Урок 18</option>
     </select>
+
+    <div id="quizBlock" style="display:none;">
+      <p class="russian" id="russianText"></p>
+      <div class="sentence-area" id="sentenceArea"></div>
+      <div class="word-bank" id="wordBank"></div>
+      <div class="result" id="result"></div>
+
+      <button onclick="checkSentence()">Проверить</button>
+      <button onclick="resetSentence()">Сбросить</button>
+      <button onclick="nextSentence()">Следующее</button>
+      <button onclick="speakSentence()">🔊 Озвучить</button>
+    </div>
   </div>
 
-  <h1 id="lessonTitle">Урок</h1>
-  <div style="margin:15px 0; text-align:center;">
-    <label for="rateRange">⚡ Скорость речи: </label>
-    <input type="range" id="rateRange" min="0.5" max="2" step="0.1" value="1">
-    <span id="rateValue">1.0</span>x
-  </div>
-
-  <!-- Урок -->
-  <div id="lessonScreen">
-    <div id="lessonContent"></div>
-   <button id="toTestBtn" class="btn">Контрольная работа 🧠</button>
-  </div>
-
-  <!-- Контрольная -->
-  <div id="testScreen" style="display:none;">
-    <h2>Контрольная работа</h2>
-    <div id="testContainer"></div>
-    <button id="backToLessons" class="btn">← Назад к урокам</button>
-  </div>
-</div>
-
-<script>
-  const lessons = {
+  <script>
+    // Подключаем уроки — можно скопировать объект lessons из lesson.html
+ const lessons = {
     1: {
   words: [
     ["Это мой мужской средний женский", "Das ist mein(m n) meine(f) "],
@@ -615,131 +598,88 @@
 
 
 
-
-
-
-
-
-
-
-
-
   };
 
+    let quizData = [];
+    let currentQuestion = {};
+    let selectedWords = [];
+    let speechRate = 1;
 
-     let currentLesson = 1;
-  let speechRate = 1;
-  let currentUtterance = null;
+    // автоматически загружаем нужный урок по параметру
+const params = new URLSearchParams(window.location.search);
+const lessonNum = params.get("lesson");
+if (lessonNum) {
+  document.getElementById("lessonSelect").value = lessonNum;
+  loadLesson(lessonNum);
+}
 
-  const params = new URLSearchParams(window.location.search);
-  if (params.has("lesson")) currentLesson = parseInt(params.get("lesson"));
-  document.getElementById("lessonSelect").value = currentLesson;
 
-  function goLesson(n) {
-    window.location.search = "?lesson=" + n;
-  }
-    // кнопка перехода на контрольную
-  document.getElementById("toTestBtn").addEventListener("click", () => {
-    // получаем текущий номер урока
-    const currentLesson = document.getElementById("lessonSelect").value || 1;
-    // переходим на test.html, передавая номер урока через параметр
-    window.location.href = `lesen4.html?lesson=${currentLesson}`;
-  });
+    function loadLesson(num) {
+      if (!lessons[num]) return;
+      quizData = lessons[num].words.map(([ru, de]) => ({ ru, de }));
+      document.getElementById("quizBlock").style.display = "block";
+      nextSentence();
+    }
 
-  function speakWord(wordElement, text, lang = "de-DE") {
-    if (currentUtterance) speechSynthesis.cancel();
-    wordElement.classList.add("highlight");
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = lang;
-    utter.rate = speechRate;
-    currentUtterance = utter;
-    utter.onend = () => wordElement.classList.remove("highlight");
-    speechSynthesis.speak(utter);
-  }
+    function nextSentence() {
+      const area = document.getElementById("sentenceArea");
+      area.textContent = "";
+      selectedWords = [];
+      document.getElementById("result").textContent = "";
 
-  function renderLesson() {
-    const content = document.getElementById("lessonContent");
-    content.innerHTML = "";
-    const lesson = lessons[currentLesson];
-    if (!lesson) return;
-    document.getElementById("lessonTitle").textContent = "Урок " + currentLesson;
+      currentQuestion = quizData[Math.floor(Math.random() * quizData.length)];
+      document.getElementById("russianText").textContent = currentQuestion.ru;
 
-    lesson.words.forEach(pair => {
-      const div = document.createElement("div");
-      div.className = "phrase";
-      div.textContent = `${pair[0]} — ${pair[1]} `;
-      const btn = document.createElement("button");
-      btn.textContent = "🔊";
-      btn.onclick = () => speakWord(div, pair[1]);
-      div.appendChild(btn);
-      content.appendChild(div);
-    });
-  }
+      const words = currentQuestion.de.split(" ");
+      const shuffled = [...words].sort(() => Math.random() - 0.5);
+      const bank = document.getElementById("wordBank");
+      bank.innerHTML = "";
 
-  // Контрольная работа
-  const lessonScreen = document.getElementById("lessonScreen");
-  const testScreen = document.getElementById("testScreen");
-  const toTestBtn = document.getElementById("toTestBtn");
-  const backToLessons = document.getElementById("backToLessons");
-  const testContainer = document.getElementById("testContainer");
-
-  toTestBtn.addEventListener("click", () => {
-    const lesson = lessons[currentLesson];
-    if (!lesson || !lesson.words) return;
-
-    testContainer.innerHTML = `<h3>Контрольная работа — Урок ${currentLesson}</h3>`;
-
-    const shuffled = [...lesson.words].sort(() => Math.random() - 0.5).slice(0, 5);
-
-    shuffled.forEach(([q, a], i) => {
-      const isRuToDe = Math.random() < 0.5;
-      const question = isRuToDe ? q : a;
-      const answer = isRuToDe ? a : q;
-
-      const block = document.createElement("div");
-      block.className = "question-block";
-      block.innerHTML = `
-        <p>${i + 1}. ${isRuToDe ? `Как будет по-немецки: <b>${question}</b>?` : `Что значит: <b>${question}</b>?`}</p>
-        <input type="text" class="testInput" placeholder="Ответ...">
-        <button class="checkBtn">Проверить</button>
-        <span class="feedback"></span>
-      `;
-
-      const input = block.querySelector(".testInput");
-      const btn = block.querySelector(".checkBtn");
-      const fb = block.querySelector(".feedback");
-
-      btn.addEventListener("click", () => {
-        if (input.value.trim().toLowerCase() === answer.toLowerCase()) {
-          fb.textContent = "✅ Верно!";
-          fb.style.color = "#4caf50";
-        } else {
-          fb.textContent = `❌ Неправильно. Правильно: ${answer}`;
-          fb.style.color = "#f44336";
-        }
+      shuffled.forEach(w => {
+        const div = document.createElement("div");
+        div.className = "word";
+        div.textContent = w;
+        div.onclick = () => {
+          if (div.classList.contains("used")) {
+            div.classList.remove("used");
+            selectedWords = selectedWords.filter(word => word !== w);
+          } else {
+            div.classList.add("used");
+            selectedWords.push(w);
+          }
+          area.textContent = selectedWords.join(" ");
+        };
+        bank.appendChild(div);
       });
+    }
 
-      testContainer.appendChild(block);
-    });
+    function checkSentence() {
+      const user = selectedWords.join(" ").trim();
+      const correct = currentQuestion.de.trim();
+      const res = document.getElementById("result");
+      if (user === correct) {
+        res.textContent = "✅ Отлично!";
+        res.style.color = "#00ff7f";
+      } else {
+        res.textContent = `❌ Неправильно! Правильно: ${correct}`;
+        res.style.color = "#ff4d4d";
+      }
+    }
 
-    lessonScreen.style.display = "none";
-    testScreen.style.display = "block";
-  });
+    function resetSentence() {
+      selectedWords = [];
+      document.querySelectorAll(".word").forEach(w => w.classList.remove("used"));
+      document.getElementById("sentenceArea").textContent = "";
+      document.getElementById("result").textContent = "";
+    }
 
-  backToLessons.addEventListener("click", () => {
-    testScreen.style.display = "none";
-    lessonScreen.style.display = "block";
-  });
-
-  // скорость речи
-  const rateRange = document.getElementById("rateRange");
-  const rateValue = document.getElementById("rateValue");
-  rateRange.addEventListener("input", () => {
-    speechRate = parseFloat(rateRange.value);
-    rateValue.textContent = speechRate.toFixed(1);
-  });
-
-  renderLesson();
-</script>
+    function speakSentence() {
+      if (!currentQuestion.de) return;
+      const utter = new SpeechSynthesisUtterance(currentQuestion.de);
+      utter.lang = "de-DE";
+      utter.rate = speechRate;
+      speechSynthesis.speak(utter);
+    }
+  </script>
 </body>
 </html>
