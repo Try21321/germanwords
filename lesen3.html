@@ -148,7 +148,9 @@
       <button onclick="resetSentence()">Сбросить</button>
       <button onclick="nextSentence()">Следующее</button>
       <button onclick="speakSentence()">🔊 Озвучить</button>
+       <button id="backToLessons" class="btn">← Назад к урокам</button>
     </div>
+
   </div>
 
   <script>
@@ -704,6 +706,7 @@
     // автоматически загружаем нужный урок по параметру
 const params = new URLSearchParams(window.location.search);
 const lessonNum = params.get("lesson");
+
 if (lessonNum) {
   document.getElementById("lessonSelect").value = lessonNum;
   loadLesson(lessonNum);
@@ -776,6 +779,10 @@ if (lessonNum) {
       utter.rate = speechRate;
       speechSynthesis.speak(utter);
     }
+     document.getElementById("backToLessons").addEventListener("click", () => {
+  // возвращаем пользователя на страницу с уроками
+  window.location.href = `massless.html?lesson=${document.getElementById("lessonSelect").value || 1}`;
+});
   </script>
 </body>
 </html>
