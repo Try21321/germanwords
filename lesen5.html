@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Контрольная — Собери предложение</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #2e2e4f;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      padding: 25px;
+    }
+
+    h1 {
+      color: #ffd166;
+      margin-bottom: 20px;
+      font-size: 26px;
+    }
+
+    select, button {
+      font-size: 16px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+
+    select {
+      background: #444466;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .russian {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #ffd166;
+    }
+
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .word {
+      background: #5c5cff;
+      padding: 10px 15px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 18px;
+      user-select: none;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    .word:hover {
+      transform: scale(1.1);
+      background: #7070ff;
+    }
+
+    .used {
+      background: #9999ff !important;
+      transform: scale(0.9);
+    }
+
+    .sentence-area {
+      background: #3b3b58;
+      min-height: 50px;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .result {
+      font-size: 22px;
+      margin-bottom: 10px;
+      min-height: 24px;
+    }
+
+    button {
+      background: #6c5ce7;
+      color: #fff;
+      margin: 5px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #7d6cf2;
+    }
+
+    @media (max-width: 600px) {
+      .word {
+        font-size: 16px;
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Контрольная — Собери предложение 🇩🇪</h1>
+    <h1>@deutschland_learn</h1>
+
+    <label for="lessonSelect">Выбери урок:</label>
+    <select id="lessonSelect" onchange="loadLesson(this.value)">
+      <option value="">-- выбрать --</option>
+      <option value="1">Урок 1</option>
+      <option value="2">Урок 2</option>
+      <option value="3">Урок 3</option>
+      <option value="4">Урок 4</option>
+      <option value="5">Урок 5</option>
+      <option value="6">Урок 6</option>
+      <option value="7">Урок 7</option>
+      <option value="8">Урок 8</option>
+      <option value="9">Урок 9</option>
+      <option value="10">Урок 10</option>
+      <option value="11">Урок 11</option>
+      <option value="12">Урок 12</option>
+      <option value="13">Урок 13</option>
+      <option value="14">Урок 14</option>
+      <option value="15">Урок 15</option>
+      <option value="16">Урок 16</option>
+      <option value="17">Урок 17</option>
+      <option value="18">Урок18</option>
+      <option value="19">Урок19</option>
+      <option value="20">Урок20</option>
+      <option value="21">Урок21</option>
+      <option value="22">Урок22</option>
+      <option value="23">Урок23</option>
+      <option value="24">Урок24</option>
+      <option value="25">Урок25</option>
+      <option value="26">Урок26</option>
+      <option value="27">Урок27</option>
+      <option value="28">Урок28</option>
+
+    
+
+    </select>
+
+    <div id="quizBlock" style="display:none;">
+      <p class="russian" id="russianText"></p>
+      <div class="sentence-area" id="sentenceArea"></div>
+      <div class="word-bank" id="wordBank"></div>
+      <div class="result" id="result"></div>
+
+      <button onclick="checkSentence()">Проверить</button>
+      <button onclick="resetSentence()">Сбросить</button>
+      <button onclick="nextSentence()">Следующее</button>
+      <button onclick="speakSentence()">🔊 Озвучить</button>
+      <button id="backToLessons" class="btn">← Назад к урокам</button>
+    </div>
+  </div>
+
+  <script>
+    // Подключаем уроки — можно скопировать объект lessons из lesson.html
+ const lessons = {
+    1: {
+  words: [
+    ["артикли мужской средний женский", "Der (m), Das (n), Die (f)"],
+    ["Фильм очень интересный", "Der Film ist interessant"],
+    ["Книга очень хорошая", "Das Buch ist sehr gut"],
+    ["Пицца очень вкусная", "Die Pizza ist sehr lecker"],
+    ["Фильм такой скучный", "Der Film ist so langweilig"],
+    ["Книга действительно хорошая", "Das Buch ist wirklich gut"],
+    ["Пицца такая вкусная", "Die Pizza ist so lecker"],
+    ["Чай горячий", "Der Tee ist heiß"],
+    ["Чай очень горячий", "Der Tee ist sehr heiß"],
+    ["Кофе горячий", "Der Kaffee ist heiß"],
+    ["Кофе очень горячий", "Der Kaffee ist sehr heiß"],
+    ["Дом большой", "Das Haus ist groß"],
+    ["Дом маленький", "Das Haus ist klein"],
+    ["Еда такая вкусная", "Das Essen ist so lecker"],
+    ["Еда очень вкусная", "Das Essen ist sehr lecker"],
+    ["Вода холодная", "Das Wasser ist kalt"],
+    ["Вода очень холодная", "Das Wasser ist sehr kalt"],
+    ["Машина очень быстрая", "Das Auto ist sehr schnell"],
+    ["Машина очень медленная", "Das Auto ist sehr langsam"],
+    ["Город красивый", "Die Stadt ist schön"],
+    ["Город очень красивый", "Die Stadt ist sehr schön"],
+    ["Город такой красивый", "Die Stadt ist so schön"],
+    ["Музыка громкая", "Die Musik ist laut"],
+    ["Музыка очень громкая", "Die Musik ist sehr laut"],
+    ["Сумка тяжелая", "Die Tasche ist schwer"],
+    ["Сумка очень тяжелая", "Die Tasche ist sehr schwer"],
+    ["Сумка такая тяжелая", "Die Tasche ist so schwer"]
+  ],
+  youtube: "https://youtube.com/shorts/4V8FNZgqhME"
+}
+
+
+
+
+  };
+
+    let quizData = [];
+    let currentQuestion = {};
+    let selectedWords = [];
+    let speechRate = 1;
+
+    // автоматически загружаем нужный урок по параметру
+const params = new URLSearchParams(window.location.search);
+const lessonNum = params.get("lesson");
+if (lessonNum) {
+  document.getElementById("lessonSelect").value = lessonNum;
+  loadLesson(lessonNum);
+}
+
+
+    function loadLesson(num) {
+      if (!lessons[num]) return;
+      quizData = lessons[num].words.map(([ru, de]) => ({ ru, de }));
+      document.getElementById("quizBlock").style.display = "block";
+      nextSentence();
+    }
+
+    function nextSentence() {
+      const area = document.getElementById("sentenceArea");
+      area.textContent = "";
+      selectedWords = [];
+      document.getElementById("result").textContent = "";
+
+      currentQuestion = quizData[Math.floor(Math.random() * quizData.length)];
+      document.getElementById("russianText").textContent = currentQuestion.ru;
+
+      const words = currentQuestion.de.split(" ");
+      const shuffled = [...words].sort(() => Math.random() - 0.5);
+      const bank = document.getElementById("wordBank");
+      bank.innerHTML = "";
+
+      shuffled.forEach(w => {
+        const div = document.createElement("div");
+        div.className = "word";
+        div.textContent = w;
+        div.onclick = () => {
+          if (div.classList.contains("used")) {
+            div.classList.remove("used");
+            selectedWords = selectedWords.filter(word => word !== w);
+          } else {
+            div.classList.add("used");
+            selectedWords.push(w);
+          }
+          area.textContent = selectedWords.join(" ");
+        };
+        bank.appendChild(div);
+      });
+    }
+
+    function checkSentence() {
+      const user = selectedWords.join(" ").trim();
+      const correct = currentQuestion.de.trim();
+      const res = document.getElementById("result");
+      if (user === correct) {
+        res.textContent = "✅ Отлично!";
+        res.style.color = "#00ff7f";
+      } else {
+        res.textContent = `❌ Неправильно! Правильно: ${correct}`;
+        res.style.color = "#ff4d4d";
+      }
+    }
+
+    function resetSentence() {
+      selectedWords = [];
+      document.querySelectorAll(".word").forEach(w => w.classList.remove("used"));
+      document.getElementById("sentenceArea").textContent = "";
+      document.getElementById("result").textContent = "";
+    }
+
+    function speakSentence() {
+      if (!currentQuestion.de) return;
+      const utter = new SpeechSynthesisUtterance(currentQuestion.de);
+      utter.lang = "de-DE";
+      utter.rate = speechRate;
+      speechSynthesis.speak(utter);
+    }
+     document.getElementById("backToLessons").addEventListener("click", () => {
+  // возвращаем пользователя на страницу с уроками
+  window.location.href = `a1.html?lesson=${document.getElementById("lessonSelect").value || 1}`;
+});
+  </script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Урок немецкого</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      color: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .card {
+      background: #3b3b58;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.6);
+      width: 600px;
+      max-width: 95%;
+      margin: 0 auto;
+    }
+
+    h1, h2 {
+      color: #ffd166;
+      text-align: center;
+    }
+
+    .phrase {
+      margin: 10px 0;
+      font-size: 20px;
+      line-height: 1.5;
+    }
+
+    .highlight {
+      background-color: #ffd166;
+      color: #000;
+      border-radius: 6px;
+      padding: 2px 6px;
+    }
+
+    button {
+      background: #6c5ce7;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: #7d6cf2;
+    }
+
+    .btn {
+      display: block;
+      margin: 10px auto;
+      font-size: 16px;
+      width: 80%;
+    }
+
+    .youtube-btn {
+      background: linear-gradient(90deg, #ff4b2b, #ff416c);
+    }
+
+    .telegram-btn {
+      background: linear-gradient(90deg, #0088cc, #00bfff);
+    }
+
+    .test-btn {
+      background: linear-gradient(90deg, #6c5ce7, #7d6cf2);
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    #menu {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    #rateValue {
+      font-weight: bold;
+      color: #ffd166;
+    }
+
+    .question-block {
+      background: #444;
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      transition: background 0.3s;
+    }
+
+    .feedback {
+      display: block;
+      margin-top: 5px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    #lessonScreen, #testScreen {
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div id="menu">
+    <h1>@deutschland_learn</h1>
+    <label for="lessonSelect">Выбери урок:</label>
+    <select id="lessonSelect" onchange="goLesson(this.value)">
+      <option value="">-- выбрать --</option>
+      <option value="1">Урок 1</option>
+      <option value="2">Урок 2</option>
+      <option value="3">Урок 3</option>
+      <option value="4">Урок 4</option>
+      <option value="5">Урок 5</option>
+      <option value="6">Урок 6</option>
+      <option value="7">Урок 7</option>
+      <option value="8">Урок 8</option>
+      <option value="9">Урок 9</option>
+      <option value="10">Урок 10</option>
+      <option value="11">Урок 11</option>
+      <option value="12">Урок 12</option>
+      <option value="13">Урок 13</option>
+      <option value="14">Урок 14</option>
+      <option value="15">Урок 15</option>
+      <option value="16">Урок 16</option>
+      <option value="17">Урок 17</option>
+      <option value="18">Урок 18</option>
+      <option value="19">Урок 19</option>
+      <option value="20">Урок 20</option>
+      <option value="21">Урок 21</option>
+      <option value="22">Урок 22</option>
+      <option value="23">Урок 23</option>
+      <option value="24">Урок 24</option>
+      <option value="25">Урок 25</option>
+    </select>
+  </div>
+
+  <h1 id="lessonTitle">Урок</h1>
+  <div style="margin:15px 0; text-align:center;">
+    <label for="rateRange">⚡ Скорость речи: </label>
+    <input type="range" id="rateRange" min="0.5" max="2" step="0.1" value="1">
+    <span id="rateValue">1.0</span>x
+  </div>
+
+  <div id="lessonScreen">
+    <div id="lessonContent"></div>
+
+    <button id="youtubeBtn" class="btn youtube-btn">🎥 Смотреть урок</button>
+    <button id="telegramBtn" class="btn telegram-btn">✈️ Наш Telegram канал</button>
+    <button id="toTestBtn" class="btn test-btn">🧠 Контрольная работа</button>
+  </div>
+
+  <!-- Контрольная -->
+  <div id="testScreen" style="display:none;">
+    <h2>Контрольная работа</h2>
+    <div id="testContainer"></div>
+    <button id="backToLessons" class="btn">← Назад к урокам</button>
+  </div>
+</div>
+
+<script>
+  const lessons = {
+    1: {
+    words: [
+    ["артикли мужской средний женский", "Der (m), Das (n), Die (f)"],
+    ["Фильм очень интересный", "Der Film ist interessant"],
+    ["Книга очень хорошая", "Das Buch ist sehr gut"],
+    ["Пицца очень вкусная", "Die Pizza ist sehr lecker"],
+    ["Фильм такой скучный", "Der Film ist so langweilig"],
+    ["Книга действительно хорошая", "Das Buch ist wirklich gut"],
+    ["Пицца такая вкусная", "Die Pizza ist so lecker"],
+    ["Чай горячий", "Der Tee ist heiß"],
+    ["Чай очень горячий", "Der Tee ist sehr heiß"],
+    ["Кофе горячий", "Der Kaffee ist heiß"],
+    ["Кофе очень горячий", "Der Kaffee ist sehr heiß"],
+    ["Дом большой", "Das Haus ist groß"],
+    ["Дом маленький", "Das Haus ist klein"],
+    ["Еда такая вкусная", "Das Essen ist so lecker"],
+    ["Еда очень вкусная", "Das Essen ist sehr lecker"],
+    ["Вода холодная", "Das Wasser ist kalt"],
+    ["Вода очень холодная", "Das Wasser ist sehr kalt"],
+    ["Машина очень быстрая", "Das Auto ist sehr schnell"],
+    ["Машина очень медленная", "Das Auto ist sehr langsam"],
+    ["Город красивый", "Die Stadt ist schön"],
+    ["Город очень красивый", "Die Stadt ist sehr schön"],
+    ["Город такой красивый", "Die Stadt ist so schön"],
+    ["Музыка громкая", "Die Musik ist laut"],
+    ["Музыка очень громкая", "Die Musik ist sehr laut"],
+    ["Сумка тяжелая", "Die Tasche ist schwer"],
+    ["Сумка очень тяжелая", "Die Tasche ist sehr schwer"],
+    ["Сумка такая тяжелая", "Die Tasche ist so schwer"]
+  ],
+  youtube: "https://youtu.be/hAROvz0YlVQ"
+}
+
+
+
+
+
+
+  };
+
+const telegramLink = "https://t.me/deutschland_learn";
+     let currentLesson = 1;
+  let speechRate = 1;
+  let currentUtterance = null;
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.has("lesson")) currentLesson = parseInt(params.get("lesson"));
+  document.getElementById("lessonSelect").value = currentLesson;
+
+  function goLesson(n) {
+    window.location.search = "?lesson=" + n;
+  }
+    // кнопка перехода на контрольную
+  document.getElementById("toTestBtn").addEventListener("click", () => {
+    // получаем текущий номер урока
+    const currentLesson = document.getElementById("lessonSelect").value || 1;
+    // переходим на test.html, передавая номер урока через параметр
+    window.location.href = `lesen5.html?lesson=${currentLesson}`;
+  });
+
+  function speakWord(wordElement, text, lang = "de-DE") {
+    if (currentUtterance) speechSynthesis.cancel();
+    wordElement.classList.add("highlight");
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = lang;
+    utter.rate = speechRate;
+    currentUtterance = utter;
+    utter.onend = () => wordElement.classList.remove("highlight");
+    speechSynthesis.speak(utter);
+  }
+
+  function renderLesson() {
+    const content = document.getElementById("lessonContent");
+    content.innerHTML = "";
+    const lesson = lessons[currentLesson];
+    if (!lesson) return;
+    document.getElementById("lessonTitle").textContent = "Урок " + currentLesson;
+
+    lesson.words.forEach(pair => {
+      const div = document.createElement("div");
+      div.className = "phrase";
+      div.textContent = `${pair[0]} — ${pair[1]} `;
+      const btn = document.createElement("button");
+      btn.textContent = "🔊";
+      btn.onclick = () => speakWord(div, pair[1]);
+      div.appendChild(btn);
+      content.appendChild(div);
+    });
+    document.getElementById("youtubeBtn").onclick = () => {
+    window.open(lesson.youtube, "_blank");
+  };
+  document.getElementById("telegramBtn").onclick = () => {
+    window.open(telegramLink, "_blank");
+  };
+}
+
+  // Контрольная работа
+  const lessonScreen = document.getElementById("lessonScreen");
+  const testScreen = document.getElementById("testScreen");
+  const toTestBtn = document.getElementById("toTestBtn");
+  const backToLessons = document.getElementById("backToLessons");
+  const testContainer = document.getElementById("testContainer");
+
+  toTestBtn.addEventListener("click", () => {
+    const lesson = lessons[currentLesson];
+    if (!lesson || !lesson.words) return;
+
+    testContainer.innerHTML = `<h3>Контрольная работа — Урок ${currentLesson}</h3>`;
+
+    const shuffled = [...lesson.words].sort(() => Math.random() - 0.5).slice(0, 5);
+
+    shuffled.forEach(([q, a], i) => {
+      const isRuToDe = Math.random() < 0.5;
+      const question = isRuToDe ? q : a;
+      const answer = isRuToDe ? a : q;
+
+      const block = document.createElement("div");
+      block.className = "question-block";
+      block.innerHTML = `
+        <p>${i + 1}. ${isRuToDe ? `Как будет по-немецки: <b>${question}</b>?` : `Что значит: <b>${question}</b>?`}</p>
+        <input type="text" class="testInput" placeholder="Ответ...">
+        <button class="checkBtn">Проверить</button>
+        <span class="feedback"></span>
+      `;
+
+      const input = block.querySelector(".testInput");
+      const btn = block.querySelector(".checkBtn");
+      const fb = block.querySelector(".feedback");
+
+      btn.addEventListener("click", () => {
+        if (input.value.trim().toLowerCase() === answer.toLowerCase()) {
+          fb.textContent = "✅ Верно!";
+          fb.style.color = "#4caf50";
+        } else {
+          fb.textContent = `❌ Неправильно. Правильно: ${answer}`;
+          fb.style.color = "#f44336";
+        }
+      });
+
+      testContainer.appendChild(block);
+    });
+
+    lessonScreen.style.display = "none";
+    testScreen.style.display = "block";
+  });
+
+  backToLessons.addEventListener("click", () => {
+    testScreen.style.display = "none";
+    lessonScreen.style.display = "block";
+  });
+
+  // скорость речи
+  const rateRange = document.getElementById("rateRange");
+  const rateValue = document.getElementById("rateValue");
+  rateRange.addEventListener("input", () => {
+    speechRate = parseFloat(rateRange.value);
+    rateValue.textContent = speechRate.toFixed(1);
+  });
+
+  renderLesson();
+</script>
+</body>
+</html>
