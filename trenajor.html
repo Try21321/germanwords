@@ -1,0 +1,1061 @@
+
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎯 Deutsch Lernen — Собери предложение</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: "Nunito", "Poppins", sans-serif;
+    background: radial-gradient(circle at top, #203a43, #2c5364, #0f2027);
+    color: #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, #00c6ff, #0072ff, #00ffcc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+    font-weight: 700;
+    position: relative;
+  }
+
+  h1::after {
+    content: "@deutschland_learn";
+    position: absolute;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Poppins", sans-serif;
+    text-shadow: 0 0 10px rgba(0,255,255,0.4);
+  }
+
+  .quiz {
+    text-align: center;
+    background: rgba(255,255,255,0.08);
+    padding: 2rem;
+    border-radius: 25px;
+    width: 400px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+  }
+
+  #sentenceTranslation {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #b5e7ff;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(0,255,255,0.3);
+  }
+
+  .sentence-area {
+    background: rgba(255,255,255,0.12);
+    min-height: 45px;
+    border-radius: 12px;
+    padding: 10px;
+    margin: 15px 0;
+    font-size: 1.1rem;
+    box-shadow: inset 0 0 10px rgba(255,255,255,0.1);
+  }
+
+  .word-bank {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .word {
+    background: rgba(255,255,255,0.15);
+    padding: 8px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-size: 1rem;
+    box-shadow: 0 0 10px rgba(0,255,255,0.2);
+  }
+
+  .word:hover {
+    background: rgba(0,255,255,0.3);
+    transform: scale(1.05);
+  }
+
+  .word.used { opacity: 0.5; }
+
+  button {
+    background: linear-gradient(90deg, #00c9ff, #92fe9d);
+    border: none;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #111;
+    font-weight: 700;
+    margin: 0.7rem 0.3rem;
+    transition: 0.2s ease;
+    box-shadow: 0 0 15px rgba(0,255,255,0.3);
+  }
+
+  button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0,255,255,0.5);
+  }
+
+  .emoji {
+    font-size: 1.4rem;
+    margin-top: 1rem;
+    min-height: 1.4rem;
+    transition: 0.3s;
+  }
+
+  .glow {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 120px;
+    background: radial-gradient(circle at center, rgba(0,255,255,0.3), transparent 70%);
+    filter: blur(40px);
+    z-index: -1;
+  }
+</style>
+</head>
+<body>
+
+<h1>@deutschland_learn</h1>
+
+<div class="quiz">
+  <p id="sentenceTranslation"></p>
+  <div class="sentence-area" id="sentenceArea"></div>
+  <div class="word-bank" id="wordBank"></div>
+  <div class="emoji" id="sentenceEmoji"></div>
+  <div>
+    <button onclick="resetSentence()">🔄 Очистить поле</button>
+  </div>
+</div>
+
+<div class="glow"></div>
+
+<script>
+  const words = [
+     ["Я дома", "Ich bin zu Hause"],
+  ["Ты здесь", "Du bist hier"],
+  ["Он работает", "Er arbeitet"],
+  ["Она идёт в школу", "Sie geht zur Schule"],
+  ["Мы друзья", "Wir sind Freunde"],
+  ["Они живут в Берлине", "Sie wohnen in Berlin"],
+  ["Это моя сумка", "Das ist meine Tasche"],
+  ["Это твой стол", "Das ist dein Tisch"],
+  ["Это мой телефон", "Das ist mein Handy"],
+  ["Это мой дом", "Das ist mein Haus"],
+  ["Я учу немецкий", "Ich lerne Deutsch"],
+  ["Ты читаешь книгу", "Du liest ein Buch"],
+  ["Он пьёт воду", "Er trinkt Wasser"],
+  ["Она ест яблоко", "Sie isst einen Apfel"],
+  ["Мы идём домой", "Wir gehen nach Hause"],
+  ["Они пьют кофе", "Sie trinken Kaffee"],
+  ["Я живу в Германии", "Ich lebe in Deutschland"],
+  ["Ты работаешь в офисе", "Du arbeitest im Büro"],
+  ["Он говорит по-немецки", "Er spricht Deutsch"],
+  ["Она учится в университете", "Sie studiert an der Universität"],
+  ["Мы любим музыку", "Wir lieben Musik"],
+  ["Они играют в футбол", "Sie spielen Fußball"],
+  ["Это красивый город", "Das ist eine schöne Stadt"],
+  ["Это моя комната", "Das ist mein Zimmer"],
+  ["Я иду в магазин", "Ich gehe in den Laden"],
+  ["Ты идёшь в школу", "Du gehst zur Schule"],
+  ["Он идёт в парк", "Er geht in den Park"],
+  ["Она идёт домой", "Sie geht nach Hause"],
+  ["Мы идём вместе", "Wir gehen zusammen"],
+  ["Они идут медленно", "Sie gehen langsam"],
+  ["Я люблю кофе", "Ich liebe Kaffee"],
+  ["Ты любишь чай", "Du liebst Tee"],
+  ["Он любит кошек", "Er mag Katzen"],
+  ["Она любит собак", "Sie mag Hunde"],
+  ["Мы любим отдыхать", "Wir entspannen gern"],
+  ["Они любят путешествовать", "Sie reisen gern"],
+  ["Это дорого", "Das ist teuer"],
+  ["Это дешево", "Das ist billig"],
+  ["Это вкусно", "Das ist lecker"],
+  ["Это неправильно", "Das ist falsch"],
+  ["Это правильно", "Das ist richtig"],
+  ["Я устал", "Ich bin müde"],
+  ["Ты веселый", "Du bist fröhlich"],
+  ["Он грустный", "Er ist traurig"],
+  ["Она спокойная", "Sie ist ruhig"],
+  ["Мы готовы", "Wir sind bereit"],
+  ["Они счастливы", "Sie sind glücklich"],
+  ["Это интересно", "Das ist interessant"],
+  ["Это скучно", "Das ist langweilig"],
+  ["Я сплю", "Ich schlafe"],
+  ["Ты ешь", "Du isst"],
+  ["Он пишет", "Er schreibt"],
+  ["Она читает", "Sie liest"],
+  ["Мы слушаем", "Wir hören"],
+  ["Они говорят", "Sie sprechen"],
+  ["Это моя машина", "Das ist mein Auto"],
+  ["Это его дом", "Das ist sein Haus"],
+  ["Это её книга", "Das ist ihr Buch"],
+  ["Это наш учитель", "Das ist unser Lehrer"],
+  ["Это их семья", "Das ist ihre Familie"],
+  ["Я вижу солнце", "Ich sehe die Sonne"],
+  ["Ты видишь луну", "Du siehst den Mond"],
+  ["Он слышит музыку", "Er hört Musik"],
+  ["Она знает ответ", "Sie weiß die Antwort"],
+  ["Мы понимаем", "Wir verstehen"],
+  ["Они ждут", "Sie warten"],
+  ["Я хочу есть", "Ich will essen"],
+  ["Ты хочешь пить", "Du willst trinken"],
+  ["Он хочет спать", "Er will schlafen"],
+  ["Она хочет гулять", "Sie will spazieren"],
+  ["Мы хотим отдыхать", "Wir wollen ruhen"],
+  ["Они хотят работать", "Sie wollen arbeiten"],
+  ["Это важно", "Das ist wichtig"],
+  ["Это легко", "Das ist leicht"],
+  ["Это трудно", "Das ist schwer"],
+  ["Это возможно", "Das ist möglich"],
+  ["Это невозможно", "Das ist unmöglich"],
+  ["Я думаю", "Ich denke"],
+  ["Ты знаешь", "Du weißt"],
+  ["Он говорит", "Er spricht"],
+  ["Она пишет", "Sie schreibt"],
+  ["Мы читаем", "Wir lesen"],
+  ["Они работают", "Sie arbeiten"],
+  ["Я живу здесь", "Ich wohne hier"],
+  ["Ты живёшь там", "Du wohnst dort"],
+  ["Он живёт рядом", "Er wohnt in der Nähe"],
+  ["Она живёт далеко", "Sie wohnt weit weg"],
+  ["Мы живём вместе", "Wir wohnen zusammen"],
+  ["Они живут отдельно", "Sie wohnen getrennt"],
+  ["Я еду на работу", "Ich fahre zur Arbeit"],
+  ["Ты едешь домой", "Du fährst nach Hause"],
+  ["Он едет в город", "Er fährt in die Stadt"],
+  ["Она едет в школу", "Sie fährt zur Schule"],
+  ["Мы едем в отпуск", "Wir fahren in den Urlaub"],
+  ["Они едут в Берлин", "Sie fahren nach Berlin"],
+  ["Это мой отец", "Das ist mein Vater"],
+  ["Это моя мать", "Das ist meine Mutter"],
+  ["Это мой брат", "Das ist mein Bruder"],
+  ["Это моя сестра", "Das ist meine Schwester"],
+  ["Это моя семья", "Das ist meine Familie"],
+  ["Я покупаю хлеб в магазине", "Ich kaufe Brot im Laden"],
+  ["Ты готовишь вкусный суп", "Du kochst eine leckere Suppe"],
+  ["Он завтракает с семьёй", "Er frühstückt mit der Familie"],
+  ["Она обедает в ресторане", "Sie isst zu Mittag im Restaurant"],
+  ["Мы ужинаем дома", "Wir essen zu Abend zu Hause"],
+  ["Они пьют чай на кухне", "Sie trinken Tee in der Küche"],
+  ["Я пеку торт", "Ich backe einen Kuchen"],
+  ["Ты режешь овощи", "Du schneidest das Gemüse"],
+  ["Он чистит картошку", "Er schält die Kartoffeln"],
+  ["Она моет посуду", "Sie wäscht das Geschirr"],
+  ["Мы убираем комнату", "Wir räumen das Zimmer auf"],
+  ["Они стирают одежду", "Sie waschen die Kleidung"],
+  ["Я читаю газету утром", "Ich lese morgens die Zeitung"],
+  ["Ты смотришь телевизор вечером", "Du siehst abends fern"],
+  ["Он слушает музыку в машине", "Er hört Musik im Auto"],
+  ["Она пишет письмо другу", "Sie schreibt einen Brief an den Freund"],
+  ["Мы говорим по телефону", "Wir telefonieren"],
+  ["Они ждут автобус", "Sie warten auf den Bus"],
+  ["Я беру ключи", "Ich nehme die Schlüssel"],
+  ["Ты открываешь дверь", "Du öffnest die Tür"],
+  ["Он закрывает окно", "Er schließt das Fenster"],
+  ["Она включает свет", "Sie macht das Licht an"],
+  ["Мы выключаем телевизор", "Wir machen den Fernseher aus"],
+  ["Они носят куртки", "Sie tragen Jacken"],
+  ["Я ищу работу", "Ich suche eine Arbeit"],
+  ["Ты находишь новую квартиру", "Du findest eine neue Wohnung"],
+  ["Он идёт на почту", "Er geht zur Post"],
+  ["Она идёт в аптеку", "Sie geht in die Apotheke"],
+  ["Мы идём на рынок", "Wir gehen auf den Markt"],
+  ["Они идут в кино", "Sie gehen ins Kino"],
+  ["Я плачу за билет", "Ich bezahle das Ticket"],
+  ["Ты получаешь письмо", "Du bekommst einen Brief"],
+  ["Он отправляет посылку", "Er schickt ein Paket"],
+  ["Она покупает цветы", "Sie kauft Blumen"],
+  ["Мы дарим подарок", "Wir schenken ein Geschenk"],
+  ["Они празднуют день рождения", "Sie feiern den Geburtstag"],
+  ["Я хожу в спортзал", "Ich gehe ins Fitnessstudio"],
+  ["Ты бегаешь по утрам", "Du läufst morgens"],
+  ["Он плавает в бассейне", "Er schwimmt im Schwimmbad"],
+  ["Она ездит на велосипеде", "Sie fährt mit dem Fahrrad"],
+  ["Мы гуляем в парке", "Wir spazieren im Park"],
+  ["Они играют на гитаре", "Sie spielen Gitarre"],
+  ["Я рисую картину", "Ich male ein Bild"],
+  ["Ты поёшь песню", "Du singst ein Lied"],
+  ["Он пишет рассказ", "Er schreibt eine Geschichte"],
+  ["Она делает фото", "Sie macht ein Foto"],
+  ["Мы смотрим фильм", "Wir sehen einen Film"],
+  ["Они читают журнал", "Sie lesen eine Zeitschrift"],
+  ["Я ношу очки", "Ich trage eine Brille"],
+  ["Ты надеваешь куртку", "Du ziehst die Jacke an"],
+  ["Он снимает обувь", "Er zieht die Schuhe aus"],
+  ["Она покупает платье", "Sie kauft ein Kleid"],
+  ["Мы выбираем обувь", "Wir wählen Schuhe aus"],
+  ["Они меряют рубашки", "Sie probieren Hemden an"],
+  ["Я живу недалеко от центра", "Ich wohne nicht weit vom Zentrum"],
+  ["Ты работаешь на заводе", "Du arbeitest in einer Fabrik"],
+  ["Он учится в школе", "Er lernt in der Schule"],
+  ["Она преподаёт немецкий", "Sie unterrichtet Deutsch"],
+  ["Мы учим новые слова", "Wir lernen neue Wörter"],
+  ["Они делают домашнее задание", "Sie machen Hausaufgaben"],
+  ["Я встаю рано", "Ich stehe früh auf"],
+  ["Ты ложишься поздно", "Du gehst spät ins Bett"],
+  ["Он чистит зубы", "Er putzt die Zähne"],
+  ["Она принимает душ", "Sie duscht"],
+  ["Мы завтракаем вместе", "Wir frühstücken zusammen"],
+  ["Они идут на работу", "Sie gehen zur Arbeit"],
+  ["Я отдыхаю на выходных", "Ich ruhe mich am Wochenende aus"],
+  ["Ты готовишь ужин", "Du kochst das Abendessen"],
+  ["Он играет с детьми", "Er spielt mit den Kindern"],
+  ["Она читает сказку", "Sie liest ein Märchen"],
+  ["Мы слушаем радио", "Wir hören Radio"],
+  ["Они поют вместе", "Sie singen zusammen"],
+  ["Я люблю весну", "Ich liebe den Frühling"],
+  ["Ты любишь лето", "Du liebst den Sommer"],
+  ["Он любит осень", "Er mag den Herbst"],
+  ["Она любит зиму", "Sie mag den Winter"],
+  ["Мы любим снег", "Wir lieben Schnee"],
+  ["Они любят солнце", "Sie lieben die Sonne"],
+  ["Я пью сок", "Ich trinke Saft"],
+  ["Ты пьёшь молоко", "Du trinkst Milch"],
+  ["Он пьёт кофе с сахаром", "Er trinkt Kaffee mit Zucker"],
+  ["Она пьёт воду без газа", "Sie trinkt stilles Wasser"],
+  ["Мы едим суп", "Wir essen Suppe"],
+  ["Они едят пиццу", "Sie essen Pizza"],
+  ["Я хочу спать", "Ich will schlafen"],
+  ["Ты хочешь отдых", "Du willst Ruhe"],
+  ["Он хочет есть", "Er will essen"],
+  ["Она хочет пить", "Sie will trinken"],
+  ["Мы хотим смотреть фильм", "Wir wollen einen Film sehen"],
+  ["Они хотят пойти в парк", "Sie wollen in den Park gehen"],
+  ["Я могу говорить по-немецки", "Ich kann Deutsch sprechen"],
+  ["Ты можешь помочь", "Du kannst helfen"],
+  ["Он может прийти завтра", "Er kann morgen kommen"],
+  ["Она может приготовить обед", "Sie kann das Mittagessen kochen"],
+  ["Мы можем подождать", "Wir können warten"],
+  ["Они могут танцевать", "Sie können tanzen"],
+  ["Я должен учиться", "Ich muss lernen"],
+  ["Ты должен работать", "Du musst arbeiten"],
+  ["Он должен рано вставать", "Er muss früh aufstehen"],
+  ["Она должна идти домой", "Sie muss nach Hause gehen"],
+  ["Мы должны помочь", "Wir müssen helfen"],
+  ["Они должны прийти вовремя", "Sie müssen pünktlich kommen"],
+  ["Я часто читаю", "Ich lese oft"],
+  ["Ты редко смотришь телевизор", "Du siehst selten fern"],
+  ["Он всегда улыбается", "Er lächelt immer"],
+  ["Она никогда не опаздывает", "Sie kommt nie zu spät"],
+  ["Мы иногда гуляем вечером", "Wir spazieren manchmal am Abend"],
+  ["Они обычно завтракают в восемь", "Sie frühstücken meistens um acht"],
+  ["Как тебя зовут?", "Wie heißt du?"],
+  ["Меня зовут Анна", "Ich heiße Anna"],
+  ["Откуда ты?", "Woher kommst du?"],
+  ["Я из Германии", "Ich komme aus Deutschland"],
+  ["Где ты живёшь?", "Wo wohnst du?"],
+  ["Я живу в Берлине", "Ich wohne in Berlin"],
+  ["Сколько тебе лет?", "Wie alt bist du?"],
+  ["Мне двадцать лет", "Ich bin zwanzig Jahre alt"],
+  ["Где ты работаешь?", "Wo arbeitest du?"],
+  ["Я работаю в офисе", "Ich arbeite im Büro"],
+  ["Ты студент?", "Bist du Student?"],
+  ["Да, я студент", "Ja, ich bin Student"],
+  ["Нет, я не студент", "Nein, ich bin kein Student"],
+  ["У тебя есть брат?", "Hast du einen Bruder?"],
+  ["Да, у меня есть брат", "Ja, ich habe einen Bruder"],
+  ["Нет, у меня нет сестры", "Nein, ich habe keine Schwester"],
+  ["Что ты делаешь?", "Was machst du?"],
+  ["Я учу немецкий язык", "Ich lerne Deutsch"],
+  ["Почему ты учишь немецкий?", "Warum lernst du Deutsch?"],
+  ["Потому что я живу в Германии", "Weil ich in Deutschland lebe"],
+  ["Куда ты идёшь?", "Wohin gehst du?"],
+  ["Я иду в школу", "Ich gehe zur Schule"],
+  ["Когда ты приходишь домой?", "Wann kommst du nach Hause?"],
+  ["Я прихожу в шесть", "Ich komme um sechs Uhr nach Hause"],
+  ["Что ты ешь на завтрак?", "Was isst du zum Frühstück?"],
+  ["Я ем хлеб с маслом", "Ich esse Brot mit Butter"],
+  ["Ты пьёшь кофе или чай?", "Trinkst du Kaffee oder Tee?"],
+  ["Я пью чай с лимоном", "Ich trinke Tee mit Zitrone"],
+  ["Где ты учишься?", "Wo studierst du?"],
+  ["Я учусь в университете", "Ich studiere an der Universität"],
+  ["Какой у тебя адрес?", "Wie ist deine Adresse?"],
+  ["Мой адрес — Hauptstraße 10", "Meine Adresse ist Hauptstraße 10"],
+  ["У тебя есть машина?", "Hast du ein Auto?"],
+  ["Да, у меня есть маленькая машина", "Ja, ich habe ein kleines Auto"],
+  ["Ты любишь путешествовать?", "Reist du gern?"],
+  ["Да, я люблю путешествовать", "Ja, ich reise gern"],
+  ["Куда ты поедешь летом?", "Wohin fährst du im Sommer?"],
+  ["Я поеду в Мюнхен", "Ich fahre nach München"],
+  ["Когда ты едешь в отпуск?", "Wann machst du Urlaub?"],
+  ["Я еду в отпуск в июле", "Ich mache Urlaub im Juli"],
+  ["Ты был в Берлине?", "Warst du in Berlin?"],
+  ["Да, я был там прошлым летом", "Ja, ich war dort im letzten Sommer"],
+  ["Как погода сегодня?", "Wie ist das Wetter heute?"],
+  ["Сегодня солнечно и тепло", "Heute ist es sonnig und warm"],
+  ["Завтра будет дождь", "Morgen wird es regnen"],
+  ["Вчера было холодно", "Gestern war es kalt"],
+  ["Ты идёшь гулять?", "Gehst du spazieren?"],
+  ["Да, я иду в парк", "Ja, ich gehe in den Park"],
+  ["Во сколько начинается урок?", "Wann beginnt der Unterricht?"],
+  ["Урок начинается в девять часов", "Der Unterricht beginnt um neun Uhr"],
+  ["Где находится вокзал?", "Wo ist der Bahnhof?"],
+  ["Вокзал недалеко отсюда", "Der Bahnhof ist nicht weit von hier"],
+  ["Как пройти к аптеке?", "Wie komme ich zur Apotheke?"],
+  ["Идите прямо и потом налево", "Gehen Sie geradeaus und dann links"],
+  ["Сколько это стоит?", "Wie viel kostet das?"],
+  ["Это стоит десять евро", "Das kostet zehn Euro"],
+  ["Можно мне кофе, пожалуйста?", "Kann ich bitte einen Kaffee haben?"],
+  ["Конечно, вот ваш кофе", "Natürlich, hier ist Ihr Kaffee"],
+  ["Где находится туалет?", "Wo ist die Toilette?"],
+  ["Туалет справа от кафе", "Die Toilette ist rechts vom Café"],
+  ["Что ты делаешь вечером?", "Was machst du am Abend?"],
+  ["Я смотрю фильм", "Ich sehe einen Film"],
+  ["Ты идёшь спать поздно?", "Gehst du spät schlafen?"],
+  ["Нет, я ложусь рано", "Nein, ich gehe früh ins Bett"],
+  ["Когда ты завтракаешь?", "Wann frühstückst du?"],
+  ["Я завтракаю в восемь часов", "Ich frühstücke um acht Uhr"],
+  ["Ты говоришь по-английски?", "Sprichst du Englisch?"],
+  ["Да, немного", "Ja, ein bisschen"],
+  ["Ты учишь другие языки?", "Lernst du andere Sprachen?"],
+  ["Да, я учу английский и немецкий", "Ja, ich lerne Englisch und Deutsch"],
+  ["Что ты делаешь в свободное время?", "Was machst du in deiner Freizeit?"],
+  ["Я читаю книги и слушаю музыку", "Ich lese Bücher und höre Musik"],
+  ["Где ты любишь отдыхать?", "Wo entspannst du dich gern?"],
+  ["Я люблю отдыхать дома", "Ich entspanne mich gern zu Hause"],
+  ["Ты живёшь один?", "Wohnst du allein?"],
+  ["Нет, я живу с семьёй", "Nein, ich wohne mit meiner Familie"],
+  ["У тебя есть домашнее животное?", "Hast du ein Haustier?"],
+  ["Да, у меня есть кошка", "Ja, ich habe eine Katze"],
+  ["Как зовут твою собаку?", "Wie heißt dein Hund?"],
+  ["Его зовут Макс", "Er heißt Max"],
+  ["Ты любишь готовить?", "Kochst du gern?"],
+  ["Да, я люблю готовить итальянскую еду", "Ja, ich koche gern italienisches Essen"],
+  ["Какой твой любимый цвет?", "Was ist deine Lieblingsfarbe?"],
+  ["Мой любимый цвет — синий", "Meine Lieblingsfarbe ist Blau"],
+  ["Ты часто ходишь в кино?", "Gehst du oft ins Kino?"],
+  ["Нет, не очень часто", "Nein, nicht so oft"],
+  ["Что ты смотришь по телевизору?", "Was siehst du im Fernsehen?"],
+  ["Я смотрю новости", "Ich sehe Nachrichten"],
+  ["Ты любишь спорт?", "Magst du Sport?"],
+  ["Да, я люблю футбол", "Ja, ich mag Fußball"],
+  ["Во что ты играешь?", "Was spielst du?"],
+  ["Я играю в теннис", "Ich spiele Tennis"],
+  ["Кто это?", "Wer ist das?"],
+  ["Это мой друг", "Das ist mein Freund"],
+  ["Где твоя мама?", "Wo ist deine Mutter?"],
+  ["Она на работе", "Sie ist bei der Arbeit"],
+  ["Когда у тебя день рождения?", "Wann hast du Geburtstag?"],
+  ["У меня день рождения в мае", "Ich habe im Mai Geburtstag"],
+  ["Что ты делаешь завтра?", "Was machst du morgen?"],
+  ["Завтра я поеду в Кёльн", "Morgen fahre ich nach Köln"],
+  ["Ты пойдёшь со мной?", "Kommst du mit mir?"],
+  ["Да, с удовольствием", "Ja, gern"],
+  ["Кто идёт в магазин?", "Wer geht in den Laden?"],
+  ["Мы идём вместе", "Wir gehen zusammen"],
+  ["Ты устал?", "Bist du müde?"],
+  ["Да, немного", "Ja, ein bisschen"],
+  ["Ты голоден?", "Hast du Hunger?"],
+  ["Да, очень", "Ja, sehr"],
+  ["Что ты хочешь есть?", "Was möchtest du essen?"],
+  ["Я хочу салат и суп", "Ich möchte Salat und Suppe"],
+  ["Ты поедешь завтра на работу?", "Fährst du morgen zur Arbeit?"],
+  ["Нет, у меня выходной", "Nein, ich habe frei"],
+  ["Где ты был вчера?", "Wo warst du gestern?"],
+  ["Я был дома", "Ich war zu Hause"],
+  ["Ты встретил Петра?", "Hast du Peter getroffen?"],
+  ["Да, на вокзале", "Ja, am Bahnhof"],
+  ["Что ты купил?", "Was hast du gekauft?"],
+  ["Я купил хлеб и молоко", "Ich habe Brot und Milch gekauft"],
+  // 🏨 В отеле
+  ["Добрый день, у вас есть свободные номера?", "Guten Tag, haben Sie freie Zimmer?"],
+  ["Да, у нас есть один одноместный номер", "Ja, wir haben ein Einzelzimmer frei"],
+  ["Сколько стоит одна ночь?", "Wie viel kostet eine Nacht?"],
+  ["Ночь стоит восемьдесят евро", "Eine Nacht kostet achtzig Euro"],
+  ["Я хотел бы забронировать номер", "Ich möchte ein Zimmer reservieren"],
+  ["На сколько ночей?", "Für wie viele Nächte?"],
+  ["На три ночи, пожалуйста", "Für drei Nächte, bitte"],
+  ["Где находится лифт?", "Wo ist der Aufzug?"],
+  ["Завтрак включён в цену?", "Ist das Frühstück im Preis inbegriffen?"],
+  ["Да, завтрак с семи до десяти", "Ja, Frühstück ist von sieben bis zehn Uhr"],
+  ["Могу я оплатить картой?", "Kann ich mit Karte bezahlen?"],
+  ["Конечно, без проблем", "Natürlich, kein Problem"],
+  ["Где можно припарковать машину?", "Wo kann man das Auto parken?"],
+  ["Парковка находится за отелем", "Der Parkplatz ist hinter dem Hotel"],
+
+  // ☕ В кафе
+  ["Можно мне меню, пожалуйста?", "Kann ich bitte die Speisekarte haben?"],
+  ["Что вы рекомендуете?", "Was empfehlen Sie?"],
+  ["Я возьму суп и салат", "Ich nehme die Suppe und den Salat"],
+  ["Что вы хотите пить?", "Was möchten Sie trinken?"],
+  ["Минеральную воду, пожалуйста", "Ein Mineralwasser, bitte"],
+  ["Вкусно?", "Schmeckt es gut?"],
+  ["Да, еда очень вкусная", "Ja, das Essen ist sehr lecker"],
+  ["Могу я заплатить?", "Kann ich bitte bezahlen?"],
+  ["Счёт, пожалуйста", "Die Rechnung, bitte"],
+  ["Оставьте сдачу", "Stimmt so, danke"],
+  ["Хорошего дня!", "Schönen Tag noch!"],
+  ["Спасибо, вам тоже!", "Danke, Ihnen auch!"],
+
+  // 🚆 В транспорте
+  ["Где находится автобусная остановка?", "Wo ist die Bushaltestelle?"],
+  ["Как добраться до вокзала?", "Wie komme ich zum Bahnhof?"],
+  ["Этот автобус идёт в центр?", "Fährt dieser Bus ins Zentrum?"],
+  ["Да, он едет прямо туда", "Ja, er fährt direkt dorthin"],
+  ["Во сколько отправляется поезд?", "Wann fährt der Zug ab?"],
+  ["Он отправляется в десять часов", "Er fährt um zehn Uhr ab"],
+  ["Где купить билет?", "Wo kann ich ein Ticket kaufen?"],
+  ["Билет стоит три евро", "Das Ticket kostet drei Euro"],
+  ["Извините, это место занято?", "Entschuldigung, ist der Platz frei?"],
+  ["Нет, здесь сидит моя подруга", "Nein, hier sitzt meine Freundin"],
+
+  // 💼 На работе
+  ["Во сколько ты начинаешь работу?", "Wann fängst du mit der Arbeit an?"],
+  ["Я начинаю в восемь утра", "Ich fange um acht Uhr morgens an"],
+  ["Где находится офис?", "Wo ist das Büro?"],
+  ["Он на втором этаже", "Es ist im zweiten Stock"],
+  ["У тебя много работы?", "Hast du viel Arbeit?"],
+  ["Да, сегодня очень много", "Ja, heute sehr viel"],
+  ["Ты доволен своей работой?", "Bist du mit deiner Arbeit zufrieden?"],
+  ["Да, у меня хороший коллектив", "Ja, ich habe ein gutes Team"],
+  ["Когда у тебя перерыв?", "Wann hast du Pause?"],
+  ["В двенадцать тридцать", "Um zwölf Uhr dreißig"],
+
+  // 🛒 В магазине
+  ["Где находится хлеб?", "Wo ist das Brot?"],
+  ["Хлеб справа от молока", "Das Brot ist rechts von der Milch"],
+  ["Можно мне килограмм яблок?", "Kann ich bitte ein Kilo Äpfel haben?"],
+  ["Сколько стоят эти бананы?", "Wie viel kosten diese Bananen?"],
+  ["Два евро за килограмм", "Zwei Euro pro Kilo"],
+  ["Где касса?", "Wo ist die Kasse?"],
+  ["Вы принимаете карту?", "Nehmen Sie Karte?"],
+  ["Да, конечно", "Ja, natürlich"],
+  ["Спасибо за покупку", "Danke für den Einkauf"],
+  ["До свидания!", "Auf Wiedersehen!"],
+
+  // 🏥 У врача
+  ["У меня болит голова", "Ich habe Kopfschmerzen"],
+  ["Сколько дней вы больны?", "Seit wann sind Sie krank?"],
+  ["У меня температура", "Ich habe Fieber"],
+  ["Вам нужно пить больше воды", "Sie müssen mehr Wasser trinken"],
+  ["Я выпишу вам лекарство", "Ich verschreibe Ihnen ein Medikament"],
+  ["Принимайте таблетки три раза в день", "Nehmen Sie die Tabletten dreimal am Tag"],
+  ["Когда мне прийти снова?", "Wann soll ich wiederkommen?"],
+  ["Через неделю, пожалуйста", "In einer Woche, bitte"],
+  ["Большое спасибо, доктор", "Vielen Dank, Herr Doktor"],
+  ["Пожалуйста, выздоравливайте!", "Bitte, gute Besserung!"],
+
+  // 🏙️ В городе
+  ["Где находится центр города?", "Wo ist die Innenstadt?"],
+  ["Как пройти к музею?", "Wie komme ich zum Museum?"],
+  ["Это далеко отсюда?", "Ist es weit von hier?"],
+  ["Нет, около десяти минут пешком", "Nein, etwa zehn Minuten zu Fuß"],
+  ["Можно пойти пешком?", "Kann man zu Fuß gehen?"],
+  ["Да, просто идите прямо", "Ja, gehen Sie einfach geradeaus"],
+  ["Где можно поесть?", "Wo kann man essen?"],
+  ["Там есть хорошее кафе", "Dort gibt es ein gutes Café"],
+  ["Я ищу аптеку", "Ich suche eine Apotheke"],
+  ["Аптека рядом с банком", "Die Apotheke ist neben der Bank"],
+  ["Можно сделать фото здесь?", "Darf man hier fotografieren?"],
+  ["Да, конечно, это красиво", "Ja, natürlich, das ist schön"],
+  ["Ты живёшь в большом городе?", "Wohnst du in einer großen Stadt?"],
+  ["Да, в Гамбурге", "Ja, in Hamburg"],
+  ["Ты был в Кёльне?", "Warst du schon in Köln?"],
+  ["Да, там очень красивый собор", "Ja, der Dom ist sehr schön"],
+  // 📚 Учёба
+  ["Где ты учишься?", "Wo lernst du?"],
+  ["Я учусь в университете", "Ich studiere an der Universität"],
+  ["Я изучаю немецкий язык", "Ich lerne Deutsch"],
+  ["Мне нравится учить языки", "Ich mag es, Sprachen zu lernen"],
+  ["Сколько лет ты учишь немецкий?", "Wie lange lernst du schon Deutsch?"],
+  ["Я начал три месяца назад", "Ich habe vor drei Monaten angefangen"],
+  ["Это трудный язык", "Das ist eine schwierige Sprache"],
+  ["Иногда я делаю ошибки", "Manchmal mache ich Fehler"],
+  ["Учитель очень добрый", "Der Lehrer ist sehr nett"],
+  ["У нас сегодня тест", "Wir haben heute einen Test"],
+  ["Я забыл тетрадь дома", "Ich habe das Heft zu Hause vergessen"],
+  ["Мне нужно повторить слова", "Ich muss die Wörter wiederholen"],
+  ["Ты сделал домашнее задание?", "Hast du die Hausaufgabe gemacht?"],
+  ["Да, я сделал всё", "Ja, ich habe alles gemacht"],
+  ["Я не понимаю это правило", "Ich verstehe diese Regel nicht"],
+  ["Можешь объяснить ещё раз?", "Kannst du es noch einmal erklären?"],
+
+  // 💬 Друзья
+  ["У тебя много друзей?", "Hast du viele Freunde?"],
+  ["Да, но они живут далеко", "Ja, aber sie wohnen weit weg"],
+  ["Мы часто переписываемся", "Wir schreiben oft miteinander"],
+  ["Мы любим гулять вместе", "Wir gehen gern zusammen spazieren"],
+  ["Мой лучший друг живёт в Берлине", "Mein bester Freund wohnt in Berlin"],
+  ["Мы знакомы пять лет", "Wir kennen uns seit fünf Jahren"],
+  ["Я доверяю ему", "Ich vertraue ihm"],
+  ["Он всегда помогает", "Er hilft immer"],
+  ["Она очень весёлая", "Sie ist sehr lustig"],
+  ["Мы смотрим фильмы вместе", "Wir schauen Filme zusammen"],
+  ["Я пригласил друзей в гости", "Ich habe Freunde eingeladen"],
+  ["Мы готовим ужин вместе", "Wir kochen zusammen Abendessen"],
+  ["Иногда мы спорим", "Manchmal streiten wir uns"],
+  ["Но потом миримся", "Aber dann versöhnen wir uns"],
+  ["Дружба — это важно", "Freundschaft ist wichtig"],
+
+  // 🏠 Дома
+  ["Я живу в квартире", "Ich wohne in einer Wohnung"],
+  ["У меня есть комната и кухня", "Ich habe ein Zimmer und eine Küche"],
+  ["Моя комната маленькая, но уютная", "Mein Zimmer ist klein, aber gemütlich"],
+  ["Где находится ванная?", "Wo ist das Bad?"],
+  ["Она рядом с кухней", "Es ist neben der Küche"],
+  ["Я убираю квартиру по выходным", "Ich putze die Wohnung am Wochenende"],
+  ["Мама готовит очень вкусно", "Mama kocht sehr lecker"],
+  ["Папа чинит всё сам", "Papa repariert alles selbst"],
+  ["Я читаю книгу на диване", "Ich lese ein Buch auf dem Sofa"],
+  ["Кошка спит на кресле", "Die Katze schläft auf dem Sessel"],
+  ["Мы завтракаем вместе", "Wir frühstücken zusammen"],
+  ["Я поливаю цветы", "Ich gieße die Blumen"],
+  ["Мой дом находится рядом со школой", "Mein Haus ist in der Nähe der Schule"],
+  ["Мы живём на третьем этаже", "Wir wohnen im dritten Stock"],
+
+  // ❤️ Эмоции и чувства
+  ["Я счастлив сегодня", "Ich bin heute glücklich"],
+  ["Он выглядит грустным", "Er sieht traurig aus"],
+  ["Она сердится", "Sie ist wütend"],
+  ["Я немного устал", "Ich bin ein bisschen müde"],
+  ["Мне скучно", "Mir ist langweilig"],
+  ["Мне холодно", "Mir ist kalt"],
+  ["Мне жарко", "Mir ist heiß"],
+  ["Я рад тебя видеть", "Ich freue mich, dich zu sehen"],
+  ["Я горжусь тобой", "Ich bin stolz auf dich"],
+  ["Не волнуйся", "Mach dir keine Sorgen"],
+  ["Всё будет хорошо", "Alles wird gut"],
+  ["Ты выглядишь отлично", "Du siehst toll aus"],
+  ["Я тебя понимаю", "Ich verstehe dich"],
+  ["Ты меня злишь", "Du machst mich wütend"],
+  ["Мне нужна тишина", "Ich brauche Ruhe"],
+
+  // 🚶‍♂️ Повседневная жизнь
+  ["Я просыпаюсь в семь часов", "Ich wache um sieben Uhr auf"],
+  ["Я принимаю душ", "Ich dusche mich"],
+  ["Потом я завтракаю", "Dann frühstücke ich"],
+  ["Я пью кофе и ем хлеб", "Ich trinke Kaffee und esse Brot"],
+  ["Я выхожу из дома в восемь", "Ich gehe um acht Uhr aus dem Haus"],
+  ["Я еду на работу на автобусе", "Ich fahre mit dem Bus zur Arbeit"],
+  ["После работы я отдыхаю", "Nach der Arbeit ruhe ich mich aus"],
+  ["Вечером я смотрю сериал", "Am Abend sehe ich eine Serie"],
+  ["Я ложусь спать в одиннадцать", "Ich gehe um elf Uhr ins Bett"],
+  ["Иногда я читаю перед сном", "Manchmal lese ich vor dem Schlafen"],
+  ["Я покупаю продукты каждый день", "Ich kaufe jeden Tag Lebensmittel"],
+  ["Я мою посуду после ужина", "Ich spüle das Geschirr nach dem Abendessen"],
+  ["По выходным я гуляю в парке", "Am Wochenende gehe ich im Park spazieren"],
+  ["Я звоню друзьям вечером", "Ich rufe abends Freunde an"],
+  ["Иногда я просто отдыхаю дома", "Manchmal entspanne ich einfach zu Hause"],
+    ["Я люблю путешествовать", "Ich reise gern"],
+  ["Куда ты поедешь летом?", "Wohin fährst du im Sommer?"],
+  ["Я поеду в Германию", "Ich fahre nach Deutschland"],
+  ["Мы летим в Берлин", "Wir fliegen nach Berlin"],
+  ["Сколько стоит билет?", "Wie viel kostet das Ticket?"],
+  ["Поездка длится два часа", "Die Fahrt dauert zwei Stunden"],
+  ["Где находится вокзал?", "Wo ist der Bahnhof?"],
+  ["Я жду автобус", "Ich warte auf den Bus"],
+  ["Поезд опаздывает", "Der Zug hat Verspätung"],
+  ["Я забронировал отель", "Ich habe ein Hotel gebucht"],
+  ["Мне нужно такси", "Ich brauche ein Taxi"],
+  ["Мы идём в аэропорт", "Wir gehen zum Flughafen"],
+  ["Паспорт у меня в сумке", "Der Pass ist in meiner Tasche"],
+  ["Граница недалеко отсюда", "Die Grenze ist nicht weit von hier"],
+  ["Я хочу увидеть море", "Ich möchte das Meer sehen"],
+  ["Мы поехали на экскурсию", "Wir sind auf einen Ausflug gefahren"],
+
+  // ☎️ Телефон и общение
+  ["Ты можешь позвонить мне?", "Kannst du mich anrufen?"],
+  ["Я тебе напишу позже", "Ich schreibe dir später"],
+  ["Ты получил моё сообщение?", "Hast du meine Nachricht bekommen?"],
+  ["Я не слышу тебя", "Ich höre dich nicht"],
+  ["Интернет не работает", "Das Internet funktioniert nicht"],
+  ["Где можно зарядить телефон?", "Wo kann man das Handy laden?"],
+  ["Я сейчас перезвоню", "Ich rufe gleich zurück"],
+  ["У тебя есть время поговорить?", "Hast du Zeit zu sprechen?"],
+  ["Я разговариваю с другом", "Ich spreche mit einem Freund"],
+  ["Ты часто звонишь родителям?", "Rufst du oft deine Eltern an?"],
+  ["Мы общаемся каждый день", "Wir kommunizieren jeden Tag"],
+  ["Он не отвечает на звонки", "Er geht nicht ans Telefon"],
+  ["Я забыл телефон дома", "Ich habe das Handy zu Hause vergessen"],
+  ["Отправь мне фото", "Schick mir ein Foto"],
+  ["Я не могу сейчас говорить", "Ich kann jetzt nicht sprechen"],
+
+  // 💰 Покупки и деньги
+  ["Где находится супермаркет?", "Wo ist der Supermarkt?"],
+  ["Я иду за покупками", "Ich gehe einkaufen"],
+  ["Мне нужно купить хлеб", "Ich muss Brot kaufen"],
+  ["Сколько стоит это платье?", "Wie viel kostet dieses Kleid?"],
+  ["Это слишком дорого", "Das ist zu teuer"],
+  ["Можно подешевле?", "Geht es billiger?"],
+  ["У вас есть сдача?", "Haben Sie Wechselgeld?"],
+  ["Я заплачу картой", "Ich bezahle mit Karte"],
+  ["Где касса?", "Wo ist die Kasse?"],
+  ["Я купил молоко и сыр", "Ich habe Milch und Käse gekauft"],
+  ["Мне нужно немного наличных", "Ich brauche etwas Bargeld"],
+  ["Банкомат не работает", "Der Geldautomat funktioniert nicht"],
+  ["Я потерял кошелёк", "Ich habe mein Portemonnaie verloren"],
+  ["Где можно обменять деньги?", "Wo kann man Geld wechseln?"],
+  ["Я экономлю на поездку", "Ich spare für eine Reise"],
+
+  // 💭 Мнения и желания
+  ["Мне это нравится", "Das gefällt mir"],
+  ["Я думаю, это интересно", "Ich denke, das ist interessant"],
+  ["Я уверен в этом", "Ich bin sicher daran"],
+  ["Мне кажется, это просто", "Ich finde, das ist einfach"],
+  ["Ты прав", "Du hast recht"],
+  ["Я не согласен", "Ich bin nicht einverstanden"],
+  ["Что ты думаешь об этом?", "Was denkst du darüber?"],
+  ["Мне скучно это делать", "Ich finde es langweilig zu tun"],
+  ["Я хочу попробовать", "Ich will es versuchen"],
+  ["Я надеюсь, всё получится", "Ich hoffe, es klappt"],
+  ["Мне нужно время подумать", "Ich brauche Zeit zum Nachdenken"],
+  ["Я не уверен", "Ich bin nicht sicher"],
+  ["Мне это не нравится", "Das mag ich nicht"],
+  ["Я рад этому", "Ich freue mich darüber"],
+  ["Я мечтаю о новой работе", "Ich träume von einem neuen Job"],
+
+  // ⏳ Время и планы
+  ["Который сейчас час?", "Wie spät ist es?"],
+  ["Сейчас десять утра", "Es ist zehn Uhr morgens"],
+  ["Урок начинается в девять", "Der Unterricht beginnt um neun"],
+  ["Мы встречаемся вечером", "Wir treffen uns am Abend"],
+  ["Завтра у меня выходной", "Morgen habe ich frei"],
+  ["Сегодня я занят", "Heute bin ich beschäftigt"],
+  ["Вчера был хороший день", "Gestern war ein guter Tag"],
+  ["Я пойду спать позже", "Ich gehe später schlafen"],
+  ["Мы увидимся через неделю", "Wir sehen uns in einer Woche"],
+  ["Я опоздал на автобус", "Ich habe den Bus verpasst"],
+  ["Ты уже поел?", "Hast du schon gegessen?"],
+  ["Я закончу через пять минут", "Ich bin in fünf Minuten fertig"],
+  ["Я не успеваю", "Ich schaffe es nicht rechtzeitig"],
+  ["Мне нужно спешить", "Ich muss mich beeilen"],
+  ["Время идёт быстро", "Die Zeit vergeht schnell"],
+   ["У меня болит голова", "Ich habe Kopfschmerzen"],
+  ["Моя рука болит", "Mein Arm tut weh"],
+  ["Он поранил ногу", "Er hat sich am Bein verletzt"],
+  ["Я чувствую себя плохо", "Ich fühle mich schlecht"],
+  ["Мне нужно немного отдохнуть", "Ich muss mich ein bisschen ausruhen"],
+  ["Ты выглядишь усталым", "Du siehst müde aus"],
+  ["Я хочу лечь спать", "Ich will ins Bett gehen"],
+  ["Я простудился", "Ich bin erkältet"],
+  ["Она кашляет", "Sie hustet"],
+  ["Мне нужно пить больше воды", "Ich muss mehr Wasser trinken"],
+  ["Я часто делаю упражнения", "Ich mache oft Übungen"],
+  ["Здоровье самое важное", "Gesundheit ist das Wichtigste"],
+  ["Он не любит спорт", "Er mag keinen Sport"],
+  ["Моя мама занимается йогой", "Meine Mutter macht Yoga"],
+  ["Я стараюсь есть здоровую еду", "Ich versuche, gesund zu essen"],
+
+  // 🏥 Врач и симптомы
+  ["Мне нужен врач", "Ich brauche einen Arzt"],
+  ["Где находится больница?", "Wo ist das Krankenhaus?"],
+  ["У меня температура", "Ich habe Fieber"],
+  ["Пожалуйста, помогите мне", "Bitte helfen Sie mir"],
+  ["Я не могу дышать", "Ich kann nicht atmen"],
+  ["Я хочу записаться к врачу", "Ich möchte einen Termin beim Arzt machen"],
+  ["Когда откроется аптека?", "Wann öffnet die Apotheke?"],
+  ["Мне нужны таблетки от кашля", "Ich brauche Tabletten gegen Husten"],
+  ["Где ближайшая аптека?", "Wo ist die nächste Apotheke?"],
+  ["У меня аллергия", "Ich habe eine Allergie"],
+  ["Вы принимаете страховку?", "Nehmen Sie die Versicherung?"],
+  ["Я чувствую себя лучше", "Ich fühle mich besser"],
+  ["Мне сделали укол", "Ich habe eine Spritze bekommen"],
+  ["Доктор очень добрый", "Der Arzt ist sehr nett"],
+  ["Я должен больше отдыхать", "Ich soll mehr Ruhe haben"],
+
+  // 🌦️ Погода и сезоны
+  ["Сегодня холодно", "Heute ist es kalt"],
+  ["На улице идёт дождь", "Draußen regnet es"],
+  ["Зимой здесь снег", "Im Winter gibt es hier Schnee"],
+  ["Летом очень жарко", "Im Sommer ist es sehr heiß"],
+  ["Я люблю весну", "Ich liebe den Frühling"],
+  ["Осенью часто идёт дождь", "Im Herbst regnet es oft"],
+  ["Сегодня солнечно", "Heute ist es sonnig"],
+  ["На улице дует ветер", "Es ist windig draußen"],
+  ["Температура минус пять", "Die Temperatur ist minus fünf"],
+  ["Я замёрз", "Ich habe gefroren"],
+  ["Я не люблю жару", "Ich mag keine Hitze"],
+  ["Погода сегодня прекрасная", "Das Wetter ist heute wunderbar"],
+  ["Скоро пойдёт дождь", "Es wird bald regnen"],
+  ["Завтра будет снег", "Morgen wird es schneien"],
+  ["Мне нравится, когда идёт дождь", "Ich mag es, wenn es regnet"],
+
+  // 🏙️ Ориентация в городе
+  ["Где находится банк?", "Wo ist die Bank?"],
+  ["Как пройти к почте?", "Wie komme ich zur Post?"],
+  ["Поверните направо", "Gehen Sie nach rechts"],
+  ["Поверните налево", "Gehen Sie nach links"],
+  ["Идите прямо", "Gehen Sie geradeaus"],
+  ["Это далеко отсюда?", "Ist es weit von hier?"],
+  ["Мне нужно найти отель", "Ich muss ein Hotel finden"],
+  ["Как называется эта улица?", "Wie heißt diese Straße?"],
+  ["Я ищу ресторан", "Ich suche ein Restaurant"],
+  ["Где находится центр?", "Wo ist das Zentrum?"],
+  ["Это рядом с вокзалом", "Es ist in der Nähe vom Bahnhof"],
+  ["Я заблудился", "Ich habe mich verlaufen"],
+  ["Покажите, пожалуйста, на карте", "Zeigen Sie es bitte auf der Karte"],
+  ["Сколько времени до станции?", "Wie lange bis zur Station?"],
+  ["Спасибо за помощь", "Danke für die Hilfe"],
+
+  // 💼 Работа и профессии
+  ["Я работаю в офисе", "Ich arbeite im Büro"],
+  ["Он инженер", "Er ist Ingenieur"],
+  ["Она медсестра", "Sie ist Krankenschwester"],
+  ["Моя сестра — учительница", "Meine Schwester ist Lehrerin"],
+  ["Где ты работаешь?", "Wo arbeitest du?"],
+  ["Я ищу работу", "Ich suche eine Arbeit"],
+  ["Он работает на фабрике", "Er arbeitet in einer Fabrik"],
+  ["Я люблю свою работу", "Ich liebe meine Arbeit"],
+  ["Она хочет стать врачом", "Sie möchte Ärztin werden"],
+  ["У меня сегодня выходной", "Ich habe heute frei"],
+  ["Он уволился с работы", "Er hat gekündigt"],
+  ["Я получаю небольшую зарплату", "Ich bekomme ein kleines Gehalt"],
+  ["Я начал новую работу", "Ich habe eine neue Arbeit angefangen"],
+  ["Мне нравится работать с людьми", "Ich arbeite gern mit Menschen"],
+  ["Моя мама работает в магазине", "Meine Mutter arbeitet im Geschäft"],
+   ["Я учусь в школе", "Ich gehe zur Schule"],
+  ["Он студент университета", "Er ist Student an der Universität"],
+  ["Она изучает немецкий язык", "Sie lernt Deutsch"],
+  ["У нас завтра экзамен", "Wir haben morgen eine Prüfung"],
+  ["Я забыл домашнее задание", "Ich habe die Hausaufgabe vergessen"],
+  ["Учитель очень добрый", "Der Lehrer ist sehr nett"],
+  ["Я люблю математику", "Ich mag Mathematik"],
+  ["Моя любимая тема — история", "Mein Lieblingsfach ist Geschichte"],
+  ["Я читаю учебник", "Ich lese das Lehrbuch"],
+  ["Ты сделал упражнение?", "Hast du die Übung gemacht?"],
+  ["Мы пишем тест", "Wir schreiben einen Test"],
+  ["Я получил хорошую оценку", "Ich habe eine gute Note bekommen"],
+  ["Школа начинается в восемь", "Die Schule beginnt um acht"],
+  ["У нас большая перемена", "Wir haben eine große Pause"],
+  ["После школы я иду домой", "Nach der Schule gehe ich nach Hause"],
+
+  // 🎨 Хобби и свободное время
+  ["Я люблю рисовать", "Ich male gern"],
+  ["Он играет на гитаре", "Er spielt Gitarre"],
+  ["Мы часто гуляем в парке", "Wir gehen oft im Park spazieren"],
+  ["Она любит танцевать", "Sie tanzt gern"],
+  ["Моё хобби — фотография", "Mein Hobby ist Fotografie"],
+  ["Я катаюсь на велосипеде", "Ich fahre Fahrrad"],
+  ["Он любит смотреть фильмы", "Er sieht gern Filme"],
+  ["Я часто слушаю музыку", "Ich höre oft Musik"],
+  ["Мы играем в футбол", "Wir spielen Fußball"],
+  ["Я собираю марки", "Ich sammle Briefmarken"],
+  ["Она поёт очень красиво", "Sie singt sehr schön"],
+  ["В свободное время я читаю", "In meiner Freizeit lese ich"],
+  ["Я люблю путешествовать", "Ich reise gern"],
+  ["Он ходит в спортзал", "Er geht ins Fitnessstudio"],
+  ["Мы смотрим сериал", "Wir schauen eine Serie"],
+
+  // 🍽️ Еда и напитки
+  ["Я люблю яблоки", "Ich mag Äpfel"],
+  ["Он пьёт воду", "Er trinkt Wasser"],
+  ["Мы завтракаем вместе", "Wir frühstücken zusammen"],
+  ["Она готовит суп", "Sie kocht Suppe"],
+  ["Я ем хлеб с маслом", "Ich esse Brot mit Butter"],
+  ["Ты любишь кофе?", "Magst du Kaffee?"],
+  ["Они ужинают в шесть", "Sie essen um sechs zu Abend"],
+  ["Я не ем мясо", "Ich esse kein Fleisch"],
+  ["Он пьёт чай с мёдом", "Er trinkt Tee mit Honig"],
+  ["Мы заказали пиццу", "Wir haben Pizza bestellt"],
+  ["Я хочу кусок торта", "Ich möchte ein Stück Kuchen"],
+  ["Овощи полезны", "Gemüse ist gesund"],
+  ["Фрукты сладкие", "Das Obst ist süß"],
+  ["Я часто готовлю дома", "Ich koche oft zu Hause"],
+  ["Она ест салат на обед", "Sie isst Salat zum Mittagessen"],
+
+  // 👨‍👩‍👧 Семья и друзья
+  ["У меня большая семья", "Ich habe eine große Familie"],
+  ["Моя мама работает врачом", "Meine Mutter arbeitet als Ärztin"],
+  ["У меня есть младший брат", "Ich habe einen kleinen Bruder"],
+  ["Она живёт с родителями", "Sie lebt mit ihren Eltern"],
+  ["Мой отец любит готовить", "Mein Vater kocht gern"],
+  ["Моя бабушка печёт пироги", "Meine Oma backt Kuchen"],
+  ["Мы часто навещаем дедушку", "Wir besuchen oft den Opa"],
+  ["Моя сестра очень милая", "Meine Schwester ist sehr nett"],
+  ["У меня много друзей", "Ich habe viele Freunde"],
+  ["Мы встречаемся каждые выходные", "Wir treffen uns jedes Wochenende"],
+  ["Он мой лучший друг", "Er ist mein bester Freund"],
+  ["Я звоню родителям каждый день", "Ich rufe meine Eltern jeden Tag an"],
+  ["Они живут недалеко", "Sie wohnen nicht weit"],
+  ["Моя семья живёт в Берлине", "Meine Familie wohnt in Berlin"],
+  ["Мы вместе проводим отпуск", "Wir machen zusammen Urlaub"],
+
+  // 🎉 Праздники и традиции
+  ["Сегодня Рождество", "Heute ist Weihnachten"],
+  ["Мы празднуем Новый год", "Wir feiern Neujahr"],
+  ["Он получил подарок", "Er hat ein Geschenk bekommen"],
+  ["Я поздравляю тебя с днём рождения", "Ich gratuliere dir zum Geburtstag"],
+  ["Она задула свечи", "Sie hat die Kerzen ausgeblasen"],
+  ["Мы украшали ёлку", "Wir haben den Weihnachtsbaum geschmückt"],
+  ["Они поют рождественские песни", "Sie singen Weihnachtslieder"],
+  ["Я люблю праздничную атмосферу", "Ich liebe die festliche Stimmung"],
+  ["Мы идём на вечеринку", "Wir gehen zur Party"],
+  ["Он приготовил праздничный ужин", "Er hat ein Festessen gekocht"],
+  ["Я получил открытку от друга", "Ich habe eine Karte vom Freund bekommen"],
+  ["На Пасху мы красим яйца", "Zu Ostern färben wir Eier"],
+  ["Мы встречаем весну", "Wir begrüßen den Frühling"],
+  ["Сегодня праздник семьи", "Heute ist das Familienfest"],
+  ["Я жду каникулы", "Ich freue mich auf die Ferien"],
+  ["Я еду на автобусе", "Ich fahre mit dem Bus"],
+  ["Он идёт на вокзал", "Er geht zum Bahnhof"],
+  ["Мы летим в Германию", "Wir fliegen nach Deutschland"],
+  ["Она ждёт поезд", "Sie wartet auf den Zug"],
+  ["Билет стоит десять евро", "Das Ticket kostet zehn Euro"],
+  ["Где находится остановка?", "Wo ist die Haltestelle?"],
+  ["Я опоздал на автобус", "Ich habe den Bus verpasst"],
+  ["Мы путешествуем на машине", "Wir reisen mit dem Auto"],
+  ["Он водит очень осторожно", "Er fährt sehr vorsichtig"],
+  ["Я хочу поехать в Берлин", "Ich möchte nach Berlin fahren"],
+  ["Они едут в отпуск", "Sie fahren in den Urlaub"],
+  ["Самолёт приземлился вовремя", "Das Flugzeug ist pünktlich gelandet"],
+  ["Я взял чемодан", "Ich habe den Koffer genommen"],
+  ["Где мой паспорт?", "Wo ist mein Pass?"],
+  ["Мы ищем гостиницу", "Wir suchen ein Hotel"],
+
+  // 🏠 Жильё и быт
+  ["Я живу в квартире", "Ich wohne in einer Wohnung"],
+  ["Он арендует комнату", "Er mietet ein Zimmer"],
+  ["У меня светлая кухня", "Ich habe eine helle Küche"],
+  ["Ванная находится справа", "Das Bad ist rechts"],
+  ["Мы убираем квартиру", "Wir putzen die Wohnung"],
+  ["Я мою посуду", "Ich spüle das Geschirr"],
+  ["Она стирает одежду", "Sie wäscht die Kleidung"],
+  ["Он чинит кран", "Er repariert den Wasserhahn"],
+  ["Мы готовим ужин на кухне", "Wir kochen das Abendessen in der Küche"],
+  ["Моя кровать очень удобная", "Mein Bett ist sehr bequem"],
+  ["Я открываю окно", "Ich mache das Fenster auf"],
+  ["Они живут на втором этаже", "Sie wohnen im zweiten Stock"],
+  ["В доме тепло и уютно", "Im Haus ist es warm und gemütlich"],
+  ["Я покупаю новую мебель", "Ich kaufe neue Möbel"],
+  ["У нас есть маленький сад", "Wir haben einen kleinen Garten"],
+
+  // 🕒 Время и распорядок дня
+  ["Я встаю в семь часов", "Ich stehe um sieben Uhr auf"],
+  ["Он завтракает в восемь", "Er frühstückt um acht Uhr"],
+  ["Мы идём на работу", "Wir gehen zur Arbeit"],
+  ["Она приходит домой вечером", "Sie kommt abends nach Hause"],
+  ["Я ложусь спать в десять", "Ich gehe um zehn Uhr schlafen"],
+  ["Сейчас половина пятого", "Es ist halb fünf"],
+  ["Вчера был дождь", "Gestern hat es geregnet"],
+  ["Сегодня очень холодно", "Heute ist es sehr kalt"],
+  ["Завтра будет солнечно", "Morgen wird es sonnig sein"],
+  ["Я часто опаздываю", "Ich bin oft zu spät"],
+  ["Он всегда вовремя", "Er ist immer pünktlich"],
+  ["Мы отдыхаем в выходные", "Wir ruhen uns am Wochenende aus"],
+  ["Она работает по утрам", "Sie arbeitet morgens"],
+  ["Я обедаю в столовой", "Ich esse in der Kantine zu Mittag"],
+  ["Вечером я читаю книгу", "Am Abend lese ich ein Buch"],
+
+  // 💬 Общение и эмоции
+  ["Как у тебя дела?", "Wie geht es dir?"],
+  ["У меня всё хорошо", "Mir geht es gut"],
+  ["Он сегодня устал", "Er ist heute müde"],
+  ["Она рада тебя видеть", "Sie freut sich, dich zu sehen"],
+  ["Мы скучаем по тебе", "Wir vermissen dich"],
+  ["Мне грустно", "Ich bin traurig"],
+  ["Ты прав", "Du hast recht"],
+  ["Это отличная идея", "Das ist eine tolle Idee"],
+  ["Я думаю иначе", "Ich denke anders"],
+  ["Он не согласен", "Er ist nicht einverstanden"],
+  ["Спасибо за помощь", "Danke für deine Hilfe"],
+  ["Пожалуйста, не волнуйся", "Bitte, mach dir keine Sorgen"],
+  ["Я горжусь тобой", "Ich bin stolz auf dich"],
+  ["Она боится темноты", "Sie hat Angst vor der Dunkelheit"],
+  ["Мы смеёмся вместе", "Wir lachen zusammen"],
+
+  // 💡 Бытовые ситуации
+  ["Я иду в магазин", "Ich gehe in den Supermarkt"],
+  ["Он покупает хлеб", "Er kauft Brot"],
+  ["Она ищет молоко", "Sie sucht Milch"],
+  ["Мы стоим в очереди", "Wir stehen in der Schlange"],
+  ["Кассир очень вежливый", "Der Kassierer ist sehr freundlich"],
+  ["Я плачу картой", "Ich bezahle mit Karte"],
+  ["Он несёт пакеты домой", "Er trägt die Taschen nach Hause"],
+  ["Мы выбрасываем мусор", "Wir werfen den Müll weg"],
+  ["Она моет пол", "Sie wischt den Boden"],
+  ["Я глажу рубашку", "Ich bügle das Hemd"],
+  ["Он идёт в аптеку", "Er geht in die Apotheke"],
+  ["Мне нужно купить лекарства", "Ich muss Medikamente kaufen"],
+  ["Я записался к врачу", "Ich habe einen Termin beim Arzt"],
+  ["Мы идём в банк", "Wir gehen zur Bank"],
+  ["Она открыла счёт", "Sie hat ein Konto eröffnet"],
+  ];
+
+  let current = {};
+  let selectedWords = [];
+  let nextTimeout;
+
+  const translationEl = document.getElementById('sentenceTranslation');
+  const wordBank = document.getElementById('wordBank');
+  const area = document.getElementById('sentenceArea');
+  const emoji = document.getElementById('sentenceEmoji');
+
+  function nextSentence() {
+    clearTimeout(nextTimeout);
+    current = words[Math.floor(Math.random() * words.length)];
+    translationEl.textContent = "💬 " + current[0];
+    area.textContent = "";
+    emoji.textContent = "";
+    selectedWords = [];
+
+    const sentence = current[1];
+    const allWords = sentence.split(" ");
+    const shuffled = [...allWords].sort(() => Math.random() - 0.5);
+
+    wordBank.innerHTML = "";
+    shuffled.forEach(word => {
+      const w = document.createElement("div");
+      w.className = "word";
+      w.textContent = word;
+      w.onclick = () => selectWord(w, word);
+      wordBank.appendChild(w);
+    });
+  }
+
+  function selectWord(element, word) {
+    if (element.classList.contains("used")) return;
+    element.classList.add("used");
+    selectedWords.push(word);
+    area.textContent = selectedWords.join(" ");
+    checkSentence();
+  }
+
+  function checkSentence() {
+    const userSentence = area.textContent.trim();
+    if (userSentence === current[1]) {
+      emoji.textContent = "✅ Правильно!";
+      emoji.style.color = "#00ff7f";
+      nextTimeout = setTimeout(nextSentence, 2500);
+    } else if (selectedWords.length === current[1].split(" ").length) {
+      emoji.textContent = "❌ Неправильно. Попробуй снова!";
+      emoji.style.color = "#ff4d4d";
+    }
+  }
+
+  function resetSentence() {
+    clearTimeout(nextTimeout);
+    selectedWords = [];
+    area.textContent = "";
+    emoji.textContent = "";
+    document.querySelectorAll(".word").forEach(w => w.classList.remove("used"));
+  }
+
+  nextSentence();
+</script>
+</body>
+</html>
+
+
+
+
